@@ -20,7 +20,7 @@ const VantaGlobe = () => {
           scale: 1.0,
           scaleMobile: 1.0,
           color: 0xff6600,
-          backgroundColor: 0x223344,
+          backgroundColor: 0x1E1E1E   ,
         }) 
 // 0x19232e
 // 0x2a3e52
