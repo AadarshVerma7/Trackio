@@ -1,0 +1,29 @@
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glow-border::after,.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: conic-gradient(from var(--angle), transparent 70%, #fff);
+  border-radius: 20px;
+  animation: spin 3s linear infinite;
+  z-index: -1;
+}
+
+.glow-border::before {
+  filter: blur(1rem);
+  opacity: 0.9;
+}
+
+@keyframes spin {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
