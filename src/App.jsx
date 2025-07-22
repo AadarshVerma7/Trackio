@@ -3,16 +3,33 @@ import './App.css'
 import { Route,Routes } from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar'
 import LandingPage from './Pages/LandingPage/LandingPage'
+import Login  from './Pages/LoginPage/Login.jsx';
+import Signup from './Pages/SignupPage/Signup.jsx'
+
 
 function App() {
-  // const [count, setCount] = useState(0)
-
+  const[showLogin,setShowLogin] = useState(false);
+  const[showSignup,setShowSignup] = useState(false);
+  
   return (
     <>
-      <Navbar />
+      <Navbar onLoginClick={() => setShowLogin(true)} onSignupClick={() => setShowSignup(true)}/>
       <Routes>
         <Route path='/' element={<LandingPage />}/>
       </Routes>
+
+      {showLogin && (
+        <div className="overlay">
+          <Login close={() => setShowLogin(false)} />
+        </div>
+      )}
+
+      {showSignup && (
+        <div className='overlay'>
+          <Signup close2={() => setShowSignup(false)} />
+        </div>
+      )
+      }
     </>
   )
 }
