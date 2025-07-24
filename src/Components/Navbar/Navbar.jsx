@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 function Navbar( {onLoginClick , onSignupClick}) {
   return (
     <div className="w-full px-6 py-4 flex justify-between items-center absolute z-2">
-      <div className="text-3xl font-bold text-orange-400 flex gap-3 cursor-pointer">
+      <div className="text-3xl font-bold text-orange-500 flex gap-3 cursor-pointer">
         <img className="h-10 " src={favicon} alt="T" />
         <h1>Trackio</h1>
       </div>
@@ -28,12 +28,11 @@ function Navbar( {onLoginClick , onSignupClick}) {
         </Link>
       </div>
 
-
       <div className="flex space-x-4">
         <button onClick={onLoginClick} className="px-4 py-2 border border-orange-500 text-orange-500 rounded-full hover:bg-orange-500 hover:text-white transition cursor-pointer">
           Login
         </button>
-        <button onClick={onSignupClick} className="px-4 py-2 border border-stone-200 bg-orange-500 text-white rounded-full hover:bg-white hover:text-orange-500 transition hover:border cursor-pointer hover:border-orange-400">
+        <button onClick={onSignupClick} className="px-4 py-2 border border-orange-500 text-orange-500 rounded-full hover:bg-orange-500 hover:text-white transition cursor-pointer">
           Sign Up
         </button>
       </div>
