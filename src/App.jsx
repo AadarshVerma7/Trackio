@@ -9,29 +9,14 @@ import HomePage from './Pages/HomePage/HomePage.jsx'
 
 
 function App() {
-  const[showLogin,setShowLogin] = useState(false);
-  const[showSignup,setShowSignup] = useState(false);
   
   return (
     <>
-      <Navbar onLoginClick={() => setShowLogin(true)} onSignupClick={() => setShowSignup(true)}/>
       <Routes>
         <Route path='/' element={<LandingPage />}/>
         <Route path='home' element={<HomePage />}/>
       </Routes>
 
-      {showLogin && (
-        <div className="overlay">
-          <Login close={() => setShowLogin(false)} />
-        </div>
-      )}
-
-      {showSignup && (
-        <div className='overlay'>
-          <Signup close2={() => setShowSignup(false)} />
-        </div>
-      )
-      }
     </>
   )
 }
