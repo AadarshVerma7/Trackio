@@ -6,6 +6,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Poppins', ...defaultTheme.fontFamily.sans],
+        fjalla: ['Fjalla One', ...defaultTheme.fontFamily.fjalla],
+        lily: ['Lily Script One', ...defaultTheme.fontFamily.lily],
         baloo: ['"Baloo Bhai 2"', ...defaultTheme.fontFamily.sans],
       },
     },
