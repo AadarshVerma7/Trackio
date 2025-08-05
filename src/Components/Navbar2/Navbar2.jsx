@@ -21,11 +21,11 @@ function Navbar2() {
         {/* Logo */}
         <div className="flex gap-2 text-lg font-semibold items-center">
           <img className="w-8" src={favicon} alt="Trackio" />
-          <h1>Trackio</h1>
+          <h1 className="lily text-2xl">Trackio</h1>
         </div>
 
         {/* Navigation Links */}
-        <div className="flex gap-6 items-center text-lg font-semibold">
+        <div className="flex gap-6 items-center text-lg font-semibold fjalla tracking-wide">
           <Link
             to="/home"
             className="relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full cursor-pointer"
