@@ -3,6 +3,8 @@ import VantaGlobe from "../../Components/VantaGlobe/VantaGlobe";
 import "./LandingPage.css";
 import { useState, useEffect } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
+import Login from "../LoginPage/Login";
+import Signup from "../SignupPage/Signup";
 
 function LandingPage() {
   const [showGlow, setShowGlow] = useState(false);
@@ -24,6 +26,7 @@ function LandingPage() {
         onLoginClick={() => setShowLogin(true)}
         onSignupClick={() => setShowSignup(true)}
       />
+
       {showLogin && (
         <div className="overlay">
           <Login close={() => setShowLogin(false)} />
