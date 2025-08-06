@@ -22,8 +22,6 @@ function Navbar2() {
         <div className="flex gap-2  text-lg font-semibold items-center">
           <img className="w-8" src={favicon} alt="Trackio" />
 
-          <h1 className="lily">Trackio</h1>
-
           <h1 className="lily text-2xl">Trackio</h1>
 
         </div>
