@@ -3,6 +3,9 @@ import VantaGlobe from "../../Components/VantaGlobe/VantaGlobe";
 import "./LandingPage.css";
 import { useState, useEffect } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
+import Login from "../../Pages/LoginPage/Login"
+import Signup from "../../Pages/SignupPage/Signup"
+
 
 function LandingPage() {
   const [showGlow, setShowGlow] = useState(false);

@@ -19,9 +19,13 @@ function Navbar2() {
         shadow-lg shadow-black/30 transition-all duration-500 absolute">
         
         {/* Logo */}
-        <div className="flex gap-2 text-lg font-semibold items-center">
+        <div className="flex gap-2  text-lg font-semibold items-center">
           <img className="w-8" src={favicon} alt="Trackio" />
+
+          <h1 className="lily">Trackio</h1>
+
           <h1 className="lily text-2xl">Trackio</h1>
+
         </div>
 
         {/* Navigation Links */}
