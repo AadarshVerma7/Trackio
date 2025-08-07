@@ -7,6 +7,7 @@ import Login  from './Pages/LoginPage/Login.jsx';
 import Signup from './Pages/SignupPage/Signup.jsx'
 import HomePage from './Pages/HomePage/HomePage.jsx'
 import Navbar2 from './Components/Navbar2/Navbar2.jsx'
+import ProfileCard from './Components/ProfileCard/ProfileCard.jsx'
 
 function App() {
   const location = useLocation();
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path='/' element={<LandingPage />}/>
         <Route path='home' element={<HomePage />}/>
+        <Route path='ProfileCard' element={<ProfileCard />}/>
       </Routes>
 
     </>
