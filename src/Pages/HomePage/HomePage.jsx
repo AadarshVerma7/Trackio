@@ -45,12 +45,12 @@ const HomePage = () => {
           <img
             src={skill}
             alt="skill"
-            className="h-50 p-3 bg-[#f2ece8] rounded-xl transform -rotate-20 "
+            className="h-50 p-3 bg-[#f2ece8] rounded-xl transform -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl "
           />
           <img
             src={podium}
             alt="podium"
-            className="h-30 relative h-60 w-50 p-3 bg-[#EE9755] rounded-xl"
+            className="h-30 relative h-60 w-50 p-3 bg-[#EE9755] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"
           />
         </div>
 
@@ -82,7 +82,7 @@ const HomePage = () => {
           <div className="flex">
             <div className="relative top-10 left-10">
               <div className="relative z-20">
-                <img src={Code} alt="code" className="h-45 bg-white border-15 rounded-xl rotate-20 p-3"/>
+                <img src={Code} alt="code" className="h-45 bg-white border-15 rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl"/>
               </div>
               <div className="h-1 absolute top-10 left-30 w-40 bg-black z-10"></div>
             </div>
