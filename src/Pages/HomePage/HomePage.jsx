@@ -4,11 +4,15 @@ import skill from "../../assets/skill.svg";
 import Code from "../../assets/Code.svg";
 import podium from "../../assets/podium.png";
 import ProfileCard from "../../Components/ProfileCard/ProfileCard";
+import SvgAnimator from "../../Components/SvgAnimator/SvgAnimator";
+import "./HomePage.css";
+
 
 const HomePage = () => {
+
   return (
-    <div className="bg-[#DDD9D6]">
-      <div className="min-h-screen flex gap-5">
+    <div className="bg-[#DDD9D6] min-h-screen">
+      <div className="max-w-screen-2xl mx-auto flex gap-5">
         {/* Main homepage starts here */}
 
         {/* left section  */}
@@ -40,6 +44,76 @@ const HomePage = () => {
               About Us!
             </h1>
           </div>
+          <div className="relative top-22 left-13">
+            <div className="flex items-start space-x-2">
+              <SvgAnimator
+                pathData="M0.499958 0.993515L3.52217 233.993"
+                stroke="#1A1818"
+                strokeWidth={230}
+                className="absolute left-33 -top-0.4"
+                style={{ width: '5px', height: '235px' }}
+                viewBox="0 0 5 234"
+                orientation="vertical"
+              />
+              <div className="absolute top-108 -left-30 autoShow">
+                <ProfileCard />
+              </div>
+              <SvgAnimator
+                pathData="M0 4L1217 4"
+                stroke="#121111"
+                strokeWidth={8}
+                className="absolute top-58"
+                style={{ width: '1217px', height: '8px' }}
+                viewBox="0 0 950 8"
+                orientation="horizontal"
+              />
+              <div className="absolute top-108 left-70 autoShow">
+                <ProfileCard />
+              </div>
+              <SvgAnimator
+                pathData="M0.499943 0.992483L3.52215 201.992"
+                stroke="#1A1818"
+                strokeWidth={8}
+                className="absolute top-59"
+                style={{ width: '5px', height: '210px' }}
+                viewBox="0 0 5 202"
+                orientation="vertical"
+              />
+              <div className="absolute top-108 left-170 autoShow">
+                <ProfileCard />
+              </div>
+              <SvgAnimator
+                pathData="M0.499943 0.992483L3.52215 201.992"
+                stroke="#1A1818"
+                strokeWidth={8}
+                className="absolute top-59 left-100"
+                style={{ width: '5px', height: '210px' }}
+                viewBox="0 0 5 202"
+                orientation="vertical"
+              />
+              <div className="absolute top-108 left-270 autoShow">
+                <ProfileCard />
+              </div>
+              <SvgAnimator
+                pathData="M0.499943 0.992483L3.52215 201.992"
+                stroke="#1A1818"
+                strokeWidth={8}
+                className="absolute top-59 left-200"
+                style={{ width: '5px', height: '210px' }}
+                viewBox="0 0 5 202"
+                orientation="vertical"
+              />
+              <SvgAnimator
+                pathData="M0.499943 0.992483L3.52215 201.992"
+                stroke="#1A1818"
+                strokeWidth={8}
+                className="absolute top-59 left-303"
+                style={{ width: '5px', height: '210px' }}
+                viewBox="0 0 5 202"
+                orientation="vertical"
+              />
+            </div>
+          </div>
         </div>
 
         {/* right section  */}
@@ -49,12 +123,12 @@ const HomePage = () => {
             <img
               src={skill}
               alt="skill"
-              className="h-50 p-3 bg-[#f2ece8] rounded-xl transform -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl "
+              className="h-50 p-3 bg-[#f2ece8] rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl "
             />
             <img
               src={podium}
               alt="podium"
-              className="h-30 relative h-60 w-50 p-3 bg-[#EE9755] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"
+              className="relative h-60 w-50 p-3 bg-[#EE9755] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"
             />
           </div>
 
@@ -133,17 +207,7 @@ const HomePage = () => {
         </div>
 
       </div>
-        {/* Main Homepage ends here */}
-
-        {/* About us section starts here */}
-
-        {/* Lines connecting to profile cards */}
-
-        <div className="bg-black h-80 w-1 relative left-35 -top-46"></div>
-        <div className="relative left-10 -top-46 w-fit">
-          <ProfileCard />
-        </div>
-    </ div>
+    </div>
   );
 };
 
