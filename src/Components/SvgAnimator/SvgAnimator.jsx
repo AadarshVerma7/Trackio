@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-const SvgAnimator = ({ 
-  pathData, 
+const SvgAnimator = ({
+  pathData,
   stroke,
   strokeWidth,
   className,
@@ -11,7 +11,6 @@ const SvgAnimator = ({
 }) => {
   const pathRef = useRef(null);
   const containerRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const path = pathRef.current;
@@ -22,27 +21,28 @@ const SvgAnimator = ({
     path.style.strokeDashoffset = pathLength;
 
     const handleScroll = () => {
-      if (!containerRef.current) return;
-      
-      const container = containerRef.current;
-      const containerRect = container.getBoundingClientRect();
+      if (!containerRef.current || !pathRef.current) return;
+
+      const path = pathRef.current;
+      const containerRect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       const elementTop = containerRect.top;
       const elementHeight = containerRect.height;
-      let visiblePercentage;
-      
-      if (orientation === 'vertical') {
-        visiblePercentage = Math.min(1, Math.max(0, (windowHeight - elementTop) / (windowHeight + elementHeight)));
-      } else {
-        visiblePercentage = Math.min(1, Math.max(0, (windowHeight - elementTop) / (windowHeight + elementHeight)));
-      }
-      path.style.strokeDashoffset = pathLength - (pathLength * visiblePercentage);
-      setIsVisible(visiblePercentage > 0 && visiblePercentage < 1);
+
+      const pathLength = path.getTotalLength();
+
+      let scrollFraction = (windowHeight - elementTop) / (windowHeight + elementHeight);
+      let visiblePercentage = Math.min(1, Math.max(0, scrollFraction * 1.6));
+
+      path.style.strokeDashoffset = pathLength - pathLength * visiblePercentage;
+
+      containerRef.current.style.opacity = window.scrollY === 0 ? 0 : 1;
     };
+
     const debouncedScroll = () => {
       window.requestAnimationFrame(handleScroll);
     };
-    
+
     window.addEventListener('scroll', debouncedScroll);
     handleScroll();
 
@@ -52,17 +52,12 @@ const SvgAnimator = ({
   }, [pathData, orientation]);
 
   return (
-    <div 
-      ref={containerRef} 
-      className={`${className} transition-opacity duration-300`}
-      style={style}
+    <div
+      ref={containerRef}
+      className={`${className} transition-opacity duration-500`}
+      style={{ ...style, opacity: 0 }} // start hidden
     >
-      <svg 
-        viewBox={viewBox} 
-        preserveAspectRatio="none"
-        width=""
-        height=""
-      >
+      <svg viewBox={viewBox} preserveAspectRatio="none" width="" height="">
         <path
           ref={pathRef}
           d={pathData}

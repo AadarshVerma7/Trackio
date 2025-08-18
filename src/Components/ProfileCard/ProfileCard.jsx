@@ -17,7 +17,7 @@ export const ProfileCard = ({
 
   return (
     <div 
-      className="group relative w-64 h-96 cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-2xl"
+      className="group relative w-74 h-96 cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-2xl"
       style={{ perspective: "1000px" }}
       onClick={() => setIsFlipped(!isFlipped)}
     >
