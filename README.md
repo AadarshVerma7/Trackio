@@ -1,12 +1,38 @@
-# React + Vite
+# Trackio
+## 🚀 Project Description
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Trackio is a collaborative learning platform that helps people grow together through healthy competition, progress tracking, and shared resources. Users can create or join groups around a specific skill, complete subtopics from a shared to-do list, and compete on leaderboards. With AI-powered contests, resource sharing, and engaging features, Trackio makes learning structured, social, and motivating.
 
-Currently, two official plugins are available:
+## 📝 Problem Statement
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Learning new skills alone can feel unstructured, isolating, and demotivating. Existing platforms either focus only on courses or only on community, leaving learners without a system that combines progress tracking, collaboration, and gamified competition.
 
-## Expanding the ESLint configuration
+## 💡 Proposed Solution
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Trackio creates a space where people can learn together in focused groups, track their progress, and keep motivated through leaderboards and friendly contests. Study materials are shared in one place, and AI-generated quizzes make learning interactive and fun. By blending accountability, collaboration, and gamification, Trackio turns skill-building into a shared journey instead of a solo struggle.
+
+## 🔑 Core Features
+
+Create or Join Groups
+
+Track Your Progress
+
+Share Resources Easily
+
+Climb the Leaderboard
+
+AI-Powered Quizzes
+
+Your Personal Dashboard
+
+## ✨ Additional Features
+
+Group Chat
+
+Video Calls
+
+Evolving Avatars
+
+Daily Streaks
+
+AI-Generated Summaries
