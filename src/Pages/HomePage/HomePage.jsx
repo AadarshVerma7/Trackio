@@ -4,9 +4,12 @@ import skill from "../../assets/skill.svg";
 import Code from "../../assets/Code.svg";
 import podium from "../../assets/podium.png";
 import ProfileCard from "../../Components/ProfileCard/ProfileCard";
+import Picture_Angad from "../../assets/Picture_Angad.jpg"
 import SvgAnimator from "../../Components/SvgAnimator/SvgAnimator";
 import "./HomePage.css";
 import MovableDiv from "./MovableDiv";
+import FAQs from "../../Components/FAQ/FAQs";
+import Footer from "../../Components/Footer/Footer";
 
 const HomePage = () => {
   const parentRef = useRef(null);
@@ -32,7 +35,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="bg-[#DDD9D6] min-h-screen">
+    <div className="min-h-screen">
       <div className="max-w-screen-2xl mx-auto flex gap-5 relative">
         {/* Left Section */}
         <div className="relative w-fit h-fit">
@@ -89,7 +92,7 @@ const HomePage = () => {
                 className="absolute top-140 -right-80"
               />
               <div className="absolute top-98 -right-150 autoShow">
-                <ProfileCard />
+                <ProfileCard ProfilePicture={Picture_Angad} Name="Angadveer Singh" role="UX/UI" github_id="Angadveer185" linkedinUrl="https://www.linkedin.com/in/angadveer-singh-1751842b2/" description="Very skilled at gaming"/>
               </div>
               <SvgAnimator
                 pathData="M217 4 L0 4"
@@ -171,19 +174,19 @@ const HomePage = () => {
         </div>
       </div>
       {/* Flippable Cards with MovableDiv */}
-      <div
+      {/* <div
         ref={parentRef}
         className="flex absolute w-full mt-285 gap-10 p-25 autoShow"
-      >
-        <MovableDiv
+      > */}
+        {/* <MovableDiv
           parentRef={parentRef}
           onMove={handleMovableMove}
           width={movableWidth}
           height={550}
-        />
+        /> */}
 
         {/* Left Big Card */}
-        <div
+        {/* <div
           className="relative w-[600px] h-[550px] border-2 mx-5"
           style={{
             perspective: "1000px",
@@ -200,10 +203,10 @@ const HomePage = () => {
           >
             Back Content
           </div>
-        </div>
+        </div> */}
 
         {/* Right Big Card */}
-        <div
+        {/* <div
           className="relative w-[600px] h-[550px] border-2 mx-5"
           style={{
             perspective: "1000px",
@@ -220,7 +223,13 @@ const HomePage = () => {
           >
             Back Content
           </div>
-        </div>
+        </div> */}
+      {/* </div> */}
+      <div className="relative top-300">
+      <FAQs />
+      </div>
+      <div className="relative top-300">
+      <Footer />
       </div>
     </div>
   );

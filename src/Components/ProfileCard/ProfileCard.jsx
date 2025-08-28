@@ -36,14 +36,14 @@ export const ProfileCard = ({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
 
-          <div className="relative px-2 py-1 rounded-lg top-6 left-6 bg-[#9a9a98] w-fit z-10">
+          <div className="relative px-2 py-1 rounded-lg top-6 mx-auto bg-[#9a9a98] w-fit z-10">
             <div className="flex gap-1 items-center">
               <img src={star} alt="star" className="h-4" />
-              <span className="text-white text-xs">{role}</span>
+              <p className="text-white text-xs text-center">{role}</p>
             </div>
           </div>
 
-          <div className="relative flex justify-center mt-48">
+          <div className="relative flex justify-center mt-56">
             <h1 className="text-white font-medium text-3xl">{Name}</h1>
           </div>
 
