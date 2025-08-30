@@ -10,6 +10,9 @@ import "./HomePage.css";
 import MovableDiv from "./MovableDiv";
 import FAQs from "../../Components/FAQ/FAQs";
 import Footer from "../../Components/Footer/Footer";
+import CreateGroup from "../CreateGroup/CreateGroup";
+import JoinGroup from "../JoinGroup/JoinGroup";
+import "../CreateGroup/CreateGroup.css";
 
 const HomePage = () => {
   const parentRef = useRef(null);
@@ -34,6 +37,9 @@ const HomePage = () => {
     ]);
   };
 
+  const [showCreateGroup, setShowCreateGroup] = useState(false);
+  const [showJoinGroup, setShowJoinGroup] = useState(false);
+
   return (
     <div className="min-h-screen">
       <div className="max-w-screen-2xl mx-auto flex gap-5 relative">
@@ -47,13 +53,22 @@ const HomePage = () => {
             </h1>
 
             <div className="flex gap-9 relative top-7 left-4">
-              <button className="transform-transition hover:scale-110 duration-300 text-white p-2 px-4 bg-black fjalla text-lg">
+              <button 
+              onClick={()=>{
+                setShowCreateGroup(true);
+              }}
+              className="transform-transition hover:scale-110 duration-300 text-white p-2 px-4 bg-black fjalla text-lg">
                 Create Group
               </button>
+              
 
               <div className="transform-transition hover:scale-110 duration-300 flex gap-2 justify-center items-center">
                 <img src={target} alt="target img" className="h-5" />
-                <button className="underline text-lg fjalla">Join Group</button>
+                <button 
+                onClick={()=>{setShowJoinGroup(true)}}
+                className="underline text-lg fjalla">
+                Join Group
+                </button>
               </div>
             </div>
 
@@ -231,6 +246,17 @@ const HomePage = () => {
       <div className="relative top-300">
       <Footer />
       </div>
+
+      {showCreateGroup && (
+      <div className="overlay">
+        <CreateGroup close3={() => setShowCreateGroup(false)} />
+      </div>
+      )}
+      {showJoinGroup && (
+      <div className="overlay">
+        <JoinGroup close4={() => setShowJoinGroup(false)} />
+      </div>
+      )}
     </div>
   );
 };
