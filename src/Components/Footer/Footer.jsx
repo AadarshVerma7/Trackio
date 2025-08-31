@@ -1,11 +1,11 @@
 import React from 'react';
 import { FaFacebook, FaInstagram, FaLinkedin} from 'react-icons/fa';
-import Logo from "../../assets/favIconPNG.png";
+import Logo from "../../assets/favIconPNG_Black.png";
 import { FaXTwitter } from 'react-icons/fa6';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#DDD9D6] text-black py-4 px-4">
+    <footer className="bg-[#f1e0c5] border-t-2 border-black backdrop-blur-lg mt-16 text-black py-4 px-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
         {/* Company Info & Social Media */}
@@ -59,7 +59,7 @@ const Footer = () => {
           <ul className="space-y-2">
             <li>Email: <a href="mailto:info@trackio.com" className="hover:font-semibold transition-all duration-200">info@trackio.com</a></li>
             <li>Phone: <a href="tel:+1234567890" className="hover:font-semibold transition-all duration-200">+91 9779935714</a></li>
-            <li>Address: Aadarsh da kotha</li>
+            <li>Address: #2147 Green St. -Dhakoli</li>
           </ul>
         </div>
 

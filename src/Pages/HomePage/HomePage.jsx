@@ -1,10 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import target from "../../assets/target.svg";
 import skill from "../../assets/skill.svg";
 import Code from "../../assets/Code.svg";
+import Circle from "../../assets/Circle.svg";
+import Squigle from "../../assets/Squigle.svg";
+import Semicircle from "../../assets/Semicircle.svg";
+import Land from "../../assets/Land.svg";
 import podium from "../../assets/podium.png";
 import ProfileCard from "../../Components/ProfileCard/ProfileCard";
-import Picture_Angad from "../../assets/Picture_Angad.jpg"
+import Picture_Angad from "../../assets/Picture_Angad.jpg";
+import Picture_Aarav from "../../assets/Picture_Aarav.jpg";
+import Picture_Aayush from "../../assets/Picture_Aayush.jpg";
 import SvgAnimator from "../../Components/SvgAnimator/SvgAnimator";
 import "./HomePage.css";
 import MovableDiv from "./MovableDiv";
@@ -42,6 +48,28 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Animated SVGs */}
+      <div className="absolute top-0 right-0 w-[600px] h-[270px] overflow-hidden">
+        <img
+          className="w-xl right-[-100px] top-[-300px] relative animate-infinite-hover"
+          src={Circle}
+          alt="Circle"
+        />
+      </div>
+      <div className="absolute right-0 top-[660px] w-[300px] h-[640px] overflow-clip">
+        <img
+          className="w-xs relative animate-slide-in-right"
+          src={Semicircle}
+          alt="Semicircle"
+        />
+      </div>
+      <img
+        className="w-3xs left-[100px] top-[100px] absolute animate-infinite-hover"
+        src={Squigle}
+        alt="Squigle"
+      />
+      <img className="w-md absolute top-[1200px] left-0" src={Land} alt="" />
+
       <div className="max-w-screen-2xl mx-auto flex gap-5 relative">
         {/* Left Section */}
         <div className="relative w-fit h-fit">
@@ -53,35 +81,36 @@ const HomePage = () => {
             </h1>
 
             <div className="flex gap-9 relative top-7 left-4">
-              <button 
-              onClick={()=>{
-                setShowCreateGroup(true);
-              }}
-              className="transform-transition hover:scale-110 duration-300 text-white p-2 px-4 bg-black fjalla text-lg">
+              <button
+                onClick={() => {
+                  setShowCreateGroup(true);
+                }}
+                className="transform-transition hover:scale-110 duration-300 text-white p-2 px-4 bg-black fjalla text-lg"
+              >
                 Create Group
               </button>
-              
 
               <div className="transform-transition hover:scale-110 duration-300 flex gap-2 justify-center items-center">
                 <img src={target} alt="target img" className="h-5" />
-                <button 
-                onClick={()=>{setShowJoinGroup(true)}}
-                className="underline text-lg fjalla">
-                Join Group
+                <button
+                  onClick={() => {
+                    setShowJoinGroup(true);
+                  }}
+                  className="underline text-lg fjalla"
+                >
+                  Join Group
                 </button>
               </div>
             </div>
 
             <div className="relative top-22 left-8 bg-gradient-to-br from-[#a8927d] to-[#5b4a3a] rounded-xl w-80">
               <h1 className="text-2xl fjalla pr-17 pl-7 py-2">
-                Know more
-                <br />
-                About Us!
+                Know more About Us!
               </h1>
             </div>
 
             {/* SVGs and ProfileCards */}
-            <div className="relative top-22 left-16 min-h-[400px]">
+            <div className="relative top-22 left-16 min-h-[400px] z-50">
               <SvgAnimator
                 pathData="M3.9998 0.960349 L12.0295 810.96"
                 stroke="black"
@@ -107,7 +136,14 @@ const HomePage = () => {
                 className="absolute top-140 -right-80"
               />
               <div className="absolute top-98 -right-150 autoShow">
-                <ProfileCard ProfilePicture={Picture_Angad} Name="Angadveer Singh" role="UX/UI" github_id="Angadveer185" linkedinUrl="https://www.linkedin.com/in/angadveer-singh-1751842b2/" description="Very skilled at gaming"/>
+                <ProfileCard
+                  ProfilePicture={Picture_Angad}
+                  Name="Angadveer Singh"
+                  role="UX/UI"
+                  github_id="Angadveer185"
+                  linkedinUrl="https://www.linkedin.com/in/angadveer-singh-1751842b2/"
+                  description="Very skilled at gaming"
+                />
               </div>
               <SvgAnimator
                 pathData="M217 4 L0 4"
@@ -117,7 +153,14 @@ const HomePage = () => {
                 className="absolute top-200 -right-5"
               />
               <div className="absolute top-168 left-3 autoShow">
-                <ProfileCard />
+                <ProfileCard
+                  ProfilePicture={Picture_Aarav}
+                  Name="Aarav Goyal"
+                  role="Documentation"
+                  github_id="aaravg192"
+                  linkedinUrl="https://www.linkedin.com/in/aarav-goyal-b8b35a307"
+                  description="Very Much Mota"
+                />
               </div>
               <SvgAnimator
                 pathData="M0.947373 7.00035 L228.947 4.00035"
@@ -127,9 +170,15 @@ const HomePage = () => {
                 className="absolute top-250 -right-80"
               />
               <div className="absolute top-218 -right-150 autoShow">
-                <ProfileCard />
+                <ProfileCard
+                  ProfilePicture={Picture_Aayush}
+                  Name="Aayush Verma"
+                  role="Backend"
+                  github_id="aaravg192"
+                  linkedinUrl="https://www.linkedin.com/in/aarav-goyal-b8b35a307"
+                  description="Very Much Useless"
+                />
               </div>
-
             </div>
           </div>
         </div>
@@ -137,15 +186,30 @@ const HomePage = () => {
         {/* Right section */}
         <div className="h-fit relative left-60 top-27 flex">
           <div className="h-fit z-20">
-            <img src={skill} alt="skill" className="h-50 p-3 bg-[#f2ece8] rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl " />
-            <img src={podium} alt="podium" className="relative h-60 w-50 p-3 bg-[#EE9755] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl" />
+            <img
+              src={skill}
+              alt="skill"
+              className="h-50 p-3 bg-[#f2ece8] rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl "
+            />
+            <img
+              src={podium}
+              alt="podium"
+              className="relative h-60 w-50 p-3 bg-[#EE9755] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"
+            />
           </div>
           <div className="h-fit">
             {/* Grow */}
             <div className="flex">
               <div className="h-1 relative top-4 -left-6 w-30 bg-black z-10"></div>
-              <img src={target} alt="target" className="h-5 top-2 -left-6 relative" />
-              <h1 className="fjalla text-2xl relative top-1 -left-3 underline"> Grow </h1>
+              <img
+                src={target}
+                alt="target"
+                className="h-5 top-2 -left-6 relative"
+              />
+              <h1 className="fjalla text-2xl relative top-1 -left-3 underline">
+                {" "}
+                Grow{" "}
+              </h1>
             </div>
             <div className="relative top-2 left-17">
               <h1 className="fjalla text-lg">
@@ -157,14 +221,25 @@ const HomePage = () => {
             <div className="flex">
               <div className="relative top-10 left-10">
                 <div className="relative z-20">
-                  <img src={Code} alt="code" className="h-45 bg-white border-15 rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl" />
+                  <img
+                    src={Code}
+                    alt="code"
+                    className="h-45 bg-white border-15 rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl"
+                  />
                 </div>
                 <div className="h-1 absolute top-10 left-30 w-40 bg-black z-10"></div>
               </div>
               <div>
                 <div className="w-1 h-6 bg-black relative left-35 top-20"></div>
-                <img src={target} alt="target" className="h-5 relative left-33 top-20" />
-                <h1 className="fjalla relative left-30 top-20 text-2xl underline"> Learn </h1>
+                <img
+                  src={target}
+                  alt="target"
+                  className="h-5 relative left-33 top-20"
+                />
+                <h1 className="fjalla relative left-30 top-20 text-2xl underline">
+                  {" "}
+                  Learn{" "}
+                </h1>
                 <h1 className="fjalla text-lg relative top-22 left-19">
                   Learn new concepts
                   <br />
@@ -175,8 +250,15 @@ const HomePage = () => {
             {/* Compete Portion */}
             <div className="flex">
               <div className="h-1 relative top-35 -left-6 w-35 bg-black "></div>
-              <img src={target} alt="target" className="h-5 relative -left-6 top-33" />
-              <h1 className="fjalla relative top-32 underline -left-4 text-2xl"> Compete </h1>
+              <img
+                src={target}
+                alt="target"
+                className="h-5 relative -left-6 top-33"
+              />
+              <h1 className="fjalla relative top-32 underline -left-4 text-2xl">
+                {" "}
+                Compete{" "}
+              </h1>
             </div>
             <div>
               <h1 className="relative fjalla text-lg top-34 left-7">
@@ -193,15 +275,15 @@ const HomePage = () => {
         ref={parentRef}
         className="flex absolute w-full mt-285 gap-10 p-25 autoShow"
       > */}
-        {/* <MovableDiv
+      {/* <MovableDiv
           parentRef={parentRef}
           onMove={handleMovableMove}
           width={movableWidth}
           height={550}
         /> */}
 
-        {/* Left Big Card */}
-        {/* <div
+      {/* Left Big Card */}
+      {/* <div
           className="relative w-[600px] h-[550px] border-2 mx-5"
           style={{
             perspective: "1000px",
@@ -220,8 +302,8 @@ const HomePage = () => {
           </div>
         </div> */}
 
-        {/* Right Big Card */}
-        {/* <div
+      {/* Right Big Card */}
+      {/* <div
           className="relative w-[600px] h-[550px] border-2 mx-5"
           style={{
             perspective: "1000px",
@@ -241,21 +323,21 @@ const HomePage = () => {
         </div> */}
       {/* </div> */}
       <div className="relative top-300">
-      <FAQs />
+        <FAQs />
       </div>
       <div className="relative top-300">
-      <Footer />
+        <Footer />
       </div>
 
       {showCreateGroup && (
-      <div className="overlay">
-        <CreateGroup close3={() => setShowCreateGroup(false)} />
-      </div>
+        <div className="overlay">
+          <CreateGroup close3={() => setShowCreateGroup(false)} />
+        </div>
       )}
       {showJoinGroup && (
-      <div className="overlay">
-        <JoinGroup close4={() => setShowJoinGroup(false)} />
-      </div>
+        <div className="overlay">
+          <JoinGroup close4={() => setShowJoinGroup(false)} />
+        </div>
       )}
     </div>
   );
