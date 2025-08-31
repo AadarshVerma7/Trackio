@@ -9,7 +9,6 @@ function Login({ close }) {
 
   const onSubmit = (data) => {
     console.log("Form Data:", data);
-    // Handle login logic here
   };
 
   return (
