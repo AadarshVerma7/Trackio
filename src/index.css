@@ -36,8 +36,71 @@
 }
 
 body {
-  /* background-color: #DDD9D6; */
-  background-image: url("assets/BG_1.jpg");
-  background-size: contain;
-  background-repeat: no-repeat;
+  /* background-color: #f7efe1; */
+  background-color: #f8e7ce;
+}
+
+/* Add to your global CSS file */
+@keyframes infiniteHover {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+.animate-infinite-hover {
+  animation: infiniteHover 2s ease-in-out infinite;
+}
+
+.animate-infinite-hover:hover {
+  animation-play-state: paused;
+}
+
+@keyframes slideInFromRight {
+  from {
+    scale: 0.5;
+    transform: translateX(600px);
+  }
+  to {
+    transform: translateX(0px);
+    scale: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 0.8s ease-out forwards;
+  animation-timeline: view();
+  animation-range: entry 0;
+}
+
+@keyframes makeFromTop {
+  from {
+    height: 100%;
+  }
+  to {
+    height: 0%;
+  }
+}
+
+.animate-make-from-top {
+  animation: makeFromTop 0.8s ease-out forwards;
+  animation-timeline: view();
+  animation-range: entry 0;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInFromLeft 0.8s ease-out forwards;
 }
