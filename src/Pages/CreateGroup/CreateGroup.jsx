@@ -1,26 +1,160 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useForm } from "react-hook-form";
+import createGroupbgLight from '../../assets/createGroupbgLight.png'
 
-const CreateGroup = ({close3}) => {
+
+const CreateGroup = ({ close3 }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log("Form Data:", {...data,todos});
+  };
+
+  const [task,setTask] = useState("");
+  const [todos,setTodos] = useState([]);
+
+  const addTodo = (e) => {
+    e.preventDefault();
+    if(task.trim() === "") return;
+    setTodos([...todos, {id: Date.now(), text:task}]);
+    setTask("");
+  }
+
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id != id))
+  }
+  
   return (
-    <div className="bg-white h-160 w-280 rounded-2xl border-2 border-orange-300 flex">
+    <div className="bg-cover bg-center w-[950px] max-w-[95vw] rounded-2xl border-2 border-orange-300 shadow-lg p-8 relative flex gap-8"
+    style={{backgroundImage: `url(${createGroupbgLight})`}}
+    >
+      {/* Close button */}
+      <button
+        onClick={close3}
+        className="absolute top-3 right-4 text-orange-500 hover:text-orange-600 text-3xl font-bold"
+        aria-label="Close"
+      >
+        &times;
+      </button>
 
-      {/* left section */}
-      <div className="pl-10 pt-8 pr-6 border-r border-gray-300">
-        <h1 className="text-4xl fjalla">Let's create a group for you!</h1>
+      {/* Left Section - Form */}
+      <div className="flex-1">
+        <h1 className="text-3xl font-bold fjalla mb-6 text-black">
+        Let's build your community
+        </h1>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          {/* Group Name */}
+          <div>
+            <p className="text-sm font-medium mb-1 text-black">Group Name</p>
+            <input
+              type="text"
+              placeholder="Ex: Learn React!"
+              className={`w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
+                errors.groupName ? "border-red-500" : "border-orange-500"
+              } bg-transparent text-black placeholder-gray-500`}
+              {...register("groupName", { required: "Group Name is required" })}
+            />
+            {errors.groupName && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.groupName.message}
+              </p>
+            )}
+          </div>
+
+          {/* Group Topic */}
+          <div>
+            <p className="text-sm font-medium mb-1 text-black">Group Topic</p>
+            <input
+              type="text"
+              placeholder="React"
+              className={`w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
+                errors.groupTopic ? "border-red-500" : "border-orange-500"
+              } bg-transparent text-black placeholder-gray-500`}
+              {...register("groupTopic", { required: "Group Topic is required" })}
+            />
+            {errors.groupTopic && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.groupTopic.message}
+              </p>
+            )}
+          </div>
+
+          {/* Group Description */}
+          <div>
+            <p className="text-sm font-medium mb-1 text-black">Group Description</p>
+            <textarea
+              rows="3"
+              placeholder="We created this group to learn React.js!"
+              className={`w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
+                errors.groupDescription ? "border-red-500" : "border-orange-500"
+              } bg-transparent text-black placeholder-gray-500`}
+              {...register("groupDescription", {
+                required: "Group Description is required",
+              })}
+            />
+            {errors.groupDescription && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.groupDescription.message}
+              </p>
+            )}
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            className="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition"
+          >
+            Create Group
+          </button>
+        </form>
       </div>
 
-      {/* right section */}
-      <div className="pl-6 pt-6 flex-1 relative">
-        <button
-          onClick={close3}
-          className="absolute top-1 right-3 text-orange-500 hover:text-orange-600 text-3xl font-bold"
-          aria-label="Close"
-        >
-          &times;
-        </button>
+      {/* Right Section */}
+      <div className="flex-1 border-l pl-6">
+        <h2 className="text-3xl font-semibold mb-4 fjalla text-black">Your tasks, your way</h2>
+        
+        {/* SubTopic List  */}
+        <div className='relative top-1.5'>
+            <p className="text-sm font-medium mb-1 text-black">Add the topics you want to learn!</p>
+          <div className='flex gap-2 mb-4'>
+              <input
+              value={task}
+              onChange={(e)=>{setTask(e.target.value)}} 
+              placeholder='Ex: React Hooks'
+              className={`w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
+                errors.SubTopic ? "border-red-500" : "border-orange-500"
+              } bg-transparent text-black placeholder-gray-500`}
+              />
+              <button 
+              onClick={addTodo}
+              className='bg-orange-500 text-white px-4 rounded-lg hover:bg-orange-600 h-10'>Add</button>
+          </div>
+          <div>
+            <ul className='space-y-2'>
+              {todos.map((todo) => (
+                <li
+                  key={todo.id}
+                  className="flex justify-between items-center bg-orange-400 text-zinc-900 font-semibold p-2 rounded-lg"
+                >
+                  <span>{todo.text}</span>
+                  <button
+                    onClick={() => {deleteTodo(todo.id)}}
+                    className="text-red-600 hover:text-red-800 text-2xl"
+                  >&times;</button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateGroup
+export default CreateGroup;
