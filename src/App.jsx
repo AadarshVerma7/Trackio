@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState , useEffect} from 'react'
 import './App.css'
 import { Route,Routes,useLocation} from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar'
@@ -14,12 +14,23 @@ function App() {
 
   const showNavbar = location.pathname !== "/";
 
+
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
+  useEffect(() => {
+    document.documentElement.className = theme; // applies "light" or "dark" to <html>
+  }, [theme]);
+  
   return (
     <>
-      {showNavbar && <Navbar2 />}
+      {showNavbar && <Navbar2 theme={theme} toggleTheme={toggleTheme} />}
       <Routes>
         <Route path='/' element={<LandingPage />}/>
-        <Route path='home' element={<HomePage />}/>
+        <Route path='home' element={<HomePage theme={theme}/>}/>
         <Route path='ProfileCard' element={<ProfileCard />}/>
       </Routes>
 

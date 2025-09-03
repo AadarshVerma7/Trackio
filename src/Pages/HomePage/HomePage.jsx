@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import target from "../../assets/target.svg";
+import targetBlack from "../../assets/targetBlack.svg";
 import skill from "../../assets/skill.svg";
 import Code from "../../assets/Code.svg";
 import Circle from "../../assets/Circle.svg";
@@ -20,7 +21,7 @@ import CreateGroup from "../CreateGroup/CreateGroup";
 import JoinGroup from "../JoinGroup/JoinGroup";
 import "../CreateGroup/CreateGroup.css";
 
-const HomePage = () => {
+const HomePage = ({theme}) => {
   const parentRef = useRef(null);
   const [flippedCards, setFlippedCards] = useState([false, false, false]);
 
@@ -74,7 +75,7 @@ const HomePage = () => {
         {/* Left Section */}
         <div className="relative w-fit h-fit">
           <div className="relative top-50 left-20">
-            <h1 className="fjalla text-6xl">
+            <h1 className={theme === "light" ? "fjalla text-6xl text-black" : "fjalla text-6xl text-[#F8FAFC]"}>
               BATTLE YOUR FRIENDS AND
               <br />
               LEARN SIMULTANEOUSLY
@@ -85,13 +86,13 @@ const HomePage = () => {
                 onClick={() => {
                   setShowCreateGroup(true);
                 }}
-                className="transform-transition hover:scale-110 duration-300 text-white p-2 px-4 bg-black fjalla text-lg"
+                className={theme === "light" ? "transform-transition hover:scale-110 duration-300 text-white p-2 px-4 bg-black fjalla text-lg" : "transform-transition hover:scale-110 duration-300 text-white p-2 px-4 bg-orange-400 fjalla text-lg"}
               >
                 Create Group
               </button>
 
               <div className="transform-transition hover:scale-110 duration-300 flex gap-2 justify-center items-center">
-                <img src={target} alt="target img" className="h-5" />
+                <img src={theme === "light" ? target : targetBlack} alt="target img" className="h-5" />
                 <button
                   onClick={() => {
                     setShowJoinGroup(true);
@@ -113,14 +114,14 @@ const HomePage = () => {
             <div className="relative top-22 left-16 min-h-[400px] z-50">
               <SvgAnimator
                 pathData="M3.9998 0.960349 L12.0295 810.96"
-                stroke="black"
+                stroke={theme === "light" ? "black" : "white"}
                 strokeWidth={8}
                 viewBox="0 0 17 811"
                 className="absolute w-3 left-150 top-40 h-270"
               />
               <SvgAnimator
                 pathData="M220.964 5.99983 L0.963631 3.99983"
-                stroke="black"
+                stroke={theme === "light" ? "black" : "white"}
                 strokeWidth={6}
                 viewBox="0 0 221 10"
                 className="absolute  top-80 -right-4"
@@ -130,7 +131,7 @@ const HomePage = () => {
               </div>
               <SvgAnimator
                 pathData="M0.964914 6.00015 L228.965 4.00015"
-                stroke="black"
+                stroke={theme === "light" ? "black" : "white"}  
                 strokeWidth={6}
                 viewBox="0 0 229 10"
                 className="absolute top-140 -right-80"
@@ -147,7 +148,7 @@ const HomePage = () => {
               </div>
               <SvgAnimator
                 pathData="M217 4 L0 4"
-                stroke="black"
+                stroke={theme === "light" ? "black" : "white"}
                 strokeWidth={6}
                 viewBox="0 0 217 8"
                 className="absolute top-200 -right-5"
@@ -164,7 +165,7 @@ const HomePage = () => {
               </div>
               <SvgAnimator
                 pathData="M0.947373 7.00035 L228.947 4.00035"
-                stroke="black"
+                stroke={theme === "light" ? "black" : "white"}
                 strokeWidth={6}
                 viewBox="0 0 229 11"
                 className="absolute top-250 -right-80"
@@ -189,20 +190,20 @@ const HomePage = () => {
             <img
               src={skill}
               alt="skill"
-              className="h-50 p-3 bg-[#f2ece8] rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl "
+              className={theme === "light" ? "h-50 p-3 bg-[#f2ece8] rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl " : "h-50 p-3 bg-orange-400 rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl "}
             />
             <img
               src={podium}
               alt="podium"
-              className="relative h-60 w-50 p-3 bg-[#EE9755] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"
+              className="relative h-60 w-50 p-3 bg-orange-400 rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"
             />
           </div>
           <div className="h-fit">
             {/* Grow */}
             <div className="flex">
-              <div className="h-1 relative top-4 -left-6 w-30 bg-black z-10"></div>
+              <div className={theme === "light" ? "h-1 relative top-4 -left-6 w-30 bg-black z-10" : "h-1 relative top-4 -left-6 w-30 bg-white z-10"}></div>
               <img
-                src={target}
+                src={theme === "light" ? target : targetBlack}
                 alt="target"
                 className="h-5 top-2 -left-6 relative"
               />
@@ -224,15 +225,15 @@ const HomePage = () => {
                   <img
                     src={Code}
                     alt="code"
-                    className="h-45 bg-white border-15 rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl"
+                    className={theme === "light" ? "h-45 bg-white border-15 rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl" : "h-45 bg-white border-15 border-orange-400 rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl"}
                   />
                 </div>
-                <div className="h-1 absolute top-10 left-30 w-40 bg-black z-10"></div>
+                <div className={theme === "light" ? "h-1 absolute top-10 left-30 w-40 bg-black z-10" : "h-1 absolute top-10 left-30 w-40 bg-white z-10"}></div>
               </div>
               <div>
-                <div className="w-1 h-6 bg-black relative left-35 top-20"></div>
+                <div className={theme === "light" ? "w-1 h-6 bg-black relative left-35 top-20" : "w-1 h-6 bg-white relative left-35 top-20"}></div>
                 <img
-                  src={target}
+                  src={theme === "light" ? target : targetBlack}
                   alt="target"
                   className="h-5 relative left-33 top-20"
                 />
@@ -249,9 +250,9 @@ const HomePage = () => {
             </div>
             {/* Compete Portion */}
             <div className="flex">
-              <div className="h-1 relative top-35 -left-6 w-35 bg-black "></div>
+              <div className={theme === "light" ? "h-1 relative top-35 -left-6 w-35 bg-black" : "h-1 relative top-35 -left-6 w-35 bg-white"}></div>
               <img
-                src={target}
+                src={theme === "light" ? target : targetBlack}
                 alt="target"
                 className="h-5 relative -left-6 top-33"
               />
@@ -331,12 +332,12 @@ const HomePage = () => {
 
       {showCreateGroup && (
         <div className="overlay">
-          <CreateGroup close3={() => setShowCreateGroup(false)} />
+          <CreateGroup close3={() => setShowCreateGroup(false)} theme={theme} />
         </div>
       )}
       {showJoinGroup && (
         <div className="overlay">
-          <JoinGroup close4={() => setShowJoinGroup(false)} />
+          <JoinGroup close4={() => setShowJoinGroup(false)} theme={theme}/>
         </div>
       )}
     </div>

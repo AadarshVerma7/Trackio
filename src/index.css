@@ -35,9 +35,19 @@
     "wdth" 100;
 }
 
-body {
-  /* background-color: #f7efe1; */
-  background-color: #f8e7ce;
+html.light {
+  background-color: #f6e5c7; /* your beige light background */
+  color: #000; /* default text color for light mode */
+}
+
+html.dark {
+  background-color: #0f172a; /* dark navy/blue background */
+  color: #f8fafc; /* default text color for dark mode */
+}
+
+/* Optional: Smooth transition */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Add to your global CSS file */

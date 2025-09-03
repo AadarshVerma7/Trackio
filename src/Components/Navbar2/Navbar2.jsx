@@ -5,12 +5,8 @@ import Profile from "../../assets/Profile.svg";
 import Moon from "../../assets/moon.svg";
 import Sun from "../../assets/sun.svg";
 
-function Navbar2() {
-  const [theme, setTheme] = useState("light");
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
+function Navbar2({theme,toggleTheme}) {
+  
 
   return (
     <nav className="relative top-5 left-1/2 transform -translate-x-1/2 w-11/12 md:w-1/2 bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl shadow-lg shadow-black/30 px-6 py-4 flex justify-between items-center z-50">
@@ -39,7 +35,7 @@ function Navbar2() {
         <button onClick={toggleTheme}>
           <img
             className="w-8 cursor-pointer"
-            src={theme === "light" ? Moon : Sun}
+            src={theme === "light" ? Sun : Moon}
             alt="Toggle Theme"
             title="Toggle Theme"
           />
