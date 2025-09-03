@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
 import createGroupbgLight from '../../assets/createGroupbgLight.png'
+import createGroupbgDark from '../../assets/createGroupbgDark.png'
 
 
-const CreateGroup = ({ close3 }) => {
+const CreateGroup = ({ close3, theme }) => {
   const {
     register,
     handleSubmit,
@@ -29,8 +30,8 @@ const CreateGroup = ({ close3 }) => {
   }
   
   return (
-    <div className="bg-cover bg-center w-[950px] max-w-[95vw] rounded-2xl border-2 border-orange-300 shadow-lg p-8 relative flex gap-8"
-    style={{backgroundImage: `url(${createGroupbgLight})`}}
+    <div className="bg-cover bg-center w-[950px] max-w-[95vw] rounded-2xl border-2 border-orange-400 shadow-lg p-8 relative flex gap-8"
+    style={theme === "light" ? {backgroundImage: `url(${createGroupbgLight})`} : {backgroundImage: `url(${createGroupbgDark})`}}
     >
       {/* Close button */}
       <button
@@ -43,20 +44,22 @@ const CreateGroup = ({ close3 }) => {
 
       {/* Left Section - Form */}
       <div className="flex-1">
-        <h1 className="text-3xl font-bold fjalla mb-6 text-black">
+        <h1 className={ theme === "light" ? "text-3xl font-bold fjalla mb-6 text-black" : "text-3xl font-bold fjalla mb-6 text-white"}>
         Let's build your community
         </h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* Group Name */}
           <div>
-            <p className="text-sm font-medium mb-1 text-black">Group Name</p>
+            <p className={theme === "light" ? "text-sm font-medium mb-1 text-black" : "text-sm font-medium mb-1 text-white"}>Group Name</p>
             <input
               type="text"
               placeholder="Ex: Learn React!"
-              className={`w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
+              className={theme === "light" ? `w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
                 errors.groupName ? "border-red-500" : "border-orange-500"
-              } bg-transparent text-black placeholder-gray-500`}
+              } bg-transparent text-black placeholder-gray-500` : `w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
+                errors.groupName ? "border-red-500" : "border-orange-500"
+              } bg-transparent text-white placeholder-gray-500`}
               {...register("groupName", { required: "Group Name is required" })}
             />
             {errors.groupName && (
@@ -68,13 +71,15 @@ const CreateGroup = ({ close3 }) => {
 
           {/* Group Topic */}
           <div>
-            <p className="text-sm font-medium mb-1 text-black">Group Topic</p>
+            <p className={theme === "light" ? "text-sm font-medium mb-1 text-black" : "text-sm font-medium mb-1 text-white"}>Group Topic</p>
             <input
               type="text"
               placeholder="React"
-              className={`w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
+              className={theme === "light" ? `w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
                 errors.groupTopic ? "border-red-500" : "border-orange-500"
-              } bg-transparent text-black placeholder-gray-500`}
+              } bg-transparent text-black placeholder-gray-500` : `w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
+                errors.groupTopic ? "border-red-500" : "border-orange-500"
+              } bg-transparent text-white placeholder-gray-500`}
               {...register("groupTopic", { required: "Group Topic is required" })}
             />
             {errors.groupTopic && (
@@ -86,13 +91,15 @@ const CreateGroup = ({ close3 }) => {
 
           {/* Group Description */}
           <div>
-            <p className="text-sm font-medium mb-1 text-black">Group Description</p>
+            <p className={theme === "light" ? "text-sm font-medium mb-1 text-black" : "text-sm font-medium mb-1 text-white"}>Group Description</p>
             <textarea
               rows="3"
               placeholder="We created this group to learn React.js!"
-              className={`w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
+              className={theme == "light" ? `w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
                 errors.groupDescription ? "border-red-500" : "border-orange-500"
-              } bg-transparent text-black placeholder-gray-500`}
+              } bg-transparent text-black placeholder-gray-500` : `w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
+                errors.groupDescription ? "border-red-500" : "border-orange-500"
+              } bg-transparent text-white placeholder-gray-500`}
               {...register("groupDescription", {
                 required: "Group Description is required",
               })}
@@ -116,19 +123,17 @@ const CreateGroup = ({ close3 }) => {
 
       {/* Right Section */}
       <div className="flex-1 border-l pl-6">
-        <h2 className="text-3xl font-semibold mb-4 fjalla text-black">Your tasks, your way</h2>
+        <h2 className={theme === "light" ? "text-3xl font-semibold mb-4 fjalla text-black" : "text-3xl font-semibold mb-4 fjalla text-white"}>Your tasks, your way</h2>
         
         {/* SubTopic List  */}
         <div className='relative top-1.5'>
-            <p className="text-sm font-medium mb-1 text-black">Add the topics you want to learn!</p>
+            <p className={theme === "light" ? "text-sm font-medium mb-1 text-black" : "text-sm font-medium mb-1 text-white"}>Add the topics you want to learn!</p>
           <div className='flex gap-2 mb-4'>
               <input
               value={task}
               onChange={(e)=>{setTask(e.target.value)}} 
               placeholder='Ex: React Hooks'
-              className={`w-full border-2 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
-                errors.SubTopic ? "border-red-500" : "border-orange-500"
-              } bg-transparent text-black placeholder-gray-500`}
+              className={theme === "light" ? `w-full border-2 border-orange-500 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-transparent text-black placeholder-gray-500` : `w-full border-2 border-orange-500 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-transparent text-white placeholder-gray-500`}
               />
               <button 
               onClick={addTodo}
