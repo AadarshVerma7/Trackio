@@ -9,7 +9,7 @@ Learning new skills alone can feel unstructured, isolating, and demotivating. Ex
 
 ## 💡 Proposed Solution
 
-Trackio creates a space where people can learn together in focused groups, track their progress, and keep motivated through leaderboards and friendly contests. Study materials are shared in one place, and AI-generated quizzes make learning interactive and fun. By blending accountability, collaboration, and gamification, Trackio turns skill-building into a shared journey instead of a solo struggle.
+Trackio creates a space where people can learn together in focused groups, track their progress, and keep motivated through leaderboards and friendly contests. Study materials are shared in one place, and AI-generated quizzes make learning interactive and fun. By blending accountability, collaboration, and gamification, Trackio turns skill-building into a share d journey instead of a solo struggle.
 
 ## 🔑 Core Features
 

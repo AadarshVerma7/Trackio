@@ -15,7 +15,7 @@ function DashBoard({theme}) {
         <div className="grid grid-cols-[20%_80%] grid-rows-[auto_1fr] gap-4 h-screen p-6 my-5">
 
             {/* Left side */}
-            <div className="row-span-3 border-2 rounded-xl">
+            <div className="bg-black/20 backdrop-blur-md border border-white/10 shadow-lg shadow-white/10 row-span-3 rounded-xl">
                 <div className='flex flex-col gap-5 justify-center items-center m-10'>
                     {/*Avatar Image */}
                     <div className='w-42 h-42 rounded-full'>
@@ -73,7 +73,7 @@ function DashBoard({theme}) {
                 </div>
             </div>
             {/* Right side - row 2 */}
-            <div className="border-2 rounded-xl">
+            <div className="bg-black/20 backdrop-blur-md border border-white/10 shadow-lg shadow-white/10 rounded-2xl">
                 <ContributionGraph darkMode={theme}/>
             </div>
 
@@ -81,7 +81,7 @@ function DashBoard({theme}) {
             <div className="row-span-2 grid grid-cols-2 gap-4">
 
                 {/* 1. "Div 4" is now full-width and uses flexbox to center its content. */}
-                <div className="border-2 rounded-xl w-full h-full flex justify-center items-center p-4">
+                <div className="bg-black/20 backdrop-blur-md border border-white/10 shadow-lg shadow-white/10  rounded-xl w-full h-full flex justify-center items-center p-4">
 
                     {/* 2. A new wrapper div to control the chart's actual size. */}
                     <div className="w-[450px] h-[350px]">
@@ -114,8 +114,8 @@ function DashBoard({theme}) {
                         />
                     </div>
                 </div>
-                <div className="border-2 rounded-xl shadow-md p-1 flex flex-col items-center gap-2">
-                    <div className='text-2xl font-semibold m-2 underline'>View Group Details</div>
+                <div className="bg-black/20 backdrop-blur-md border border-white/10 shadow-lg shadow-white/10    rounded-xl shadow-md p-1 flex flex-col items-center gap-2">
+                    <div className='text-2xl font-semibold m-2 bg-gradient-to-r from-orange-400 to-pink-500 bg-clip-text text-transparent underline'>View Group Details</div>
                     <div className='flex m-2 items-center w-full px-5 py-2'>
                         {/*Search Bar */}
                         <div className='relative w-2/3 h-[6vh]'>

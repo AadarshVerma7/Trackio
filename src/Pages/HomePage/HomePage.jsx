@@ -10,7 +10,7 @@ import Land from "../../assets/Land.svg";
 import podium from "../../assets/podium.png";
 import ProfileCard from "../../Components/ProfileCard/ProfileCard";
 import Picture_Angad from "../../assets/Picture_Angad.jpg";
-import Picture_Aarav from "../../assets/Picture_Aarav.jpg";
+import Picture_Aarav from "../../assets/Picture_Aarav1.jpg";
 import Picture_Aayush from "../../assets/Picture_Aayush.jpg";
 import SvgAnimator from "../../Components/SvgAnimator/SvgAnimator";
 import "./HomePage.css";
@@ -157,10 +157,10 @@ const HomePage = ({theme}) => {
                 <ProfileCard
                   ProfilePicture={Picture_Aarav}
                   Name="Aarav Goyal"
-                  role="Documentation"
+                  role="Frontend Dev"
                   github_id="aaravg192"
                   linkedinUrl="https://www.linkedin.com/in/aarav-goyal-b8b35a307"
-                  description="Very Much Mota"
+                  description="I’m Aarav, a curious learner passionate about building clean, functional, and creative digital experiences. Always experimenting, always growing."
                 />
               </div>
               <SvgAnimator
@@ -177,7 +177,7 @@ const HomePage = ({theme}) => {
                   role="Backend"
                   github_id="aaravg192"
                   linkedinUrl="https://www.linkedin.com/in/aarav-goyal-b8b35a307"
-                  description="Very Much Useless"
+                  description="FullStack Developer of this project with expertise in React and Express."
                 />
               </div>
             </div>
