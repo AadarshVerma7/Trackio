@@ -8,6 +8,7 @@ import Signup from './Pages/SignupPage/Signup.jsx'
 import HomePage from './Pages/HomePage/HomePage.jsx'
 import Navbar2 from './Components/Navbar2/Navbar2.jsx'
 import ProfileCard from './Components/ProfileCard/ProfileCard.jsx'
+import DashBoard from './Pages/DashBoard/DashBoard.jsx'
 
 function App() {
   const location = useLocation();
@@ -32,6 +33,7 @@ function App() {
         <Route path='/' element={<LandingPage />}/>
         <Route path='home' element={<HomePage theme={theme}/>}/>
         <Route path='ProfileCard' element={<ProfileCard />}/>
+        <Route path='/profile' element={<DashBoard theme={theme}/>}/>
       </Routes>
 
     </>

@@ -40,7 +40,9 @@ function Navbar2({theme,toggleTheme}) {
             title="Toggle Theme"
           />
         </button>
-        <img className="w-8 cursor-pointer" src={Profile} alt="Profile" title="Profile"/>
+        <Link
+        to="/profile"
+        ><img className="w-8 cursor-pointer" src={Profile} alt="Profile" title="Profile"/></Link>
       </div>
     </nav>
   );
