@@ -113,4 +113,11 @@ html {
 
 .animate-slide-in-left {
   animation: slideInFromLeft 0.8s ease-out forwards;
+  min-height: 100vh;
+  background-image: url("assets/BG_1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
+
+
