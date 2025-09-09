@@ -54,14 +54,14 @@ export const ProfileCard = ({
           <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 opacity-0 translate-y-7 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-1000 ease-in-out">
             <div className="bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg flex gap-4">
               <Link
-                to={{ pathname: linkedinUrl }}
+                to={linkedinUrl}
                 target="_blank"
                 className="hover:scale-110 transition-transform"
               >
                 <img src={linkedin} alt="linkedin" className="h-6 w-8" />
               </Link>
               <Link
-                to={{ pathname: `https://github.com/${github_id}` }}
+                to={`https://github.com/${github_id}`}
                 target="_blank"
                 className="hover:scale-110 transition-transform"
               >
