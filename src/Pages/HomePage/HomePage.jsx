@@ -143,7 +143,7 @@ const HomePage = ({theme}) => {
                   role="UX/UI"
                   github_id="Angadveer185"
                   linkedinUrl="https://www.linkedin.com/in/angadveer-singh-1751842b2/"
-                  description="Very skilled at gaming"
+                  description="I am a passionate developer with a strong interest in technology, web development, and problem-solving. I'm continuously building his skills through projects, coding challenges, and creative pursuits."
                 />
               </div>
               <SvgAnimator
@@ -190,12 +190,12 @@ const HomePage = ({theme}) => {
             <img
               src={skill}
               alt="skill"
-              className={theme === "light" ? "h-50 p-3 bg-[#f2ece8] rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl " : "h-50 p-3 bg-orange-400 rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl "}
+              className={theme === "light" ? "h-50 p-3 bg-[#f2ece8] rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl " : "h-50 p-3 bg-[#708993] rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl "}
             />
             <img
               src={podium}
               alt="podium"
-              className="relative h-60 w-50 p-3 bg-orange-400 rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"
+              className={theme ==="light" ? "relative h-60 w-50 p-3 bg-orange-400 rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl" : "relative h-60 w-50 p-3 bg-[#E7F2EF] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"}
             />
           </div>
           <div className="h-fit">
@@ -225,7 +225,7 @@ const HomePage = ({theme}) => {
                   <img
                     src={Code}
                     alt="code"
-                    className={theme === "light" ? "h-45 bg-white border-15 rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl" : "h-45 bg-white border-15 border-orange-400 rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl"}
+                    className={theme === "light" ? "h-45 bg-white border-15 rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl" : "h-45 bg-white border-15 border-[#A1C2BD] rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl"}
                   />
                 </div>
                 <div className={theme === "light" ? "h-1 absolute top-10 left-30 w-40 bg-black z-10" : "h-1 absolute top-10 left-30 w-40 bg-white z-10"}></div>
