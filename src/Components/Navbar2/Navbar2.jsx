@@ -23,7 +23,7 @@ function Navbar2({theme,toggleTheme}) {
           <Link
             key={link}
             to={`/${link.toLowerCase().replace(/\s/g, "")}`}
-            className="relative after:block after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full cursor-pointer"
+            className={theme=== "light" ? "relative after:block after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full cursor-pointer" : "relative after:block after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full cursor-pointer"}
           >
             {link}
           </Link>
