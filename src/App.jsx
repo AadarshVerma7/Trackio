@@ -10,6 +10,7 @@ import Navbar2 from './Components/Navbar2/Navbar2.jsx'
 import ProfileCard from './Components/ProfileCard/ProfileCard.jsx'
 import DashBoard from './Pages/DashBoard/DashBoard.jsx'
 import GroupMemberList from './Components/GroupMemberList/GroupMemberList.jsx'
+import GroupMemberToDo from './Components/GroupMemberToDo/GroupMemberToDo.jsx'
 
 function App() {
   const location = useLocation();
@@ -36,6 +37,7 @@ function App() {
         <Route path='ProfileCard' element={<ProfileCard />}/>
         <Route path='/profile' element={<DashBoard theme={theme}/>}/>
         <Route path='/group-member-list' element={<GroupMemberList />}/>
+        <Route path='/group-member-to-do' element={<GroupMemberToDo />}/>
       </Routes>
 
     </>
