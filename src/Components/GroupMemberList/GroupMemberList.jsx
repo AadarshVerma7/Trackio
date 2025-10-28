@@ -15,11 +15,11 @@ const GroupMemberList = () => {
       {/* Outer Container with margin and rounded edges */}
       <div className="w-[25%] min-h-[85vh] bg-opacity-90 shadow-2xl rounded-3xl flex flex-col justify-between p-6 space-y-6 bg-[#d0c1a8]">
         {/* Group Header */}
-        <div className="relative w-full h-35 rounded-2xl overflow-hidden">
+        <div className="relative w-full h-35 rounded-2xl overflow-hidden ">
           <img
-            src="https://www.goseeko.com/blog/wp-content/uploads/2021/07/kermit-nicou-j7Eww2PvSvk-unsplash-scaled-1.jpg"
+            src="src\assets\memberListBanner.jpg"
             alt="Group Banner"
-            className="w-full h-full object-cover scale-110 blur-xs"
+            className="w-full h-full object-cover scale-110 blur-xs "
           />
           <div className="absolute inset-0 flex items-center justify-center  bg-opacity-40 ">
             <h2 className="text-2xl font-semibold text-white">Group Name</h2>
@@ -35,7 +35,7 @@ const GroupMemberList = () => {
             >
               <div className="flex justify-between items-center mb-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-orange-400 text-lg">🥸</span>
+                  <span className="text-orange-400 text-lg">🧑‍🦲</span>
                   <span className="font-medium">{member.name}</span>
                 </div>
                 <span className="text-sm text-gray-700">{member.progress}%</span>
