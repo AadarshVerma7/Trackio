@@ -26,10 +26,10 @@ function DashBoard({ theme }) {
 
   return (
     <div
-      className={`min-h-screen px-8 py-6 transition-colors duration-500 ${colors.primary} text-gray-200`}
+      className={`min-h-screen px-8 py-6 transition-colors duration-500 text-gray-200`}
     >
       {/* GRID LAYOUT */}
-      <div className="grid grid-cols-[22%_78%] gap-6 h-full">
+      <div className="grid grid-cols-[22%_78%] gap-6 h-full pt-5">
         {/* SIDEBAR */}
         <aside
           className={`${colors.card} ${colors.shadow} rounded-2xl p-6 flex flex-col items-center justify-between`}
