@@ -51,7 +51,7 @@ const CreateGroup = ({ close3, theme }) => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* Group Name */}
           <div>
-            <p className={theme === "light" ? "text-sm font-medium mb-1 text-black" : "text-sm font-medium mb-1 text-white"}>Group Name</p>
+            <p className={theme === "light" ? "text-sm font-medium mb-1 text-black" : "text-sm font-medium mb-1 text-white"}>Group Name*</p>
             <input
               type="text"
               placeholder="Ex: Learn React!"
@@ -71,7 +71,7 @@ const CreateGroup = ({ close3, theme }) => {
 
           {/* Group Topic */}
           <div>
-            <p className={theme === "light" ? "text-sm font-medium mb-1 text-black" : "text-sm font-medium mb-1 text-white"}>Group Topic</p>
+            <p className={theme === "light" ? "text-sm font-medium mb-1 text-black" : "text-sm font-medium mb-1 text-white"}>Group Topic*</p>
             <input
               type="text"
               placeholder="React"

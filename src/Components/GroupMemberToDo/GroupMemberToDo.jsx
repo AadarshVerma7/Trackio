@@ -30,7 +30,7 @@ const GroupMemberToDo = () => {
   return (
     <div className="text-black p-6 w-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="lg:col-span-2 bg-gray-100 rounded-2xl p-4 shadow-md">
+        <div className="lg:col-span-2 bg-[#d0c1a8] rounded-2xl p-4 shadow-md">
           <h2 className="text-2xl font-semibold mb-4">To - Do</h2>
 
           {/* Add Task Input */}
@@ -40,11 +40,12 @@ const GroupMemberToDo = () => {
               value={newTask}
               onChange={(e) => setNewTask(e.target.value)}
               placeholder="Enter a new task..."
-              className="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full border border-[#342f28f2] rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#796149]
+              placeholder-[#000000]"
             />
             <button
               onClick={handleAddTask}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-5 rounded-xl font-semibold"
+              className="bg-[#95775a] hover:bg-[#796149] text-white px-5 rounded-xl font-semibold"
             >
               Add
             </button>
@@ -52,11 +53,12 @@ const GroupMemberToDo = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Completed Tasks */}
-            <div className="bg-black text-white rounded-2xl p-4 min-h-[280px] overflow-y-auto">
-              <h3 className="text-xl font-bold mb-3 text-center">Completed</h3>
+            <div className="bg-[#a39783] text-white rounded-2xl p-4 min-h-[280px] overflow-y-auto">
+              <h3 className="text-4xl font-extrabold mb-3 text-center poppins">Completed</h3>
               <div className="space-y-3">
                 {completed.length === 0 ? (
-                  <p className="text-center text-gray-400">No completed tasks yet</p>
+                  <p className="text-gray-700 text-center">No completed tasks yet</p>
+
                 ) : (
                   completed.map((task, index) => (
                     <div
@@ -85,11 +87,11 @@ const GroupMemberToDo = () => {
             </div>
 
             {/* Pending Tasks */}
-            <div className="bg-black text-white rounded-2xl p-4 min-h-[380px] overflow-y-auto">
-              <h3 className="text-xl font-bold mb-3 text-center">Pending</h3>
+            <div className="bg-[#a39783] text-white rounded-2xl p-4 min-h-[380px] overflow-y-auto">
+              <h3 className="text-4xl font-extrabold mb-3 text-center poppins">Pending</h3>
               <div className="space-y-3">
                 {pending.length === 0 ? (
-                  <p className="text-center text-gray-400">No pending tasks</p>
+                  <p className="text-center text-gray-700">No pending tasks</p>
                 ) : (
                   pending.map((task, index) => (
                     <div

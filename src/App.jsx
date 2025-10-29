@@ -37,8 +37,6 @@ function App() {
         <Route path='home' element={<HomePage theme={theme}/>}/>
         <Route path='ProfileCard' element={<ProfileCard />}/>
         <Route path='/profile' element={<DashBoard theme={theme}/>}/>
-        <Route path='/group-member-list' element={<GroupMemberList />}/>
-        <Route path='/group-member-to-do' element={<GroupMemberToDo />}/>
         <Route path='/groups' element={<GroupPage />}/>
       </Routes>
 

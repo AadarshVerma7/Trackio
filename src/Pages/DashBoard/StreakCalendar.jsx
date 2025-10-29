@@ -90,7 +90,7 @@ const ContributionGraph = ({darkMode}) => {
   const squareSize = (width - totalGapsWidth - totalPaddingWidth) / NUM_COLUMNS;
 
   return (
-    <div className={`${textColor} p-6 rounded-lg w-full h-full flex flex-col`}>
+    <div className={`${textColor} rounded-lg w-full h-full flex flex-col`}>
       {/* Header Section*/}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">
@@ -110,7 +110,7 @@ const ContributionGraph = ({darkMode}) => {
                 {monthData.days.map((day, index) => (
                   <div
                     key={index}
-                    className={`rounded-sm ${getActivityColor(day.activity)}`}
+                    className={`rounded-xs ${getActivityColor(day.activity)}`}
                     // Apply calculated size directly
                     style={{ width: `${squareSize}px`, height: `${squareSize}px` }}
                     title={`Date: ${day.date.toDateString()}, Activity: ${day.activity}`}
