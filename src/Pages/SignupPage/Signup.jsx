@@ -1,4 +1,9 @@
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { AppContext } from "../../context/AppContext.jsx";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Signup({ close2 }) {
   const {
@@ -7,9 +12,33 @@ function Signup({ close2 }) {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    // Handle signup logic here
+  const { backendUrl, setIsLoggedIn, setUserData } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post(`${backendUrl}/api/auth/register`, {
+        name:data.username,
+        email:data.userEmail,
+        password:data.password,
+      });
+
+      if (res.data.success) {
+        toast.success("Signup successful!");
+        setIsLoggedIn(true);
+        setUserData(res.data.user);
+        close2();
+        navigate("/home"); // redirect to home
+      } else {
+        toast.error(res.data.message || "Signup failed");
+      }
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.message || "Signup failed");
+      } else {
+        toast.error("Network error. Please try again.");
+      }
+    }
   };
 
   return (
@@ -22,7 +51,9 @@ function Signup({ close2 }) {
         &times;
       </button>
 
-      <h2 className="text-2xl font-semibold mb-2 text-center text-orange-500">Sign Up</h2>
+      <h2 className="text-2xl font-semibold mb-2 text-center text-orange-500">
+        Sign Up
+      </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <input

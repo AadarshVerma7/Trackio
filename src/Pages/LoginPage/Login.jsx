@@ -1,4 +1,9 @@
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 
 function Login({ close }) {
   const {
@@ -7,9 +12,32 @@ function Login({ close }) {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
+  const onSubmit = async (data) => {
+    try {
+      const {email,password} = data;
+      const response = await axios.post(`${backendUrl}/api/auth/login`,{
+        email,
+        password,
+      });
+
+      if(response.data.success){
+        toast.success(response.data.message || "Login Successful !");
+        setIsLoggedIn(true);
+        await getUserData();
+        navigate('/home');
+        close();
+      }
+      else{
+        toast.error(response.data.message || "Login Failed !");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went Wrong !");
+    }
   };
+
+  const {backendUrl,setIsLoggedIn,setUserData,getUserData} = useContext(AppContext);
+  const navigate = useNavigate();
+  axios.defaults.withCredentials=true;
 
   return (
     <div className="bg-white/1 backdrop-blur-lg border border-orange-500 rounded-lg shadow-lg w-80 px-6 py-8 flex flex-col gap-4 font-sans relative">
@@ -27,15 +55,15 @@ function Login({ close }) {
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <input
-          type="text"
-          placeholder="Username"
+          type="email"
+          placeholder="Email"
           className={`border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
             errors.username ? "border-red-500" : "border-orange-500"
           } bg-transparent text-white placeholder-white`}
-          {...register("username", { required: "Username is required" })}
+          {...register("email", { required: "Email is required" })}
         />
-        {errors.username && (
-          <p className="text-red-500 text-sm">{errors.username.message}</p>
+        {errors.email && (
+          <p className="text-red-500 text-sm">{errors.email.message}</p>
         )}
 
         <input
