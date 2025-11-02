@@ -45,8 +45,8 @@ const registerUser = asyncHandler(async (req, res) => {
         const mailOptions = {
             from: process.env.SMTP_SENDER_EMAIL,
             to: email,
-            subject: `Welcome to Aayush's Platform`,
-            text: `Welcome to Aayush's Platform 😎. Your account has been successfully created with the email id: ${email}`,
+            subject: `Welcome to Trackio`,
+            text: `Welcome to Trackio. Your account has been successfully created with the email id: ${email}`,
         };
 
         await transporter.sendMail(mailOptions);

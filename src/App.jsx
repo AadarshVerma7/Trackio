@@ -12,6 +12,7 @@ import DashBoard from './Pages/DashBoard/DashBoard.jsx'
 import GroupMemberList from './Components/GroupMemberList/GroupMemberList.jsx'
 import GroupMemberToDo from './Components/GroupMemberToDo/GroupMemberToDo.jsx'
 import GroupPage from './Pages/GroupPage/GroupPage.jsx'
+import { ToastContainer} from 'react-toastify';
 
 function App() {
   const location = useLocation();
@@ -31,11 +32,12 @@ function App() {
   
   return (
     <>
+    <ToastContainer />
       {showNavbar && <Navbar2 theme={theme} toggleTheme={toggleTheme} />}
       <Routes>
         <Route path='/' element={<LandingPage />}/>
-        <Route path='home' element={<HomePage theme={theme}/>}/>
-        <Route path='ProfileCard' element={<ProfileCard />}/>
+        <Route path='/home' element={<HomePage theme={theme}/>}/>
+        <Route path='/profileCard' element={<ProfileCard />}/>
         <Route path='/profile' element={<DashBoard theme={theme}/>}/>
         <Route path='/groups' element={<GroupPage />}/>
       </Routes>

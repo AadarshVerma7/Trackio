@@ -4,9 +4,17 @@ import ContributionGraph from "./StreakCalendar";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
 import sourceData from "./sourceData.json";
+import { useContext } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
 
 function DashBoard({ theme }) {
   const [inputValue, setInputValue] = useState("");
+
+  const {backendUrl,setIsLoggedIn,setUserData} = useContext(AppContext);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => setInputValue(e.target.value);
 
@@ -23,6 +31,23 @@ function DashBoard({ theme }) {
       ? "shadow-[0_4px_20px_rgba(255,255,255,0.08)]"
       : "shadow-[0_4px_20px_rgba(0,0,0,0.1)]",
   };
+
+  const handleLogout = async ()=>{
+    try {
+      const {data} = await axios.post(`${backendUrl}/api/auth/logout`);
+      if(data.success){
+        toast.success(data.message || "Logged Out Successfully !");
+        setIsLoggedIn(false);
+        setUserData(null);
+        navigate("/");
+      }
+      else{
+        toast.error(data.message || "Logout Failed !");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went Wrong !");
+    }
+  }
 
   return (
     <div
@@ -75,7 +100,7 @@ function DashBoard({ theme }) {
             </ul>
 
             <div className="flex justify-between mt-8">
-              <button className="bg-red-500 hover:bg-red-600 text-white font-semibold px-5 py-2 rounded-lg transition-all">
+              <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white font-semibold px-5 py-2 rounded-lg transition-all">
                 Logout
               </button>
               <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg transition-all">
