@@ -16,6 +16,7 @@ import { ToastContainer} from 'react-toastify';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx'
 import PublicRoute from './Components/PublicRoute/PublicRoute.jsx'
 import { AppContext } from './context/AppContext.jsx'
+import { ContactUs } from './Pages/ContactUs/ContactUs.jsx'
 
 function App() {
   const location = useLocation();
@@ -44,6 +45,7 @@ function App() {
         <Route path='/profileCard' element={<ProtectedRoute><ProfileCard /></ProtectedRoute>}/>
         <Route path='/profile' element={<ProtectedRoute><DashBoard theme={theme}/></ProtectedRoute>}/>
         <Route path='/groups' element={<ProtectedRoute><GroupPage /></ProtectedRoute>}/>
+        <Route path='/contact' element={<ProtectedRoute><ContactUs /></ProtectedRoute>}/>
       </Routes>
 
     </>

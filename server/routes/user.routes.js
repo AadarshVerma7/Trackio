@@ -1,9 +1,10 @@
 import express from "express";
-import { getUserData } from "../controllers/user.controllers.js";
-import userAuth from "../middlewares/user.middlewares.js";
+import { getUserData,updateStreak } from "../controllers/user.controllers.js";
+import { verifyJWT } from "../middlewares/verifyJWT.js";
 
 const router=express.Router();
 
-router.route("/profile").get(userAuth,getUserData);
+router.get("/getUserData",verifyJWT,getUserData);
+router.post("/updateStreak",verifyJWT,updateStreak);
 
 export default router;

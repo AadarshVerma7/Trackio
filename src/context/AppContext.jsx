@@ -13,10 +13,10 @@ export const AppContextProvider = (props) =>{
 
     const getUserData = async ()=>{
         try {
-            const {data} = await axios.get(backendUrl+'/api/user/profile');
+            const {data} = await axios.get(backendUrl+'/api/user/getUserData');
             data.success?setUserData(data.userData):toast.error(data.message);
         } catch (error) {
-            toast.error(data.message);
+            toast.error(error.response?.data?.message || "Failed to fetch user Data");
         }
     }
 
