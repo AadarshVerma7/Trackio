@@ -1,4 +1,4 @@
-import { useState , useEffect} from 'react'
+import { useState , useEffect, useContext} from 'react'
 import './App.css'
 import { Route,Routes,useLocation} from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar'
@@ -13,12 +13,16 @@ import GroupMemberList from './Components/GroupMemberList/GroupMemberList.jsx'
 import GroupMemberToDo from './Components/GroupMemberToDo/GroupMemberToDo.jsx'
 import GroupPage from './Pages/GroupPage/GroupPage.jsx'
 import { ToastContainer} from 'react-toastify';
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx'
+import PublicRoute from './Components/PublicRoute/PublicRoute.jsx'
+import { AppContext } from './context/AppContext.jsx'
 
 function App() {
   const location = useLocation();
 
   const showNavbar = location.pathname !== "/";
 
+  const {isLoggedIn} = useContext(AppContext);
 
   const [theme, setTheme] = useState("light");
 
@@ -35,11 +39,11 @@ function App() {
     <ToastContainer />
       {showNavbar && <Navbar2 theme={theme} toggleTheme={toggleTheme} />}
       <Routes>
-        <Route path='/' element={<LandingPage />}/>
-        <Route path='/home' element={<HomePage theme={theme}/>}/>
-        <Route path='/profileCard' element={<ProfileCard />}/>
-        <Route path='/profile' element={<DashBoard theme={theme}/>}/>
-        <Route path='/groups' element={<GroupPage />}/>
+        <Route path='/' element={<PublicRoute><LandingPage /></PublicRoute>}/>
+        <Route path='/home' element={<ProtectedRoute><HomePage theme={theme}/></ProtectedRoute>}/>
+        <Route path='/profileCard' element={<ProtectedRoute><ProfileCard /></ProtectedRoute>}/>
+        <Route path='/profile' element={<ProtectedRoute><DashBoard theme={theme}/></ProtectedRoute>}/>
+        <Route path='/groups' element={<ProtectedRoute><GroupPage /></ProtectedRoute>}/>
       </Routes>
 
     </>
