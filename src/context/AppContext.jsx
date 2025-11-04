@@ -11,23 +11,6 @@ export const AppContextProvider = (props) =>{
     const [isLoggedIn,setIsLoggedIn] = useState(false);
     const [userData,setUserData] = useState(null);
 
-    const getAuthState=async()=>{
-        try {
-            const {data} = await axios.get(backendUrl+'/api/auth/is-auth');
-            if(data.success){
-                setIsLoggedIn(true);
-                setUserData(data.userData);
-            }
-        } catch (error) {
-            if(error.response && error.response.status===401){
-                console.log("User is not Authenticated");
-            }
-            else{
-                toast.error("An Unexpected Error Happened");
-            }
-        }
-    }
-
     const getUserData = async ()=>{
         try {
             const {data} = await axios.get(backendUrl+'/api/user/profile');
@@ -36,10 +19,6 @@ export const AppContextProvider = (props) =>{
             toast.error(data.message);
         }
     }
-
-    useEffect(()=>{
-        getAuthState();
-    },[])
 
     const value={
         backendUrl,
