@@ -1,51 +1,40 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { toast } from 'react-toastify';
 
-// This is a custom hook to measure an element's width
 const useContainerWidth = () => {
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
     const observer = new ResizeObserver(entries => {
-      if (entries[0]) {
-        setWidth(entries[0].contentRect.width);
-      }
+      if (entries[0]) setWidth(entries[0].contentRect.width);
     });
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
-    };
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
   }, []);
 
   return { containerRef, width };
 };
 
-
-// Data generation and color functions remain the same
-const generateAndGroupData = () => {
+const generateAndGroupData = (streakDates = []) => {
   const yearData = [];
   const today = new Date();
   const oneYearAgo = new Date();
   oneYearAgo.setFullYear(today.getFullYear() - 1);
-  
+
   const startDate = new Date(oneYearAgo);
   const daysToRender = 371;
 
   for (let i = 0; i < daysToRender; i++) {
     const currentDate = new Date(startDate);
     currentDate.setDate(startDate.getDate() + i);
-    if (currentDate < today) {
-      yearData.push({
-        date: currentDate,
-        activity: Math.floor(Math.random() * 5),
-      });
-    }
+    const dateKey = currentDate.toISOString().split("T")[0];
+    const isStreakDay = streakDates.includes(dateKey);
+    yearData.push({
+      date: currentDate,
+      activity: isStreakDay ? 3 : 0,
+    });
   }
 
   const groupedData = yearData.reduce((acc, item) => {
@@ -57,7 +46,7 @@ const generateAndGroupData = () => {
       acc[key] = {
         monthName: month,
         days: [],
-        startDayOffset: firstDayOfMonth.getDay(), 
+        startDayOffset: firstDayOfMonth.getDay(),
       };
     }
     acc[key].days.push(item);
@@ -67,38 +56,42 @@ const generateAndGroupData = () => {
   return Object.values(groupedData);
 };
 
-const getActivityColor = (level) => {
-  if (level === 0) return 'bg-gray-400';
-  if (level === 1) return 'bg-green-900';
-  if (level === 2) return 'bg-green-700';
-  if (level === 3) return 'bg-green-500';
-  if (level === 4) return 'bg-green-300';
-};
+const getActivityColor = (level) => (level === 0 ? 'bg-gray-400' : 'bg-green-600');
 
-const ContributionGraph = ({darkMode}) => {
+const ContributionGraph = ({ darkMode }) => {
   const { containerRef, width } = useContainerWidth();
-  const [groupedData] = useState(()=>generateAndGroupData());
-  const textColor=darkMode=='light'?'text-black':'text-white';
+  const [groupedData, setGroupedData] = useState([]);
+  const textColor = darkMode === 'light' ? 'text-black' : 'text-white';
 
-  // --- CALCULATION LOGIC ---
-  // We have 53 potential columns (weeks) in a year.
+  useEffect(() => {
+    const streakDates = JSON.parse(localStorage.getItem("streakDates")) || [];
+    const todayKey = new Date().toISOString().split("T")[0];
+
+    // If user hasn’t logged in today → add today’s date
+    if (!streakDates.includes(todayKey)) {
+      streakDates.push(todayKey);
+      localStorage.setItem("streakDates", JSON.stringify(streakDates));
+      toast.success("+1 Daily Login"); // 🔔 notification
+    }
+
+    const data = generateAndGroupData(streakDates);
+    setGroupedData(data);
+  }, []);
+
   const NUM_COLUMNS = 53;
-  // Account for gaps between months and padding inside the containers
-  const totalGapsWidth = (groupedData.length -1) * 12; // 12px gap
-  const totalPaddingWidth = groupedData.length * 30; // 8px padding on each side
-  // Calculate the size of each square
+  const totalGapsWidth = (groupedData.length - 1) * 12;
+  const totalPaddingWidth = groupedData.length * 30;
   const squareSize = (width - totalGapsWidth - totalPaddingWidth) / NUM_COLUMNS;
 
   return (
     <div className={`${textColor} rounded-lg w-full h-full flex flex-col`}>
-      {/* Header Section*/}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">
-          Total active days: <span className={`${textColor} mr-5`}>209</span> Max streak: <span className={`${textColor}`}>101</span>
+          Total active days: <span className={`${textColor} mr-5`}>209</span> 
+          Max streak: <span className={`${textColor}`}>101</span>
         </h2>
       </div>
 
-      {/* Main container that we measure */}
       <div className="flex justify-between" ref={containerRef}>
         {width > 0 && groupedData.map((monthData, monthIndex) => (
           <div key={monthIndex} className="flex flex-col">
@@ -111,14 +104,12 @@ const ContributionGraph = ({darkMode}) => {
                   <div
                     key={index}
                     className={`rounded-xs ${getActivityColor(day.activity)}`}
-                    // Apply calculated size directly
                     style={{ width: `${squareSize}px`, height: `${squareSize}px` }}
-                    title={`Date: ${day.date.toDateString()}, Activity: ${day.activity}`}
+                    title={`Date: ${day.date.toDateString()}`}
                   ></div>
                 ))}
               </div>
             </div>
-            
             <div className={`text-s font-bold ${textColor} mt-2 text-center`}>{monthData.monthName}</div>
           </div>
         ))}

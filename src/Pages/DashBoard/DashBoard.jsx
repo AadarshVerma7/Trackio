@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Footer from "../../Components/Footer/Footer";
 import ContributionGraph from "./StreakCalendar";
 import { Chart as ChartJS } from "chart.js/auto";
@@ -49,6 +49,45 @@ function DashBoard({ theme }) {
     }
   }
 
+  const [userName,setUserName] = useState("");
+  const [streakData,setStreakData] = useState({
+    streak:0,
+    maxStreak:0,
+  });
+
+  useEffect(()=>{
+    const fetchUserData = async () =>{
+      try {
+        const {data} = await axios.get(`${backendUrl}/api/user/getUserData`,{
+          withCredentials:true,
+        });
+        if(data.success){
+          setUserName(data.userData.name);
+        }
+      } catch (error) {
+        console.log("Error fetching user data : ",error);
+      }
+    };
+
+    const updateUserStreak = async ()=>{
+      try {
+        const {data} = await axios.post(`${backendUrl}/api/user/updateStreak`,{},{
+          withCredentials:true,
+        });
+        if(data.success){
+          setStreakData({
+            streak:data.data.streak,
+            maxStreak:data.data.maxStreak,
+          });
+        }
+      } catch (error) {
+        console.log("Error Updating streak : ",error);
+      }
+    };
+    fetchUserData();
+    updateUserStreak();
+  },[backendUrl]);
+
   return (
     <div
       className={`min-h-screen px-8 py-6 transition-colors duration-500 text-gray-200`}
@@ -69,7 +108,7 @@ function DashBoard({ theme }) {
               />
             </div>
             <h2 className={`text-2xl font-semibold ${colors.textPrimary}`}>
-              Aayush Vats
+              {userName || "Loading..."}
             </h2>
             <button className="bg-gradient-to-r from-orange-400 to-orange-500 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300">
               Edit Profile
@@ -116,7 +155,11 @@ function DashBoard({ theme }) {
           <div
             className={`${colors.card} ${colors.shadow} rounded-2xl p-6 transition-all`}
           >
-            <ContributionGraph darkMode={theme} />
+            <ContributionGraph 
+            darkMode={theme} 
+            streak={streakData.streak}
+            maxStreak={streakData.maxStreak}
+            />
           </div>
 
           {/* CHART + GROUPS GRID */}
