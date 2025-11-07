@@ -20,7 +20,7 @@ function AllGroups({ theme }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const groups = [
-    { Name: "Group 1", Members: 4, Progress: 69, Role: "Member" },
+    { Name: "Group 1", Members: 4, Progress: 19, Role: "Member" },
     { Name: "Group 2", Members: 5, Progress: 45, Role: "Admin" },
     { Name: "Group 3", Members: 7, Progress: 90, Role: "Admin" },
     { Name: "Group 4", Members: 3, Progress: 20, Role: "Member" },

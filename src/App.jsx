@@ -51,7 +51,7 @@ function App() {
         <Route path='/profile' element={<ProtectedRoute><DashBoard theme={theme}/></ProtectedRoute>}/>
         <Route path='/groups' element={<ProtectedRoute><GroupPage theme={theme}/></ProtectedRoute>}/>
         <Route path='/all-groups' element={<ProtectedRoute><AllGroups theme={theme}/></ProtectedRoute>}/>
-        <Route path='/contact' element={<ProtectedRoute><ContactUs theme={theme}/></ProtectedRoute>}/>
+        <Route path='/contact' element={<ContactUs theme={theme}/>}/>
         <Route path='/join' element={<ProtectedRoute><JoinGroup /></ProtectedRoute>}/>
       </Routes>
 
