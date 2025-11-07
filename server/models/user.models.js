@@ -35,23 +35,11 @@ const UserSchema=new mongoose.Schema({
         type:Number,
         default:0,
     },
-    streak:{
-        type:Number,
-        default:0,
+    streak: {
+        currentCount: { type: Number, default: 0 },
+        startDate: { type: Date, default: "" },
+        lastLoginDate: { type: String, default: "" },
     },
-    maxStreak:{
-        type:Number,
-        default:0,
-    },
-    lastActiveDays:{
-        type:Date,
-    },
-    streakHistory:[
-        {
-            date:{type:Date,required:true},
-            active:{type:Boolean,default:true},
-        },
-    ],
 },{timestamps:true});
 
 const UserModel=mongoose.models.user || mongoose.model('User',UserSchema);

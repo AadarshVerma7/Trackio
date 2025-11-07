@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../../Components/Footer/Footer";
 import ContributionGraph from "./StreakCalendar";
 import { Chart as ChartJS } from "chart.js/auto";
@@ -8,12 +8,14 @@ import { useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../context/AppContext";
+import { AppContext } from "../../context/AppContext.jsx";
+import EditProfile from "../../Components/EditProfile/EditProfile.jsx";
 
 function DashBoard({ theme }) {
   const [inputValue, setInputValue] = useState("");
+  const [showEditProfile, setShowEditProfile] = useState(false);
 
-  const {backendUrl,setIsLoggedIn,setUserData} = useContext(AppContext);
+  const { backendUrl, setIsLoggedIn, setUserData } = useContext(AppContext);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => setInputValue(e.target.value);
@@ -32,16 +34,16 @@ function DashBoard({ theme }) {
       : "shadow-[0_4px_20px_rgba(0,0,0,0.1)]",
   };
 
-  const handleLogout = async ()=>{
+  const handleLogout = async () => {
     try {
-      const {data} = await axios.post(`${backendUrl}/api/auth/logout`);
-      if(data.success){
+      const { data } = await axios.post(`${backendUrl}/api/auth/logout`, {}, { withCredentials: true });
+      if (data.success) {
         toast.success(data.message || "Logged Out Successfully !");
         setIsLoggedIn(false);
         setUserData(null);
         navigate("/");
       }
-      else{
+      else {
         toast.error(data.message || "Logout Failed !");
       }
     } catch (error) {
@@ -49,44 +51,44 @@ function DashBoard({ theme }) {
     }
   }
 
-  const [userName,setUserName] = useState("");
-  const [streakData,setStreakData] = useState({
-    streak:0,
-    maxStreak:0,
+  const [userName, setUserName] = useState("");
+  const [streakData, setStreakData] = useState({
+    streak: 0,
+    maxStreak: 0,
   });
 
-  useEffect(()=>{
-    const fetchUserData = async () =>{
+  useEffect(() => {
+    const fetchUserData = async () => {
       try {
-        const {data} = await axios.get(`${backendUrl}/api/user/getUserData`,{
-          withCredentials:true,
+        const { data } = await axios.get(`${backendUrl}/api/user/getUserData`, {
+          withCredentials: true,
         });
-        if(data.success){
+        if (data.success) {
           setUserName(data.userData.name);
         }
       } catch (error) {
-        console.log("Error fetching user data : ",error);
+        console.log("Error fetching user data : ", error);
       }
     };
 
-    const updateUserStreak = async ()=>{
+    const updateUserStreak = async () => {
       try {
-        const {data} = await axios.post(`${backendUrl}/api/user/updateStreak`,{},{
-          withCredentials:true,
+        const { data } = await axios.post(`${backendUrl}/api/user/updateStreak`, {}, {
+          withCredentials: true,
         });
-        if(data.success){
+        if (data.success) {
           setStreakData({
-            streak:data.data.streak,
-            maxStreak:data.data.maxStreak,
+            streak: data.data.streak,
+            maxStreak: data.data.maxStreak,
           });
         }
       } catch (error) {
-        console.log("Error Updating streak : ",error);
+        console.log("Error Updating streak : ", error);
       }
     };
     fetchUserData();
     updateUserStreak();
-  },[backendUrl]);
+  }, [backendUrl]);
 
   return (
     <div
@@ -107,18 +109,34 @@ function DashBoard({ theme }) {
                 className="object-cover w-full h-full"
               />
             </div>
-            <h2 className={`text-2xl font-semibold ${colors.textPrimary}`}>
+            <h2 className={`text-2xl font-semibold lily ${colors.textPrimary}`}>
               {userName || "Loading..."}
             </h2>
-            <button className="bg-gradient-to-r from-orange-400 to-orange-500 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300">
+            <button onClick={() => setShowEditProfile(true)} className="bg-gradient-to-r from-orange-400 to-orange-500 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
               Edit Profile
             </button>
+            {showEditProfile && (
+              <div className="fixed inset-0 backdrop-blur-sm bg-black/20 flex items-center justify-center z-50">
+                <div className="bg-white rounded-xl shadow-xl p-6 w-[90%] max-w-3xl">
+                  <EditProfile />
+                  <div className="flex justify-end mt-4">
+                    <button
+                      onClick={() => setShowEditProfile(false)}
+                      className="px-5 py-2 rounded-lg bg-gray-300 hover:bg-gray-400"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* STATS */}
           <div className="w-full mt-8">
+            <hr className="text-gray-400 border-t-2 rounded-4xl"/>
             <h3
-              className={`text-center text-2xl font-semibold mb-4 bg-gradient-to-r ${colors.accent} bg-clip-text text-transparent`}
+              className={`text-center text-3xl font-semibold m-6 bg-gradient-to-r ${colors.accent} bg-clip-text text-transparent`}
             >
               Stats
             </h3>
@@ -155,10 +173,10 @@ function DashBoard({ theme }) {
           <div
             className={`${colors.card} ${colors.shadow} rounded-2xl p-6 transition-all`}
           >
-            <ContributionGraph 
-            darkMode={theme} 
-            streak={streakData.streak}
-            maxStreak={streakData.maxStreak}
+            <ContributionGraph
+              darkMode={theme}
+              streak={streakData.streak}
+              maxStreak={streakData.maxStreak}
             />
           </div>
 
@@ -221,11 +239,10 @@ function DashBoard({ theme }) {
                   )}
                   <input
                     type="text"
-                    className={`w-full pl-10 pr-4 py-2 rounded-lg border focus:ring-2 focus:ring-orange-400 outline-none ${
-                      isDark
+                    className={`w-full pl-10 pr-4 py-2 rounded-lg border focus:ring-2 focus:ring-orange-400 outline-none ${isDark
                         ? "bg-transparent border-gray-700 text-white"
                         : "bg-white border-gray-300 text-gray-800"
-                    }`}
+                      }`}
                     placeholder="Search Groups"
                     value={inputValue}
                     onChange={handleInputChange}
@@ -233,11 +250,10 @@ function DashBoard({ theme }) {
                 </div>
 
                 <select
-                  className={`px-4 py-2 rounded-lg border ${
-                    isDark
+                  className={`px-4 py-2 rounded-lg border ${isDark
                       ? "bg-gray-700 border-gray-700 text-white"
                       : "bg-white border-gray-300 text-gray-800"
-                  }`}
+                    }`}
                 >
                   <option value="Member">Member</option>
                   <option value="Admin">Admin</option>
@@ -250,16 +266,14 @@ function DashBoard({ theme }) {
                   (group) => (
                     <div
                       key={group}
-                      className={`w-[150px] text-center py-6 rounded-xl border transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-md ${
-                        isDark
+                      className={`w-[150px] text-center py-6 rounded-xl border transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-md ${isDark
                           ? "bg-white/5 border-gray-600 hover:bg-orange-500/20"
                           : "bg-white/70 border-gray-300 hover:bg-orange-100"
-                      }`}
+                        }`}
                     >
                       <p
-                        className={`font-semibold ${
-                          isDark ? "text-white" : "text-gray-800"
-                        }`}
+                        className={`font-semibold ${isDark ? "text-white" : "text-gray-800"
+                          }`}
                       >
                         {group}
                       </p>
