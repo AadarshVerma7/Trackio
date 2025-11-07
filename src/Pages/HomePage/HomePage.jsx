@@ -22,7 +22,6 @@ import JoinGroup from "../JoinGroup/JoinGroup";
 import "../CreateGroup/CreateGroup.css";
 
 const HomePage = ({ theme, scrollToAbout, setScrollToAbout }) => {
-const HomePage = ({ theme }) => {
 
   const parentRef = useRef(null);
   const [flippedCards, setFlippedCards] = useState([false, false, false]);
@@ -233,11 +232,6 @@ useEffect(() => {
               src={podium}
               alt="podium"
               className={theme === "light" ? "relative h-60 w-50 p-3 bg-orange-400 rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl" : "relative h-60 w-50 p-3 bg-[#E7F2EF] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"}
-              className={
-                theme === "light"
-                  ? "relative h-60 w-50 p-3 bg-orange-400 rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"
-                  : "relative h-60 w-50 p-3 bg-[#E7F2EF] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"
-              }
             />
           </div>
           <div className="h-fit">
