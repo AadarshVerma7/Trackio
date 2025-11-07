@@ -1,16 +1,25 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate,useLocation } from "react-router-dom";
 import favicon from "../../assets/favIconPNG.png";
 import Profile from "../../assets/Profile.svg";
 import Moon from "../../assets/moon.svg";
 import Sun from "../../assets/sun.svg";
 
-function Navbar2({theme,toggleTheme}) {
-  
+function Navbar2({ theme, toggleTheme, onAboutClick }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+const handleAboutClick = () => {
+    navigate("/home");      // go to home page
+    setTimeout(() => {  // wait a tiny bit for HomePage to load
+      onAboutClick?.(); // trigger scroll
+    }, 200);
+  };
+
 
   return (
     <nav className="relative top-5 left-1/2 transform -translate-x-1/2 w-11/12 md:w-1/2 bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl shadow-lg shadow-black/30 px-6 py-4 flex justify-between items-center z-50">
-      
+
       {/* Logo */}
       <div className="flex items-center gap-2">
         <img className="w-8" src={favicon} alt="Trackio" />
@@ -22,8 +31,17 @@ function Navbar2({theme,toggleTheme}) {
         {["Home", "About Us", "Contact", "Groups"].map((link) => (
           <Link
             key={link}
-            to={`/${link.toLowerCase().replace(/\s/g, "")}`}
-            className={theme=== "light" ? "relative after:block after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full cursor-pointer" : "relative after:block after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full cursor-pointer"}
+            to={link === "About Us" ? "#" : `/${link.toLowerCase().replace(/\s/g, "")}`}
+            onClick={(e) => {
+               if (link === "About Us") {
+                e.preventDefault();
+                handleAboutClick(e);
+            }
+          }}
+              className = { theme=== "light" 
+                ? "relative after:block after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full cursor-pointer" 
+                :"relative after:block after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full cursor-pointer"
+            }
           >
             {link}
           </Link>
@@ -41,8 +59,8 @@ function Navbar2({theme,toggleTheme}) {
           />
         </button>
         <Link
-        to="/profile"
-        ><img className="w-8 cursor-pointer" src={Profile} alt="Profile" title="Profile"/></Link>
+          to="/profile"
+        ><img className="w-8 cursor-pointer" src={Profile} alt="Profile" title="Profile" /></Link>
       </div>
     </nav>
   );

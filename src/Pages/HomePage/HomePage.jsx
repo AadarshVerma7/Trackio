@@ -21,7 +21,7 @@ import CreateGroup from "../CreateGroup/CreateGroup";
 import JoinGroup from "../JoinGroup/JoinGroup";
 import "../CreateGroup/CreateGroup.css";
 
-const HomePage = ({theme}) => {
+const HomePage = ({ theme, scrollToAbout, setScrollToAbout }) => {
   const parentRef = useRef(null);
   const [flippedCards, setFlippedCards] = useState([false, false, false]);
 
@@ -46,6 +46,21 @@ const HomePage = ({theme}) => {
 
   const [showCreateGroup, setShowCreateGroup] = useState(false);
   const [showJoinGroup, setShowJoinGroup] = useState(false);
+
+  const aboutUsRef = useRef(null);
+
+  const scrollToAboutUs = () => {
+    aboutUsRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+useEffect(() => {
+  if (scrollToAbout) {
+    scrollToAboutUs();
+    setScrollToAbout(false); // reset the trigger
+  }
+}, [scrollToAbout, setScrollToAbout]);
+
+
 
   return (
     <div className="min-h-screen">
@@ -104,14 +119,15 @@ const HomePage = ({theme}) => {
               </div>
             </div>
 
-            <div className="relative top-22 left-8 bg-gradient-to-br from-[#a8927d] to-[#5b4a3a] rounded-xl w-80">
+            <div onClick={scrollToAboutUs}
+              className="cursor-pointer relative top-22 left-8 bg-gradient-to-br from-[#a8927d] to-[#5b4a3a] rounded-xl w-80 hover:scale-105 transform transition-all duration-300 active:scale-95 active:brightness-90">
               <h1 className="text-2xl fjalla pr-17 pl-7 py-2">
                 Know more About Us!
               </h1>
             </div>
 
             {/* SVGs and ProfileCards */}
-            <div className="relative top-22 left-16 min-h-[400px] z-50">
+            <div ref={aboutUsRef} className="relative top-22 left-16 min-h-[400px] z-50">
               <SvgAnimator
                 pathData="M3.9998 0.960349 L12.0295 810.96"
                 stroke={theme === "light" ? "black" : "white"}
@@ -131,7 +147,7 @@ const HomePage = ({theme}) => {
               </div>
               <SvgAnimator
                 pathData="M0.964914 6.00015 L228.965 4.00015"
-                stroke={theme === "light" ? "black" : "white"}  
+                stroke={theme === "light" ? "black" : "white"}
                 strokeWidth={6}
                 viewBox="0 0 229 10"
                 className="absolute top-140 -right-80"
@@ -195,7 +211,7 @@ const HomePage = ({theme}) => {
             <img
               src={podium}
               alt="podium"
-              className={theme ==="light" ? "relative h-60 w-50 p-3 bg-orange-400 rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl" : "relative h-60 w-50 p-3 bg-[#E7F2EF] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"}
+              className={theme === "light" ? "relative h-60 w-50 p-3 bg-orange-400 rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl" : "relative h-60 w-50 p-3 bg-[#E7F2EF] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"}
             />
           </div>
           <div className="h-fit">
@@ -337,7 +353,7 @@ const HomePage = ({theme}) => {
       )}
       {showJoinGroup && (
         <div className="overlay">
-          <JoinGroup close4={() => setShowJoinGroup(false)} theme={theme}/>
+          <JoinGroup close4={() => setShowJoinGroup(false)} theme={theme} />
         </div>
       )}
     </div>
