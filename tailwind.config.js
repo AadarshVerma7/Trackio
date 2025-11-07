@@ -14,3 +14,21 @@ module.exports = {
   },
   plugins: [],
 };
+
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      keyframes: {
+        "gradient-flow": {
+          "0%": { "background-position": "200% 200%" },
+          "100%": { "background-position": "-200% -200%" },
+        },
+      },
+      animation: {
+        "gradient-flow": "gradient-flow 0.2s linear infinite",
+      },
+    },
+  },
+};
+
