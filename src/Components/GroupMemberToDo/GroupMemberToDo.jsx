@@ -1,14 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const GroupMemberToDo = () => {
+const GroupMemberToDo = ({ theme }) => {
+  const isDark = theme === "dark";
+
+  const colors = {
+    primary: isDark ? "bg-[#272F40]" : "bg-[#D0C1A8]",
+    secondary: isDark ? "bg-[#0F172A]" : "bg-[#a6987f]",
+    accent: "from-orange-400 to-pink-500",
+    button: isDark ? "bg-gray-900" : "bg-[#95775A]",
+    textPrimary: isDark ? "text-white" : "text-gray-800",
+    icons: isDark ? "invert-100" : "invert-0",
+    shadow: isDark
+      ? "shadow-[0_2px_5px_rgba(255,255,255,0.4)]"
+      : "shadow-[0_2px_5px_rgba(0,0,0,0.1)]",
+    input: isDark
+      ? "bg-[#2B3447] text-white placeholder-gray-400"
+      : "bg-white text-black placeholder-black",
+    border: isDark ? "border-white/30" : "border-[#342f28f2]",
+    textMuted: isDark ? "text-gray-400" : "text-gray-900",
+    taskBox: isDark ? "bg-[#272F40] text-white" : "bg-gray-200 text-black",
+    focusRing: isDark ? "focus:ring-white" : "focus:ring-[#796149]",
+  };
   const [completed, setCompleted] = useState([]);
   const [pending, setPending] = useState([]);
-  const [newTask, setNewTask] = useState('');
+  const [newTask, setNewTask] = useState("");
 
   const handleAddTask = () => {
-    if (newTask.trim() !== '') {
+    if (newTask.trim() !== "") {
       setPending([...pending, newTask.trim()]);
-      setNewTask('');
+      setNewTask("");
     }
   };
 
@@ -23,14 +43,16 @@ const GroupMemberToDo = () => {
   };
 
   const handleDeleteTask = (task, type) => {
-    if (type === 'pending') setPending(pending.filter((t) => t !== task));
+    if (type === "pending") setPending(pending.filter((t) => t !== task));
     else setCompleted(completed.filter((t) => t !== task));
   };
 
   return (
-    <div className="text-black p-6 w-full">
+    <div className={`${colors.textPrimary} p-6 w-full`}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="lg:col-span-2 bg-[#d0c1a8] rounded-2xl p-4 shadow-md">
+        <div
+          className={`lg:col-span-2 ${colors.primary} rounded-2xl p-4 shadow-md`}
+        >
           <h2 className="text-2xl font-semibold mb-4">To - Do</h2>
 
           {/* Add Task Input */}
@@ -40,12 +62,12 @@ const GroupMemberToDo = () => {
               value={newTask}
               onChange={(e) => setNewTask(e.target.value)}
               placeholder="Enter a new task..."
-              className="w-full border border-[#342f28f2] rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#796149]
-              placeholder-[#000000]"
+              className={`w-full border border-[#342f28f2] ${colors.border} rounded-xl px-4 py-2 focus:outline-none focus:ring-2 ${colors.focusRing}
+              ${colors.textMuted}`}
             />
             <button
               onClick={handleAddTask}
-              className="bg-[#95775a] hover:bg-[#796149] text-white px-5 rounded-xl font-semibold"
+              className={` ${colors.button} text-white px-5 rounded-xl font-semibold hover:scale-[1.05] cursor-pointer`}
             >
               Add
             </button>
@@ -53,17 +75,22 @@ const GroupMemberToDo = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Completed Tasks */}
-            <div className="bg-[#a39783] text-white rounded-2xl p-4 min-h-[280px] overflow-y-auto">
-              <h3 className="text-4xl font-extrabold mb-3 text-center poppins">Completed</h3>
+            <div
+              className={`${colors.secondary} ${colors.textPrimary} rounded-2xl p-4 min-h-[280px] overflow-y-auto`}
+            >
+              <h3 className="text-4xl font-extrabold mb-3 text-center poppins">
+                Completed
+              </h3>
               <div className="space-y-3">
                 {completed.length === 0 ? (
-                  <p className="text-gray-700 text-center">No completed tasks yet</p>
-
+                  <p className={`${colors.textMuted} text-center`}>
+                    No completed tasks yet
+                  </p>
                 ) : (
                   completed.map((task, index) => (
                     <div
                       key={index}
-                      className="bg-gray-200 text-black py-2 px-4 rounded-xl flex justify-between items-center"
+                      className={`${colors.primary} ${colors.textPrimary} ${colors.shadow} py-2 px-4 rounded-xl flex justify-between items-center`}
                     >
                       <span>{task}</span>
                       <div className="flex gap-2">
@@ -74,7 +101,7 @@ const GroupMemberToDo = () => {
                           ↩
                         </button>
                         <button
-                          onClick={() => handleDeleteTask(task, 'completed')}
+                          onClick={() => handleDeleteTask(task, "completed")}
                           className="text-red-500 font-semibold"
                         >
                           ✕
@@ -87,16 +114,22 @@ const GroupMemberToDo = () => {
             </div>
 
             {/* Pending Tasks */}
-            <div className="bg-[#a39783] text-white rounded-2xl p-4 min-h-[380px] overflow-y-auto">
-              <h3 className="text-4xl font-extrabold mb-3 text-center poppins">Pending</h3>
+            <div
+              className={`${colors.secondary} ${colors.textPrimary} rounded-2xl p-4 min-h-[380px] overflow-y-auto`}
+            >
+              <h3 className="text-4xl font-extrabold mb-3 text-center poppins">
+                Pending
+              </h3>
               <div className="space-y-3">
                 {pending.length === 0 ? (
-                  <p className="text-center text-gray-700">No pending tasks</p>
+                  <p className={`text-center ${colors.textMuted}`}>
+                    No pending tasks
+                  </p>
                 ) : (
                   pending.map((task, index) => (
                     <div
                       key={index}
-                      className="bg-gray-200 text-black py-2 px-4 rounded-xl flex justify-between items-center"
+                      className={`${colors.primary} ${colors.textPrimary} ${colors.shadow} py-2 px-4 rounded-xl flex justify-between items-center`}
                     >
                       <span>{task}</span>
                       <div className="flex gap-2">
@@ -107,7 +140,7 @@ const GroupMemberToDo = () => {
                           ✓
                         </button>
                         <button
-                          onClick={() => handleDeleteTask(task, 'pending')}
+                          onClick={() => handleDeleteTask(task, "pending")}
                           className="text-red-500 font-semibold"
                         >
                           ✕

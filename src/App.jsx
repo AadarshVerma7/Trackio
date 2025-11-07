@@ -18,6 +18,8 @@ import PublicRoute from './Components/PublicRoute/PublicRoute.jsx'
 import { AppContext } from './context/AppContext.jsx'
 import { ContactUs } from './Pages/ContactUs/ContactUs.jsx'
 import { set } from 'react-hook-form'
+import JoinGroup from './Pages/JoinGroup/JoinGroup.jsx'
+import AllGroups from './Pages/AllGroups/AllGroups.jsx'
 
 function App() {
   const location = useLocation();
@@ -47,8 +49,10 @@ function App() {
         <Route path='/home' element={<ProtectedRoute><HomePage scrollToAbout={scrollToAbout} setScrollToAbout={setScrollToAbout} theme={theme}/></ProtectedRoute>}/>
         <Route path='/profileCard' element={<ProtectedRoute><ProfileCard /></ProtectedRoute>}/>
         <Route path='/profile' element={<ProtectedRoute><DashBoard theme={theme}/></ProtectedRoute>}/>
-        <Route path='/groups' element={<ProtectedRoute><GroupPage /></ProtectedRoute>}/>
-        <Route path='/contact' element={<ProtectedRoute><ContactUs /></ProtectedRoute>}/>
+        <Route path='/groups' element={<ProtectedRoute><GroupPage theme={theme}/></ProtectedRoute>}/>
+        <Route path='/all-groups' element={<ProtectedRoute><AllGroups theme={theme}/></ProtectedRoute>}/>
+        <Route path='/contact' element={<ProtectedRoute><ContactUs theme={theme}/></ProtectedRoute>}/>
+        <Route path='/join' element={<ProtectedRoute><JoinGroup /></ProtectedRoute>}/>
       </Routes>
 
     </>

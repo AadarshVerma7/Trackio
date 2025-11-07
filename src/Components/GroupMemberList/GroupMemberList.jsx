@@ -1,7 +1,20 @@
 import { LogOut } from "lucide-react";
 import React from "react";
 
-const GroupMemberList = () => {
+const GroupMemberList = ({ theme }) => {
+  const isDark = theme === "dark";
+
+  const colors = {
+    primary: isDark ? "bg-[#272F40]" : "bg-[#D0C1A8]",
+    secondary: isDark ? "bg-[#0F172A]" : "bg-[#a6987f]",
+    button: isDark ? "bg-red-600" : "bg-red-600",
+    textPrimary: isDark ? "text-white" : "text-white",
+    title: isDark ? "text-black" : "text-black",
+    shadow: isDark
+      ? "shadow-[0_2px_5px_rgba(255,255,255,0.4)]"
+      : "shadow-[0_2px_5px_rgba(0,0,0,0.1)]",
+    bar: isDark ? "bg-white/90" : "bg-[#4522068e]",
+  };
   const members = [
     { name: "Member 1", progress: 60 },
     { name: "Member 2", progress: 40 },
@@ -10,16 +23,16 @@ const GroupMemberList = () => {
   ];
 
   return (
-    <div className="bg-[#d0c1a8] bg-opacity-90 shadow-2xl rounded-3xl flex flex-col justify-between h-full p-5">
+    <div className={`${colors.primary} bg-opacity-90 shadow-2xl rounded-3xl flex flex-col justify-between p-5`}>
       {/* Group Header */}
-      <div className="relative w-full h-35 rounded-2xl overflow-hidden mb-4">
+      <div className="relative w-full h-43 rounded-2xl overflow-hidden mb-4">
         <img
           src="src/assets/memberListBanner.jpg"
           alt="Group Banner"
           className="w-full h-full object-cover scale-110 blur-[2px]"
         />
         <div className="absolute inset-0 flex items-center justify-center bg-opacity-30">
-          <h2 className="text-xl font-semibold text-black">Group Name</h2>
+          <h2 className={`text-xl font-semibold ${colors.textPrimary}`}>Group Name</h2>
         </div>
       </div>
 
@@ -28,11 +41,11 @@ const GroupMemberList = () => {
         {members.map((member, index) => (
           <div
             key={index}
-            className="bg-[#b4a68c] p-3 rounded-xl shadow-md hover:bg-[#a6987f] transition-all"
+            className={`${colors.secondary} p-3 rounded-xl shadow-md transition-all`}
           >
             <div className="flex justify-between items-center mb-1">
               <div className="flex items-center gap-2">
-                <i className="fas fa-user text-lg text-[#766f63]"></i>
+                <i className={'fas fa-user text-lg ${colors.bar}'}></i>
                 <span className="font-medium text-white">{member.name}</span>
               </div>
               <span className="text-sm text-gray-200 font-semibold">
@@ -41,7 +54,7 @@ const GroupMemberList = () => {
             </div>
             <div className="w-full h-2 bg-[#ffffff3c] rounded-full overflow-hidden">
               <div
-                className="h-full bg-[#4522068e] rounded-full transition-all duration-700 ease-in-out"
+                className={`h-full ${colors.bar} rounded-full transition-all duration-700 ease-in-out`}
                 style={{ width: `${member.progress}%` }}
               ></div>
             </div>
@@ -50,7 +63,7 @@ const GroupMemberList = () => {
       </div>
 
       {/* Leave Button */}
-      <button className="mt-4 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold shadow-lg transition-all">
+      <button className={`mt-4 flex items-center justify-center gap-2 ${colors.button} text-white py-3 rounded-xl font-semibold shadow-lg transition-all`}>
         <LogOut className="w-4 h-4" /> Leave Group
       </button>
     </div>
