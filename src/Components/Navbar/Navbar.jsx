@@ -1,6 +1,7 @@
 import React from "react";
 import favicon from '../../assets/favIconPNG.png'
 import {Link} from 'react-router-dom'
+
 function Navbar( {onLoginClick , onSignupClick}) {
   return (
     <div className="w-full px-6 py-4 flex justify-between items-center absolute z-2">
@@ -11,6 +12,7 @@ function Navbar( {onLoginClick , onSignupClick}) {
 
       <div className="hidden md:flex space-x-8 text-stone-200 text-lg font-medium">
         <div className="relative group cursor-pointer">
+        <Link to='/home' className="relative group">
           Home
           <span className="absolute left-0 -bottom-1 w-0 h-0.25 bg-white transition-all duration-300 group-hover:w-full"></span>
         </div>

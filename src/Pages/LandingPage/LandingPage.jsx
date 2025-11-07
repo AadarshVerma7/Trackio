@@ -72,8 +72,8 @@ function LandingPage() {
           left: "5%",
         }}
       >
-        <h1 className="font-baloo text-white font-medium text-5xl mt-2.5">
-          <div className="flex gap-2.5 items-baseline">
+        <h1 className="font-baloo text-white font-medium text-5xl mt-2.5 ">
+          <div className="flex gap-2.5 items-baseline ">
             All
             <div className="text-orange-500 text-6xl transition-all duration-300  ">
               in one
@@ -82,7 +82,7 @@ function LandingPage() {
           </div>
         </h1>
         <div className="glow-wrapper relative inline-block rounded-[22px] p-[2px] mt-10">
-          <button className="relative z-10 w-full text-white text-xl font-semibold px-7 py-3.5 rounded-[20px] bg-orange-500 hover:bg-orange-600 hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(255,102,0,0.4)] transition-all duration-300 ease-in-out active:scale-95 cursor-pointer">
+          <button className="relative z-10 w-full text-white text-xl font-semibold px-7 py-3.5 rounded-[20px] bg-orange-500 hover:bg-orange-600 hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(255,102,0,0.4)] transition-all duration-300 ease-in-out active:scale-95 cursor-pointer ">
             Start Now
           </button>
           <span

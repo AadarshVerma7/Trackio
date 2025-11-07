@@ -17,9 +17,14 @@ import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx'
 import PublicRoute from './Components/PublicRoute/PublicRoute.jsx'
 import { AppContext } from './context/AppContext.jsx'
 import { ContactUs } from './Pages/ContactUs/ContactUs.jsx'
+import { set } from 'react-hook-form'
+import JoinGroup from './Pages/JoinGroup/JoinGroup.jsx'
+import AllGroups from './Pages/AllGroups/AllGroups.jsx'
 
 function App() {
   const location = useLocation();
+
+  const [scrollToAbout, setScrollToAbout] = useState(false);
 
   const showNavbar = location.pathname !== "/";
 
@@ -38,14 +43,16 @@ function App() {
   return (
     <>
     <ToastContainer />
-      {showNavbar && <Navbar2 theme={theme} toggleTheme={toggleTheme} />}
+      {showNavbar && <Navbar2 onAboutClick={() => setScrollToAbout(true)} theme={theme} toggleTheme={toggleTheme} />}
       <Routes>
         <Route path='/' element={<PublicRoute><LandingPage /></PublicRoute>}/>
-        <Route path='/home' element={<ProtectedRoute><HomePage theme={theme}/></ProtectedRoute>}/>
+        <Route path='/home' element={<ProtectedRoute><HomePage scrollToAbout={scrollToAbout} setScrollToAbout={setScrollToAbout} theme={theme}/></ProtectedRoute>}/>
         <Route path='/profileCard' element={<ProtectedRoute><ProfileCard /></ProtectedRoute>}/>
         <Route path='/profile' element={<ProtectedRoute><DashBoard theme={theme}/></ProtectedRoute>}/>
-        <Route path='/groups' element={<ProtectedRoute><GroupPage /></ProtectedRoute>}/>
-        <Route path='/contact' element={<ProtectedRoute><ContactUs /></ProtectedRoute>}/>
+        <Route path='/groups' element={<ProtectedRoute><GroupPage theme={theme}/></ProtectedRoute>}/>
+        <Route path='/all-groups' element={<ProtectedRoute><AllGroups theme={theme}/></ProtectedRoute>}/>
+        <Route path='/contact' element={<ContactUs theme={theme}/>}/>
+        <Route path='/join' element={<ProtectedRoute><JoinGroup /></ProtectedRoute>}/>
       </Routes>
 
     </>

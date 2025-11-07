@@ -21,7 +21,8 @@ import CreateGroup from "../CreateGroup/CreateGroup";
 import JoinGroup from "../JoinGroup/JoinGroup";
 import "../CreateGroup/CreateGroup.css";
 
-const HomePage = ({theme}) => {
+const HomePage = ({ theme, scrollToAbout, setScrollToAbout }) => {
+
   const parentRef = useRef(null);
   const [flippedCards, setFlippedCards] = useState([false, false, false]);
 
@@ -46,6 +47,21 @@ const HomePage = ({theme}) => {
 
   const [showCreateGroup, setShowCreateGroup] = useState(false);
   const [showJoinGroup, setShowJoinGroup] = useState(false);
+
+  const aboutUsRef = useRef(null);
+
+  const scrollToAboutUs = () => {
+    aboutUsRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+useEffect(() => {
+  if (scrollToAbout) {
+    scrollToAboutUs();
+    setScrollToAbout(false); // reset the trigger
+  }
+}, [scrollToAbout, setScrollToAbout]);
+
+
 
   return (
     <div className="min-h-screen">
@@ -75,7 +91,13 @@ const HomePage = ({theme}) => {
         {/* Left Section */}
         <div className="relative w-fit h-fit">
           <div className="relative top-50 left-20">
-            <h1 className={theme === "light" ? "fjalla text-6xl text-black" : "fjalla text-6xl text-[#F8FAFC]"}>
+            <h1
+              className={
+                theme === "light"
+                  ? "fjalla text-6xl text-black"
+                  : "fjalla text-6xl text-[#F8FAFC]"
+              }
+            >
               BATTLE YOUR FRIENDS AND
               <br />
               LEARN SIMULTANEOUSLY
@@ -86,13 +108,21 @@ const HomePage = ({theme}) => {
                 onClick={() => {
                   setShowCreateGroup(true);
                 }}
-                className={theme === "light" ? "transform-transition hover:scale-110 duration-300 text-white p-2 px-4 bg-black fjalla text-lg" : "transform-transition hover:scale-110 duration-300 text-white p-2 px-4 bg-orange-400 fjalla text-lg"}
+                className={
+                  theme === "light"
+                    ? "transform-transition hover:scale-110 duration-300 text-white p-2 px-4 bg-black fjalla text-lg"
+                    : "transform-transition hover:scale-110 duration-300 text-white p-2 px-4 bg-orange-400 fjalla text-lg"
+                }
               >
                 Create Group
               </button>
 
               <div className="transform-transition hover:scale-110 duration-300 flex gap-2 justify-center items-center">
-                <img src={theme === "light" ? target : targetBlack} alt="target img" className="h-5" />
+                <img
+                  src={theme === "light" ? target : targetBlack}
+                  alt="target img"
+                  className="h-5"
+                />
                 <button
                   onClick={() => {
                     setShowJoinGroup(true);
@@ -104,14 +134,15 @@ const HomePage = ({theme}) => {
               </div>
             </div>
 
-            <div className="relative top-22 left-8 bg-gradient-to-br from-[#a8927d] to-[#5b4a3a] rounded-xl w-80">
+            <div onClick={scrollToAboutUs}
+              className="cursor-pointer relative top-22 left-8 bg-gradient-to-br from-[#a8927d] to-[#5b4a3a] rounded-xl w-80 hover:scale-105 transform transition-all duration-300 active:scale-95 active:brightness-90">
               <h1 className="text-2xl fjalla pr-17 pl-7 py-2">
                 Know more About Us!
               </h1>
             </div>
 
             {/* SVGs and ProfileCards */}
-            <div className="relative top-22 left-16 min-h-[400px] z-50">
+            <div ref={aboutUsRef} className="relative top-22 left-16 min-h-[400px] z-50">
               <SvgAnimator
                 pathData="M3.9998 0.960349 L12.0295 810.96"
                 stroke={theme === "light" ? "black" : "white"}
@@ -131,7 +162,7 @@ const HomePage = ({theme}) => {
               </div>
               <SvgAnimator
                 pathData="M0.964914 6.00015 L228.965 4.00015"
-                stroke={theme === "light" ? "black" : "white"}  
+                stroke={theme === "light" ? "black" : "white"}
                 strokeWidth={6}
                 viewBox="0 0 229 10"
                 className="absolute top-140 -right-80"
@@ -146,6 +177,7 @@ const HomePage = ({theme}) => {
                   description="I am a passionate developer with a strong interest in technology, web development, and problem-solving. I'm continuously building his skills through projects, coding challenges, and creative pursuits."
                 />
               </div>
+              <div id="NavigationPoint"></div>
               <SvgAnimator
                 pathData="M217 4 L0 4"
                 stroke={theme === "light" ? "black" : "white"}
@@ -190,18 +222,28 @@ const HomePage = ({theme}) => {
             <img
               src={skill}
               alt="skill"
-              className={theme === "light" ? "h-50 p-3 bg-[#f2ece8] rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl " : "h-50 p-3 bg-[#708993] rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl "}
+              className={
+                theme === "light"
+                  ? "h-50 p-3 bg-[#f2ece8] rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl "
+                  : "h-50 p-3 bg-[#708993] rounded-xl -rotate-20 transform transition-all duration-300 hover:scale-110 hover:rotate-8 hover:shadow-2xl "
+              }
             />
             <img
               src={podium}
               alt="podium"
-              className={theme ==="light" ? "relative h-60 w-50 p-3 bg-orange-400 rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl" : "relative h-60 w-50 p-3 bg-[#E7F2EF] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"}
+              className={theme === "light" ? "relative h-60 w-50 p-3 bg-orange-400 rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl" : "relative h-60 w-50 p-3 bg-[#E7F2EF] rounded-xl transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-2xl"}
             />
           </div>
           <div className="h-fit">
             {/* Grow */}
             <div className="flex">
-              <div className={theme === "light" ? "h-1 relative top-4 -left-6 w-30 bg-black z-10" : "h-1 relative top-4 -left-6 w-30 bg-white z-10"}></div>
+              <div
+                className={
+                  theme === "light"
+                    ? "h-1 relative top-4 -left-6 w-30 bg-black z-10"
+                    : "h-1 relative top-4 -left-6 w-30 bg-white z-10"
+                }
+              ></div>
               <img
                 src={theme === "light" ? target : targetBlack}
                 alt="target"
@@ -225,13 +267,29 @@ const HomePage = ({theme}) => {
                   <img
                     src={Code}
                     alt="code"
-                    className={theme === "light" ? "h-45 bg-white border-15 rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl" : "h-45 bg-white border-15 border-[#A1C2BD] rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl"}
+                    className={
+                      theme === "light"
+                        ? "h-45 bg-white border-15 rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl"
+                        : "h-45 bg-white border-15 border-[#A1C2BD] rounded-xl rotate-20 p-3 transition-transform duration-500 hover:[transform:rotateX(15deg)rotateY(15deg)scale(1.1)] hover:shadow-2xl"
+                    }
                   />
                 </div>
-                <div className={theme === "light" ? "h-1 absolute top-10 left-30 w-40 bg-black z-10" : "h-1 absolute top-10 left-30 w-40 bg-white z-10"}></div>
+                <div
+                  className={
+                    theme === "light"
+                      ? "h-1 absolute top-10 left-30 w-40 bg-black z-10"
+                      : "h-1 absolute top-10 left-30 w-40 bg-white z-10"
+                  }
+                ></div>
               </div>
               <div>
-                <div className={theme === "light" ? "w-1 h-6 bg-black relative left-35 top-20" : "w-1 h-6 bg-white relative left-35 top-20"}></div>
+                <div
+                  className={
+                    theme === "light"
+                      ? "w-1 h-6 bg-black relative left-35 top-20"
+                      : "w-1 h-6 bg-white relative left-35 top-20"
+                  }
+                ></div>
                 <img
                   src={theme === "light" ? target : targetBlack}
                   alt="target"
@@ -250,7 +308,13 @@ const HomePage = ({theme}) => {
             </div>
             {/* Compete Portion */}
             <div className="flex">
-              <div className={theme === "light" ? "h-1 relative top-35 -left-6 w-35 bg-black" : "h-1 relative top-35 -left-6 w-35 bg-white"}></div>
+              <div
+                className={
+                  theme === "light"
+                    ? "h-1 relative top-35 -left-6 w-35 bg-black"
+                    : "h-1 relative top-35 -left-6 w-35 bg-white"
+                }
+              ></div>
               <img
                 src={theme === "light" ? target : targetBlack}
                 alt="target"
@@ -324,10 +388,10 @@ const HomePage = ({theme}) => {
         </div> */}
       {/* </div> */}
       <div className="relative top-300">
-        <FAQs />
+        <FAQs theme={theme} />
       </div>
       <div className="relative top-300">
-        <Footer />
+        <Footer theme={theme} />
       </div>
 
       {showCreateGroup && (
@@ -337,7 +401,7 @@ const HomePage = ({theme}) => {
       )}
       {showJoinGroup && (
         <div className="overlay">
-          <JoinGroup close4={() => setShowJoinGroup(false)} theme={theme}/>
+          <JoinGroup close4={() => setShowJoinGroup(false)} theme={theme} />
         </div>
       )}
     </div>

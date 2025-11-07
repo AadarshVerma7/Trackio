@@ -30,6 +30,8 @@
     "tailwindcss-animation-delay": "^2.0.2",
     "three": "^0.178.0",
     "use-streak": "^1.0.4",
+    "toastify": "^2.0.1",
+
     "vanta": "^0.5.24"
   },
   "devDependencies": {
