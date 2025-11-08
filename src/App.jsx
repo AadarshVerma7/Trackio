@@ -20,13 +20,12 @@ import { ContactUs } from './Pages/ContactUs/ContactUs.jsx'
 import { set } from 'react-hook-form'
 import JoinGroup from './Pages/JoinGroup/JoinGroup.jsx'
 import AllGroups from './Pages/AllGroups/AllGroups.jsx'
+import ResetPassword from './Pages/ResetPassword/ResetPassword.jsx'
 
 function App() {
   const location = useLocation();
 
   const [scrollToAbout, setScrollToAbout] = useState(false);
-
-  const showNavbar = location.pathname !== "/";
 
   const {isLoggedIn} = useContext(AppContext);
 
@@ -39,11 +38,14 @@ function App() {
   useEffect(() => {
     document.documentElement.className = theme; // applies "light" or "dark" to <html>
   }, [theme]);
+
+  const hideNavbarPaths = ['/','/forgot-password'];
+  const showNavbar = !hideNavbarPaths.includes(location.pathname);
   
   return (
     <>
     <ToastContainer />
-      {showNavbar && <Navbar2 onAboutClick={() => setScrollToAbout(true)} theme={theme} toggleTheme={toggleTheme} />}
+      {showNavbar && (<Navbar2 onAboutClick={() => setScrollToAbout(true)} theme={theme} toggleTheme={toggleTheme} />)}
       <Routes>
         <Route path='/' element={<PublicRoute><LandingPage /></PublicRoute>}/>
         <Route path='/home' element={<ProtectedRoute><HomePage scrollToAbout={scrollToAbout} setScrollToAbout={setScrollToAbout} theme={theme}/></ProtectedRoute>}/>
@@ -53,6 +55,7 @@ function App() {
         <Route path='/all-groups' element={<ProtectedRoute><AllGroups theme={theme}/></ProtectedRoute>}/>
         <Route path='/contact' element={<ContactUs theme={theme}/>}/>
         <Route path='/join' element={<ProtectedRoute><JoinGroup /></ProtectedRoute>}/>
+        <Route path='/forgot-password' element={<ResetPassword />}/>
       </Routes>
 
     </>

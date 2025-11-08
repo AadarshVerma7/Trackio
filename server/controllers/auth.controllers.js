@@ -274,7 +274,7 @@ const passwordResetOtp = asyncHandler(async (req,res)=>{
     .json(
         new apiResponse(200,
             {},
-            "If the User exists then the password Reset Mail has been sent Successfully"
+            "Password reset link sent"
         )
     );
 });

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 
@@ -12,32 +12,31 @@ function Login({ close }) {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const { backendUrl, setIsLoggedIn, getUserData } = useContext(AppContext);
+  const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
+
   const onSubmit = async (data) => {
     try {
-      const {email,password} = data;
-      const response = await axios.post(`${backendUrl}/api/auth/login`,{
+      const { email, password } = data;
+      const response = await axios.post(`${backendUrl}/api/auth/login`, {
         email,
         password,
       });
 
-      if(response.data.success){
-        toast.success(response.data.message || "Login Successful !");
+      if (response.data.success) {
+        toast.success(response.data.message || "Login Successful!");
         setIsLoggedIn(true);
         await getUserData();
-        navigate('/home');
+        navigate("/home");
         close();
-      }
-      else{
-        toast.error(response.data.message || "Login Failed !");
+      } else {
+        toast.error(response.data.message || "Login Failed!");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Something went Wrong !");
+      toast.error(error.response?.data?.message || "Something went wrong!");
     }
   };
-
-  const {backendUrl,setIsLoggedIn,setUserData,getUserData} = useContext(AppContext);
-  const navigate = useNavigate();
-  axios.defaults.withCredentials=true;
 
   return (
     <div className="bg-white/1 backdrop-blur-lg border border-orange-500 rounded-lg shadow-lg w-80 px-6 py-8 flex flex-col gap-4 font-sans relative">
@@ -49,7 +48,7 @@ function Login({ close }) {
         &times;
       </button>
 
-      <h2 className="text-2xl font-semibold mb-2 text-center text-white">
+      <h2 className="text-3xl font-semibold mb-2 text-center text-white">
         Login
       </h2>
 
@@ -58,7 +57,7 @@ function Login({ close }) {
           type="email"
           placeholder="Email"
           className={`border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
-            errors.username ? "border-red-500" : "border-orange-500"
+            errors.email ? "border-red-500" : "border-orange-500"
           } bg-transparent text-white placeholder-white`}
           {...register("email", { required: "Email is required" })}
         />
@@ -77,6 +76,16 @@ function Login({ close }) {
         {errors.password && (
           <p className="text-red-500 text-sm">{errors.password.message}</p>
         )}
+
+        {/* Forgot Password Link */}
+        <div className="text-right text-sm underline">
+          <Link
+            to="/forgot-password"
+            className="text-orange-400 hover:text-orange-500"
+          >
+            Forgot Password?
+          </Link>
+        </div>
 
         <button
           type="submit"

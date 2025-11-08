@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppContext.jsx";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Signup({ close2 }) {
   const {
@@ -18,9 +18,9 @@ function Signup({ close2 }) {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(`${backendUrl}/api/auth/register`, {
-        name:data.username,
-        email:data.userEmail,
-        password:data.password,
+        name: data.username,
+        email: data.userEmail,
+        password: data.password,
       });
 
       if (res.data.success) {
@@ -28,7 +28,7 @@ function Signup({ close2 }) {
         setIsLoggedIn(true);
         setUserData(res.data.user);
         close2();
-        navigate("/home"); // redirect to home
+        navigate("/home");
       } else {
         toast.error(res.data.message || "Signup failed");
       }
@@ -51,7 +51,7 @@ function Signup({ close2 }) {
         &times;
       </button>
 
-      <h2 className="text-2xl font-semibold mb-2 text-center text-orange-500">
+      <h2 className="text-3xl font-semibold mb-2 text-center text-white">
         Sign Up
       </h2>
 
@@ -99,6 +99,16 @@ function Signup({ close2 }) {
         >
           {isSubmitting ? "Signing in..." : "Sign Up"}
         </button>
+
+        {/* Forgot Password Link */}
+        <div className="text-center text-sm mt-2 underline">
+          <Link
+            to="/forgot-password"
+            className="text-orange-400 hover:text-orange-500"
+          >
+            Forgot Password?
+          </Link>
+        </div>
       </form>
     </div>
   );

@@ -1,6 +1,7 @@
 import userModel from "../models/user.models.js";
 import { apiError } from "../utils/apiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 /**
  * GET user data (uses req.user from verifyJWT)
@@ -14,9 +15,15 @@ const getUserData = asyncHandler(async (req, res) => {
     success: true,
     userData: {
       name: user.name,
-      streak: user.streak ?? 0,
+      email: user.email,
+      phone: user.phone,
+      address: user.address,
+      profilePic: user.profilePic,
+      streak: user.streak?.currentCount??0,
+      startDate: user.streak?.startDate ?? null,
       maxStreak: user.maxStreak ?? 0,
       lastActiveDays: user.lastActiveDays ?? null,
+      lastLoginDate: user.streak?.lastLoginDate ?? null,
     },
   });
 });
@@ -29,26 +36,95 @@ const getUserData = asyncHandler(async (req, res) => {
  * - Adds a streakHistory entry only if today's date not already present
  */
 const updateStreak = asyncHandler(async (req, res) => {
-  const {currentStreak,startDate,lastLoginDate} = req.body;
-  if(currentStreak === undefined || !startDate || !lastLoginDate) return new apiError(400,"Missing Streak Fields");
-  const user = await userModel.findById(req.user._id);
-  if (!user) throw new apiError(404, "User Not Found!");
+  try {
+    const user = await userModel.findById(req.user._id);
+    if (!user) throw new apiError(404, "User Not Found!");
 
-  user.streak.currentStreak=currentStreak;
-  user.streak.startDate=startDate;
-  user.streak.lastLoginDate=lastLoginDate;
-  if(currentStreak>(user.maxStreak || 0)) user.maxStreak=currentStreak;
+    const today = new Date();
+    const lastLogin = user.streak?.lastLoginDate
+      ? new Date(user.streak.lastLoginDate)
+      : null;
 
-  await user.save();
+    if (!lastLogin) {
+      user.streak.currentCount = 1;
+      user.streak.startDate = today;
+    } else {
+      const diffDays = Math.floor(
+        (today - lastLogin) / (1000 * 60 * 60 * 24)
+      );
 
-  res.json({
-    success: true,
-    message: "Streak updated",
-    data: {
+      if (diffDays === 1) {
+        user.streak.currentCount += 1;
+      } else if (diffDays > 1) {
+        user.streak.currentCount = 1;
+        user.streak.startDate = today;
+      }
+    }
+
+    user.streak.lastLoginDate = today;
+
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "Streak updated successfully",
       streak: user.streak,
-      maxStreak: user.maxStreak,
-    },
-  });
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error in updateStreak",
+      error: error.message,
+      stack: error.stack,
+    });
+  }
 });
 
-export { getUserData, updateStreak };
+const updateUserProfile = asyncHandler(async(req,res)=>{
+  const userId = req.user?._id;
+  if(!userId) throw new apiError(401,"Unauthorized");
+
+  const {name,email,phone,address} = req.body;
+  const updatedData={};
+
+  if(name) updatedData.name=name;
+  if(email) updatedData.email=email;
+  if(phone) updatedData.phone=phone;
+  if(address) updatedData.address=address;
+
+  try {
+    if(req.file){
+      const localFilePath = req.file.path;
+      const uploadResult = await uploadOnCloudinary(localFilePath);
+  
+      if(!uploadResult?.secure_url){
+        throw new apiError(400,"Failed to Upload Image on Cloudinary !");
+      }
+      updatedData.profilePic={
+        url:uploadResult.secure_url,
+        publicId: uploadResult.public_id,
+      };
+    }
+
+    const updatedUser = await userModel
+    .findByIdAndUpdate(userId,{$set:updatedData},{new:true})
+    .select("-password -verifyOtp -resetOtp");
+
+    if(!updatedUser) throw new apiError(404,"User Not Found !");
+
+    res.json({
+      success:true,
+      message:"Profile updated Successfully !",
+      data:updatedUser,
+    });
+  } catch (error) {
+    console.error("Error Updating User Profile !",error.message);
+    res.status(500).json({
+      success:false,
+      message:"Error Updating User Profile",
+      error:error.message,
+    });
+  }
+});
+
+export { getUserData, updateStreak, updateUserProfile };
