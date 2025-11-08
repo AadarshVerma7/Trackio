@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/mongodb.js";
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
+import path from "path";
 
 const app = express();
 
@@ -36,6 +37,8 @@ app.get('/', (req, res) => {
 })
 
 //API EndPoints
+
+app.use("/public",express.static(path.join(process.cwd(),"public")));
 
 app.use('/api/auth',authRouter);
 

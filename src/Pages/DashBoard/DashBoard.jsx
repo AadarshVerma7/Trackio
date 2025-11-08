@@ -14,6 +14,7 @@ import EditProfile from "../../Components/EditProfile/EditProfile.jsx";
 function DashBoard({ theme }) {
   const [inputValue, setInputValue] = useState("");
   const [showEditProfile, setShowEditProfile] = useState(false);
+  const [profilePicUrl,setProfilePicUrl] = useState("");
 
   const { backendUrl, setIsLoggedIn, setUserData } = useContext(AppContext);
   const navigate = useNavigate();
@@ -65,6 +66,8 @@ function DashBoard({ theme }) {
         });
         if (data.success) {
           setUserName(data.userData.name);
+          setProfilePicUrl(data.userData.profilePic?.url || "https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png");
+          localStorage.setItem("userProfilePic",data.userData.profilePic?.url);
         }
       } catch (error) {
         console.log("Error fetching user data : ", error);
@@ -78,8 +81,9 @@ function DashBoard({ theme }) {
         });
         if (data.success) {
           setStreakData({
-            streak: data.data.streak,
-            maxStreak: data.data.maxStreak,
+            streak: data.streak?.currentCount || 0,
+            startDate: data.streak?.startDate || null,
+            lastLoginDate: data.streak?.lastLoginDate || null,
           });
         }
       } catch (error) {
@@ -104,7 +108,7 @@ function DashBoard({ theme }) {
           <div className="flex flex-col items-center gap-4">
             <div className="w-32 h-32 rounded-full overflow-hidden ring-4 ring-orange-400/60 shadow-lg">
               <img
-                src="https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png"
+                src={profilePicUrl || localStorage.getItem("userProfilePic") || "https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png"}
                 alt="Avatar"
                 className="object-cover w-full h-full"
               />
@@ -118,11 +122,12 @@ function DashBoard({ theme }) {
             {showEditProfile && (
               <div className="fixed inset-0 backdrop-blur-sm bg-black/20 flex items-center justify-center z-50">
                 <div className="bg-white rounded-xl shadow-xl p-6 w-[90%] max-w-3xl">
+                  <div className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text tracking-wide pb-3">Profile</div>
                   <EditProfile />
                   <div className="flex justify-end mt-4">
                     <button
                       onClick={() => setShowEditProfile(false)}
-                      className="px-5 py-2 rounded-lg bg-gray-300 hover:bg-gray-400"
+                      className="px-5 py-2 rounded-lg bg-red-500 hover:bg-red-600 cursor-pointer text-white"
                     >
                       Close
                     </button>
@@ -134,7 +139,7 @@ function DashBoard({ theme }) {
 
           {/* STATS */}
           <div className="w-full mt-8">
-            <hr className="text-gray-400 border-t-2 rounded-4xl"/>
+            <hr className="text-gray-400 border-t-2 rounded-4xl" />
             <h3
               className={`text-center text-3xl font-semibold m-6 bg-gradient-to-r ${colors.accent} bg-clip-text text-transparent`}
             >
@@ -157,10 +162,10 @@ function DashBoard({ theme }) {
             </ul>
 
             <div className="flex justify-between mt-8">
-              <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white font-semibold px-5 py-2 rounded-lg transition-all">
+              <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white font-semibold px-5 py-2 rounded-lg transition-all cursor-pointer">
                 Logout
               </button>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg transition-all">
+              <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg transition-all cursor-pointer">
                 Support
               </button>
             </div>
@@ -240,8 +245,8 @@ function DashBoard({ theme }) {
                   <input
                     type="text"
                     className={`w-full pl-10 pr-4 py-2 rounded-lg border focus:ring-2 focus:ring-orange-400 outline-none ${isDark
-                        ? "bg-transparent border-gray-700 text-white"
-                        : "bg-white border-gray-300 text-gray-800"
+                      ? "bg-transparent border-gray-700 text-white"
+                      : "bg-white border-gray-300 text-gray-800"
                       }`}
                     placeholder="Search Groups"
                     value={inputValue}
@@ -251,8 +256,8 @@ function DashBoard({ theme }) {
 
                 <select
                   className={`px-4 py-2 rounded-lg border ${isDark
-                      ? "bg-gray-700 border-gray-700 text-white"
-                      : "bg-white border-gray-300 text-gray-800"
+                    ? "bg-gray-700 border-gray-700 text-white"
+                    : "bg-white border-gray-300 text-gray-800"
                     }`}
                 >
                   <option value="Member">Member</option>
@@ -267,8 +272,8 @@ function DashBoard({ theme }) {
                     <div
                       key={group}
                       className={`w-[150px] text-center py-6 rounded-xl border transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-md ${isDark
-                          ? "bg-white/5 border-gray-600 hover:bg-orange-500/20"
-                          : "bg-white/70 border-gray-300 hover:bg-orange-100"
+                        ? "bg-white/5 border-gray-600 hover:bg-orange-500/20"
+                        : "bg-white/70 border-gray-300 hover:bg-orange-100"
                         }`}
                     >
                       <p

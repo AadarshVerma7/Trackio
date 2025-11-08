@@ -12,9 +12,10 @@ function Navbar( {onLoginClick , onSignupClick}) {
 
       <div className="hidden md:flex space-x-8 text-stone-200 text-lg font-medium">
         <div className="relative group cursor-pointer">
-        <Link to='/home' className="relative group">
+        <div className="relative group">
           Home
           <span className="absolute left-0 -bottom-1 w-0 h-0.25 bg-white transition-all duration-300 group-hover:w-full"></span>
+        </div>
         </div>
         <div className="relative group cursor-pointer">
           About

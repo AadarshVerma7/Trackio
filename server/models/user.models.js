@@ -1,15 +1,50 @@
 import mongoose from "mongoose";
 
+const profilePicSchema = new mongoose.Schema(
+    {
+        url:{
+            type:String,
+            default:"",
+        },
+        publicId:{
+            type:String,
+            default:"",
+        },
+    },
+    {_id:false}
+);
+
+const streakSchema = new mongoose.Schema(
+    {
+        currentCount:{
+            type:Number,
+            default:0,
+        },
+        startDate:{
+            type:Date,
+            default:null,
+        },
+        lastLoginDate:{
+            type:Date,
+            default:null,
+        },
+    },
+    {_id:false}
+);
+
 const UserSchema=new mongoose.Schema({
     name:{
         type:String,
         required:true,
+        trim:true,
     },
     email:{
         type:String,
         required:true,
         unique:true,
         index:true,
+        lowercase:true,
+        trim:true,
     },
     password:{
         type:String,
@@ -17,7 +52,7 @@ const UserSchema=new mongoose.Schema({
     },
     verifyOtp:{
         type:String,
-        default:'',
+        default:"",
     },
     verifyOtpExpireAt:{
         type:Number,
@@ -29,19 +64,32 @@ const UserSchema=new mongoose.Schema({
     },
     resetOtp:{
         type:String,
-        default:'',
+        default:"",
     },
     resetOtpExpireAt:{
         type:Number,
         default:0,
     },
-    streak: {
-        currentCount: { type: Number, default: 0 },
-        startDate: { type: Date, default: "" },
-        lastLoginDate: { type: String, default: "" },
+    phone:{
+        type:String,
+        default:"",
+        trim:true,
     },
+    address:{
+        type:String,
+        default:"",
+        trim:true,
+    },
+    profilePic:{
+        type:profilePicSchema,
+        default:()=>({}),
+    },
+    streak:{
+        type:streakSchema,
+        default:()=>({}),
+    }
 },{timestamps:true});
 
-const UserModel=mongoose.models.user || mongoose.model('User',UserSchema);
+const UserModel = mongoose.models.User || mongoose.model("User",UserSchema);
 
 export default UserModel;
