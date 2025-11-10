@@ -25,6 +25,6 @@ export const uploadOnCloudinary = async (localFilePath) =>{
     } catch (error) {
         if (fs.existsSync(localFilePath)) fs.unlinkSync(localFilePath);
         console.error("Cloudinary upload failed:", error);
-        throw new apiError(500, error.message || "Cloudinary upload failed");
+        throw new Error(500, error.message || "Cloudinary upload failed");
     }
 };

@@ -25,6 +25,8 @@ function Signup({ close2 }) {
 
       if (res.data.success) {
         toast.success("Signup successful!");
+        localStorage.setItem("token",res.data.data.token);
+        localStorage.setItem("userId",res.data.data.id);
         setIsLoggedIn(true);
         setUserData(res.data.user);
         close2();

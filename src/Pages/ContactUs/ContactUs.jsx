@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import Footer from "../../Components/Footer/Footer";
+import { toast } from "react-toastify";
 
 // ==========================================================
 // ✅ First ContactUs component (original structure)
@@ -62,12 +63,37 @@ export const ContactUs = ({ theme }) => {
         if (errors.message) return messageRef.current.focus();
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validate()) {
-            alert("Message sent successfully!");
-            setFormData({ firstName: "", lastName: "", email: "", message: "" });
-            setErrors({});
+            try {
+                const response = await fetch("http://localhost:4000/api/contact/send-complaint",{
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json",
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const data=await response.json();
+
+                if(response.ok && data.success){
+                    toast.success("Complaint send successfully !");
+                    setFormData({
+                        firstName:"",
+                        lastName:"",
+                        email:"",
+                        message:"",
+                    });
+                    setErrors({});
+                }
+                else{
+                    toast.error(data.message || "Failed to send complaint");
+                }
+            } catch (error) {
+                console.log("Error Submiting Form : ",error);
+                toast.error("Something went Wrong. Please try again later");
+            }
         } else {
             focusFirstError();
         }
@@ -216,7 +242,7 @@ export const ContactUs = ({ theme }) => {
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    placeholder="you@example.com"
+                                    placeholder="your@example.com"
                                     className={`w-full border rounded-xl p-3 bg-white transition-all duration-300 focus:outline-none focus:ring-2 
                                         ${theme === "light"
                                                 ? `bg-white text-black placeholder-gray-500 border-gray-300 focus:ring-black`
@@ -259,7 +285,7 @@ export const ContactUs = ({ theme }) => {
                             <div className="flex justify-end pt-2">
                                 <button
                                     type="submit"
-                                    className={`bg-${primaryColor} text-black px-8 py-3 border-2 border-black rounded-xl font-semibold flex items-center gap-2 hover:bg-${primaryColorHover} transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-1  focus:ring-opacity-50 active:scale-95`}
+                                    className={`bg-${primaryColor} text-black px-8 py-3 border-2 border-black rounded-xl font-semibold flex items-center gap-2 hover:bg-${primaryColorHover} transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-1  focus:ring-opacity-50 active:scale-95 cursor-pointer`}
                                 >
                                     Send Message <span className="text-lg">→</span>
                                 </button>

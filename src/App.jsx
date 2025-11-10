@@ -51,8 +51,8 @@ function App() {
         <Route path='/home' element={<ProtectedRoute><HomePage scrollToAbout={scrollToAbout} setScrollToAbout={setScrollToAbout} theme={theme}/></ProtectedRoute>}/>
         <Route path='/profileCard' element={<ProtectedRoute><ProfileCard /></ProtectedRoute>}/>
         <Route path='/profile' element={<ProtectedRoute><DashBoard theme={theme}/></ProtectedRoute>}/>
-        <Route path='/groups' element={<ProtectedRoute><GroupPage theme={theme}/></ProtectedRoute>}/>
-        <Route path='/all-groups' element={<ProtectedRoute><AllGroups theme={theme}/></ProtectedRoute>}/>
+        <Route path='/groups/:groupId' element={<ProtectedRoute><GroupPage theme={theme}/></ProtectedRoute>}/>
+        <Route path='/groups' element={<ProtectedRoute><AllGroups theme={theme}/></ProtectedRoute>}/>
         <Route path='/contact' element={<ContactUs theme={theme}/>}/>
         <Route path='/join' element={<ProtectedRoute><JoinGroup /></ProtectedRoute>}/>
         <Route path='/forgot-password' element={<ResetPassword />}/>

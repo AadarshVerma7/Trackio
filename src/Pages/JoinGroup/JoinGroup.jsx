@@ -2,6 +2,7 @@ import React from 'react'
 import joinGroupbgLight from '../../assets/joinGroupbgLight.png'
 import joinGroupbgDark from '../../assets/joinGroupbgDark.png'
 import { useForm } from "react-hook-form";
+import { toast } from 'react-toastify';
 
 const JoinGroup = ({ close4 , theme}) => {
   const {
@@ -10,8 +11,36 @@ const JoinGroup = ({ close4 , theme}) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
+  const onSubmit = async (data) => {
+    const payload = {
+      groupName:data.groupName,
+      groupId:data.groupId,
+    };
+
+    try {
+      const response = await fetch("http://localhost:4000/api/group/join",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          "Authorization":`Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify(payload),
+        credentials:"include",
+      });
+
+      const result=await response.json();
+
+      if(result.success){
+        toast.success(`${result.message}`);
+        close4();
+      }
+      else{
+        toast.error(`${result.message}`);
+      }
+    } catch (error) {
+      console.log("Error joining group : ",error);
+      toast.error("Something went wrong. Please try again !");
+    }
   };
 
   return (
@@ -50,7 +79,7 @@ const JoinGroup = ({ close4 , theme}) => {
               className={`w-80 border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-400 ${
                 errors.groupID ? "border-red-500" : "border-orange-400"
               } bg-black/40 text-white placeholder-gray-400 backdrop-blur-md`}
-              {...register("groupID", { required: "Group ID is required" })}
+              {...register("groupId", { required: "Group ID is required" })}
             />
             {errors.groupID && (
               <p className="text-red-400 text-sm mt-1">

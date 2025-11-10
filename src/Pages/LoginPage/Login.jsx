@@ -26,6 +26,8 @@ function Login({ close }) {
 
       if (response.data.success) {
         toast.success(response.data.message || "Login Successful!");
+        localStorage.setItem("token",response.data.data.token);
+        localStorage.setItem("userId",response.data.data.id);
         setIsLoggedIn(true);
         await getUserData();
         navigate("/home");
