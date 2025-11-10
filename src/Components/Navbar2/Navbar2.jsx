@@ -26,7 +26,7 @@ function Navbar2({ theme, toggleTheme, onAboutClick }) {
 
       {/* Navigation Links */}
       <div className="flex gap-6 items-center text-lg font-semibold fjalla tracking-wide">
-        {["Home", "About Us", "Contact", "Groups", "All-Groups"].map((link) => {
+        {["Home", "About Us", "Contact", "Groups"].map((link) => {
           if (link === "About Us") {
             return (
               <a

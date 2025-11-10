@@ -62,6 +62,7 @@ const registerUser = asyncHandler(async (req, res) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
+                token,
             }, "User Registered Successfully")
         );
 });
@@ -102,6 +103,7 @@ const loginUser = asyncHandler(async (req, res) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
+                token,
             }, "User Logged in SuccessFully")
         );
 });

@@ -8,6 +8,10 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/mongodb.js";
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
+import contactRoutes from "./routes/contact.routes.js";
+import groupRoutes from "./routes/group.routes.js";
+import taskRoutes from "./routes/task.routes.js";
+import resourceRoutes from "./routes/resource.routes.js";
 import path from "path";
 
 const app = express();
@@ -40,6 +44,14 @@ app.get('/', (req, res) => {
 
 app.use("/public",express.static(path.join(process.cwd(),"public")));
 
+app.use("/api/contact",contactRoutes);
+
 app.use('/api/auth',authRouter);
 
 app.use('/api/user',userRouter);
+
+app.use("/api/group",groupRoutes);
+
+app.use("/api/tasks",taskRoutes);
+
+app.use("/api/resources",resourceRoutes);

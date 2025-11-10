@@ -4,7 +4,7 @@ import User from "../models/user.models.js";
 
 export const verifyJWT =  async (req, res, next) => {
   try {
-    const token = req.cookies?.token;
+    const token = req.cookies?.token || req.headers.authorization?.split(" ")[1];
 
     if (!token) {
       throw new apiError(401, "Unauthorized - No Token Provided");
@@ -16,7 +16,7 @@ export const verifyJWT =  async (req, res, next) => {
     if(!user){
       return res.status(404).json({success:false,message:"User Not Found"});
     }
-    req.user = user; // now req.user._id is available
+    req.user = user;
     next();
   } catch (error) {
     console.error("JWT Verification Failed:", error.message);

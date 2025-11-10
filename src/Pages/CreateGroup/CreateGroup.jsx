@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
 import createGroupbgLight from '../../assets/createGroupbgLight.png'
 import createGroupbgDark from '../../assets/createGroupbgDark.png'
+import {toast} from "react-toastify";
 
 
 const CreateGroup = ({ close3, theme }) => {
@@ -11,8 +12,39 @@ const CreateGroup = ({ close3, theme }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", {...data,todos});
+  const onSubmit = async (data) => {
+    const payload = {
+      groupName:data.groupName,
+      topic:data.groupTopic,
+      description:data.groupDescription,
+      todoList:todos.map(todo=>({task:todo.text})),
+    };
+
+    try {
+      const response = await fetch("http://localhost:4000/api/group/create",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify(payload),
+        credentials:"include",
+      });
+
+      const result = await response.json();
+
+      if(result.success){
+        toast.success(`${result.message}`);
+        setTodos([]);
+        close3();
+      }
+      else{
+        toast.error(`${result.message}`);
+      }
+    } catch (error) {
+      console.error("Error Creating group : ",error);
+      toast.error("Something went wrong. Please try again !");
+    }
   };
 
   const [task,setTask] = useState("");
@@ -114,7 +146,7 @@ const CreateGroup = ({ close3, theme }) => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition"
+            className="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition cursor-pointer"
           >
             Create Group
           </button>
