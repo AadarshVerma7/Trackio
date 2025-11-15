@@ -12,6 +12,7 @@ import contactRoutes from "./routes/contact.routes.js";
 import groupRoutes from "./routes/group.routes.js";
 import taskRoutes from "./routes/task.routes.js";
 import resourceRoutes from "./routes/resource.routes.js";
+import chatBotRoutes from "./routes/chatBot.routes.js";
 import path from "path";
 
 const app = express();
@@ -55,3 +56,5 @@ app.use("/api/group",groupRoutes);
 app.use("/api/tasks",taskRoutes);
 
 app.use("/api/resources",resourceRoutes);
+
+app.use("/api",chatBotRoutes);

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import Login from "../../Pages/LoginPage/Login"
 import Signup from "../../Pages/SignupPage/Signup"
-
+import Quiz from "../../Components/Log-In-Quiz/Quiz";
 
 function LandingPage() {
   const [showGlow, setShowGlow] = useState(false);
@@ -17,6 +17,14 @@ function LandingPage() {
       clearTimeout(hideTimer);
     };
   }, []);
+
+  const openSignupAfterQuiz = () => {
+    setOpenQuiz(false);
+    setShowSignup(true);
+  };
+
+
+  const [openQuiz, setOpenQuiz] = useState(false);
 
   const[showLogin,setShowLogin] = useState(false);
   const[showSignup,setShowSignup] = useState(false);
@@ -38,6 +46,13 @@ function LandingPage() {
           <Signup close2={() => setShowSignup(false)} />
         </div>
       )}
+
+      <Quiz
+        isOpen={openQuiz}
+        onClose={() => setOpenQuiz(false)}
+        openSignup={openSignupAfterQuiz}
+      />
+
       <VantaGlobe />
       <div
         style={{
@@ -82,7 +97,9 @@ function LandingPage() {
           </div>
         </h1>
         <div className="glow-wrapper relative inline-block rounded-[22px] p-[2px] mt-10">
-          <button className="relative z-10 w-full text-white text-xl font-semibold px-7 py-3.5 rounded-[20px] bg-orange-500 hover:bg-orange-600 hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(255,102,0,0.4)] transition-all duration-300 ease-in-out active:scale-95 cursor-pointer ">
+          <button
+            onClick={() => setOpenQuiz(true)}
+            className="relative z-10 w-full text-white text-xl font-semibold px-7 py-3.5 rounded-[20px] bg-orange-500 hover:bg-orange-600 hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(255,102,0,0.4)] transition-all duration-300 ease-in-out active:scale-95 cursor-pointer">
             Start Now
           </button>
           <span
