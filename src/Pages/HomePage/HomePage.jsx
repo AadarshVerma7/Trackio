@@ -20,6 +20,7 @@ import Footer from "../../Components/Footer/Footer";
 import CreateGroup from "../CreateGroup/CreateGroup";
 import JoinGroup from "../JoinGroup/JoinGroup";
 import "../CreateGroup/CreateGroup.css";
+import ChatBot from "../../Components/ChatBot/ChatBot";
 
 const HomePage = ({ theme, scrollToAbout, setScrollToAbout }) => {
 
@@ -404,6 +405,8 @@ useEffect(() => {
           <JoinGroup close4={() => setShowJoinGroup(false)} theme={theme} />
         </div>
       )}
+
+      <ChatBot />
     </div>
   );
 };

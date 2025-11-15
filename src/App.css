@@ -9,3 +9,12 @@
   align-items: center;
   z-index: 9999; 
 }
+
+@keyframes slideUp {
+  from { transform: translateY(30px)}
+  to { transform: translateY(0)}
+}
+
+.animate-slideUp {
+  animation: slideUp 0.4s ease-out forwards;
+}
