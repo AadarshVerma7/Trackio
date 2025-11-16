@@ -10,6 +10,18 @@ import AddResourceModal from "../../Components/AddResourceModel/AddResourceModel
 import ViewResourcesModal from "../../Components/ViewResourceModel/ViewResourceModel.jsx";
 
 function GroupPage({ theme }) {
+  const isDark = theme === "dark";
+  const colors = {
+    primary: isDark ? "bg-[#272F40]" : "bg-[#D0C1A8]",
+    secondary: isDark ? "bg-[#0F172A]" : "bg-[#a6987f]",
+    button: isDark ? "bg-gray-900" : "bg-[#95775A]",
+    buttonPrimary: isDark ? "bg-[#101828]" : "bg-[#95775A]",
+  buttonSecondary: isDark ? "bg-[#18243b]" : "bg-[#a38466]",
+    textPrimary: isDark ? "text-white" : "text-gray-800",
+    textMuted: isDark ? "text-gray-400" : "text-gray-900",
+  };
+
+
   const { backendUrl } = useContext(AppContext);
   const { groupId } = useParams();
   const [group, setGroup] = useState(null);
@@ -132,20 +144,20 @@ function GroupPage({ theme }) {
     <>
       <div className="flex p-8">
         <div className="w-3/4 space-y-4">
-          <div className="p-4 rounded-2xl bg-[#272F40] text-white shadow-md">
-            <h1 className="text-3xl font-bold">{group.groupName}</h1>
-            <p className="text-gray-300 mt-2">{group.description}</p>
+          <div className={`mx-6 mt-4 p-4 rounded-2xl ${colors.primary} ${colors.textPrimary} shadow-md`}>
+            <h1 className={`text-3xl ${colors.textPrimary} font-bold`}>{group.groupName}</h1>
+            <p className={`${colors.textMuted} mt-2`}>{group.description}</p>
 
             <div className="flex gap-4 mt-4">
               <button
                 onClick={() => setShowAddModal(true)}
-                className="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                className={`${colors.buttonPrimary} px-4 py-2 rounded-lg font-semibold hover:scale-[1.02] duration-300 transition`}
               >
                 Add Resources
               </button>
               <button
                 onClick={() => setShowViewModal(true)}
-                className="bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 transition"
+                className={`${colors.buttonSecondary} px-4 py-2 rounded-lg font-semibold hover:scale-[1.02] duration-300 transition`}
               >
                 View Resources
               </button>

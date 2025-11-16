@@ -46,11 +46,14 @@ function AllGroups({ theme }) {
         const groupsWithProgress = await Promise.all(
           result.groups.map(async (group) => {
             try {
-              const res = await fetch(`${backendUrl}/api/tasks/progress/${group._id}`, {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-              });
+              const res = await fetch(
+                `${backendUrl}/api/tasks/progress/${group._id}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  },
+                }
+              );
               const data = await res.json();
               if (res.ok && data.success) {
                 return { ...group, userProgress: data.progress };
@@ -94,17 +97,23 @@ function AllGroups({ theme }) {
   ).length;
   const avgProgress =
     groups.length > 0
-      ? Math.round(groups.reduce((a, b) => a + (b.userProgress || 0), 0) / groups.length)
+      ? Math.round(
+          groups.reduce((a, b) => a + (b.userProgress || 0), 0) / groups.length
+        )
       : 0;
 
   return (
     <div className="my-10 px-6 sm:px-10">
       {/* Breadcrumb + Header */}
-      <p className={`text-sm mb-1 ${colors.textSecondary}`}>Dashboard / Groups</p>
+      <p className={`text-sm mb-1 ${colors.textSecondary}`}>
+        Dashboard / Groups
+      </p>
       <div
         className={`${colors.primary} p-5 rounded-xl flex flex-col sm:flex-row justify-between items-center gap-4 ${colors.shadow}`}
       >
-        <h1 className={`fjalla font-semibold text-2xl tracking-wide ${colors.textPrimary}`}>
+        <h1
+          className={`fjalla font-semibold text-2xl tracking-wide ${colors.textPrimary}`}
+        >
           Groups
         </h1>
 
@@ -119,7 +128,9 @@ function AllGroups({ theme }) {
           <select
             value={sortType}
             onChange={(e) => setSortType(e.target.value)}
-            className={`border ${colors.border} ${colors.textPrimary} rounded-xl text-sm px-3 py-2 bg-transparent focus:outline-none focus:ring-2 focus:ring-[#95775A]`}
+            className={`border ${colors.border} ${colors.textPrimary} rounded-xl text-sm px-3 py-2 
+            ${colors.primary} 
+            focus:outline-none focus:ring-2 focus:ring-[#95775A]`}
           >
             <option value="">Sort by</option>
             <option value="name">Name</option>
@@ -138,17 +149,31 @@ function AllGroups({ theme }) {
       {/* Stats Overview */}
       {!loading && (
         <div className="grid sm:grid-cols-3 gap-4 mt-6">
-          <div className={`${colors.secondary} rounded-xl p-4 text-center ${colors.shadow}`}>
+          <div
+            className={`${colors.secondary} rounded-xl p-4 text-center ${colors.shadow}`}
+          >
             <p className={`text-md ${colors.textSecondary}`}>Total Groups</p>
-            <h2 className={`text-2xl font-semibold ${colors.textPrimary}`}>{totalGroups}</h2>
+            <h2 className={`text-2xl font-semibold ${colors.textPrimary}`}>
+              {totalGroups}
+            </h2>
           </div>
-          <div className={`${colors.secondary} rounded-xl p-4 text-center ${colors.shadow}`}>
+          <div
+            className={`${colors.secondary} rounded-xl p-4 text-center ${colors.shadow}`}
+          >
             <p className={`text-md ${colors.textSecondary}`}>You Admin</p>
-            <h2 className={`text-2xl font-semibold ${colors.textPrimary}`}>{adminGroups}</h2>
+            <h2 className={`text-2xl font-semibold ${colors.textPrimary}`}>
+              {adminGroups}
+            </h2>
           </div>
-          <div className={`${colors.secondary} rounded-xl p-4 text-center ${colors.shadow}`}>
-            <p className={`text-md ${colors.textSecondary}`}>Average Progress</p>
-            <h2 className={`text-2xl font-semibold ${colors.textPrimary}`}>{avgProgress}%</h2>
+          <div
+            className={`${colors.secondary} rounded-xl p-4 text-center ${colors.shadow}`}
+          >
+            <p className={`text-md ${colors.textSecondary}`}>
+              Average Progress
+            </p>
+            <h2 className={`text-2xl font-semibold ${colors.textPrimary}`}>
+              {avgProgress}%
+            </h2>
           </div>
         </div>
       )}
@@ -202,7 +227,9 @@ function AllGroups({ theme }) {
               alt="No groups"
               className="w-32 opacity-80 mb-3"
             />
-            <p className={`text-lg fjalla ${colors.textPrimary}`}>No groups found 😕</p>
+            <p className={`text-lg fjalla ${colors.textPrimary}`}>
+              No groups found 😕
+            </p>
             <button
               onClick={() => navigate("/create-group")}
               className={`${colors.button} text-white fjalla rounded-xl px-5 py-2 mt-3 hover:opacity-90 transition`}

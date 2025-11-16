@@ -3,17 +3,20 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppContext.jsx";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Signup({ close2 }) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm();
 
   const { backendUrl, setIsLoggedIn, setUserData } = useContext(AppContext);
   const navigate = useNavigate();
+
+  const passwordValue = watch("password");
 
   const onSubmit = async (data) => {
     try {
@@ -25,8 +28,8 @@ function Signup({ close2 }) {
 
       if (res.data.success) {
         toast.success("Signup successful!");
-        localStorage.setItem("token",res.data.data.token);
-        localStorage.setItem("userId",res.data.data.id);
+        localStorage.setItem("token", res.data.data.token);
+        localStorage.setItem("userId", res.data.data.id);
         setIsLoggedIn(true);
         setUserData(res.data.user);
         close2();
@@ -58,18 +61,8 @@ function Signup({ close2 }) {
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <input
-          type="text"
-          placeholder="User-Email"
-          className={`border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-transparent text-white placeholder-white ${
-            errors.userEmail ? "border-red-500" : "border-orange-500"
-          }`}
-          {...register("userEmail", { required: "Email is required" })}
-        />
-        {errors.userEmail && (
-          <p className="text-red-500 text-sm">{errors.userEmail.message}</p>
-        )}
 
+        {/* Username */}
         <input
           type="text"
           placeholder="Username"
@@ -82,18 +75,62 @@ function Signup({ close2 }) {
           <p className="text-red-500 text-sm">{errors.username.message}</p>
         )}
 
+        {/* Email */}
+        <input
+          type="text"
+          placeholder="Email"
+          className={`border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-transparent text-white placeholder-white ${
+            errors.userEmail ? "border-red-500" : "border-orange-500"
+          }`}
+          {...register("userEmail", { required: "Email is required" })}
+        />
+        {errors.userEmail && (
+          <p className="text-red-500 text-sm">{errors.userEmail.message}</p>
+        )}
+
+        {/* Password */}
         <input
           type="password"
           placeholder="Password"
           className={`border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-transparent text-white placeholder-white ${
             errors.password ? "border-red-500" : "border-orange-500"
           }`}
-          {...register("password", { required: "Password is required" })}
+          {...register("password", {
+            required: "Password is required",
+            minLength: {
+              value: 8,
+              message: "Must be at least 8 characters",
+            },
+            validate: {
+              hasUpper: (value) =>
+                /[A-Z]/.test(value) || "Must contain at least one uppercase letter",
+              hasLower: (value) =>
+                /[a-z]/.test(value) || "Must contain at least one lowercase letter",
+            },
+          })}
         />
         {errors.password && (
           <p className="text-red-500 text-sm">{errors.password.message}</p>
         )}
 
+        {/* Confirm Password */}
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          className={`border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-transparent text-white placeholder-white ${
+            errors.confirmPassword ? "border-red-500" : "border-orange-500"
+          }`}
+          {...register("confirmPassword", {
+            required: "Please confirm your password",
+            validate: (value) =>
+              value === passwordValue || "Passwords do not match",
+          })}
+        />
+        {errors.confirmPassword && (
+          <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
+        )}
+
+        {/* Submit */}
         <button
           type="submit"
           disabled={isSubmitting}
@@ -101,16 +138,6 @@ function Signup({ close2 }) {
         >
           {isSubmitting ? "Signing in..." : "Sign Up"}
         </button>
-
-        {/* Forgot Password Link */}
-        <div className="text-center text-sm mt-2 underline">
-          <Link
-            to="/forgot-password"
-            className="text-orange-400 hover:text-orange-500"
-          >
-            Forgot Password?
-          </Link>
-        </div>
       </form>
     </div>
   );

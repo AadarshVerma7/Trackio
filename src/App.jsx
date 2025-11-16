@@ -29,7 +29,7 @@ function App() {
 
   const {isLoggedIn} = useContext(AppContext);
 
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
@@ -55,7 +55,7 @@ function App() {
         <Route path='/groups' element={<ProtectedRoute><AllGroups theme={theme}/></ProtectedRoute>}/>
         <Route path='/contact' element={<ContactUs theme={theme}/>}/>
         <Route path='/join' element={<ProtectedRoute><JoinGroup /></ProtectedRoute>}/>
-        <Route path='/forgot-password' element={<ResetPassword />}/>
+        <Route path='/forgot-password' element={<ResetPassword theme={theme}/>}/>
       </Routes>
 
     </>

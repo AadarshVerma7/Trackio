@@ -139,7 +139,7 @@ const GroupMemberToDo = ({ theme, groupId, onProgressUpdate }) => {
   return (
     <div className={`${colors.textPrimary} p-6 w-full`}>
       <div className={`${colors.primary} rounded-2xl p-4 shadow-md`}>
-        <h2 className="text-2xl font-semibold mb-4 text-center">To-Do List</h2>
+        <h2 className="text-2xl font-semibold mb-4">To-Do List</h2>
 
         {/* Add Task Section */}
         <div className="flex items-center gap-3 mb-6">

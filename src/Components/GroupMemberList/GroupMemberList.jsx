@@ -1,5 +1,7 @@
 import { LogOut } from "lucide-react";
 import React,{useEffect} from "react";
+import LightGroupBG from '../../assets/LightGroupBG.jpg'
+import DarkGroupBG from '../../assets/DarkGroupBG.jpg'
 
 const GroupMemberList = ({ theme, members, groupName = "Group Name", onLeave }) => {
   const isDark = theme === "dark";
@@ -19,20 +21,18 @@ const GroupMemberList = ({ theme, members, groupName = "Group Name", onLeave }) 
       ? "shadow-[0_2px_5px_rgba(255,255,255,0.4)]"
       : "shadow-[0_2px_5px_rgba(0,0,0,0.1)]",
     bar: isDark ? "bg-white/90" : "bg-[#4522068e]",
+    bg: isDark ? DarkGroupBG : LightGroupBG,
   };
 
   return (
     <div
       className={`${colors.primary} bg-opacity-90 shadow-2xl rounded-3xl flex flex-col justify-between p-5`}
     >
-      <h2 className="text-2xl font-semibold text-center mb-4 text-white">
-        Group Members
-      </h2>
-
+      
       {/* Group Header */}
       <div className="relative w-full h-43 rounded-2xl overflow-hidden mb-4">
         <img
-          src="src/assets/memberListBanner.jpg"
+          src={colors.bg}
           alt="Group Banner"
           className="w-full h-full object-cover scale-110 blur-[2px]"
         />
@@ -42,6 +42,10 @@ const GroupMemberList = ({ theme, members, groupName = "Group Name", onLeave }) 
           </h2>
         </div>
       </div>
+
+      <h2 className="text-2xl font-semibold text-center mb-4 text-white">
+        Group Members
+      </h2>
 
       {/* Member List */}
       <div className="flex-1 overflow-y-auto space-y-7 pr-1">
