@@ -126,7 +126,8 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-2xl p-8 max-w-5xl mx-auto flex flex-col md:flex-row items-start gap-8 relative overflow-hidden">
+    <div className="backdrop-blur-xl bg-white/70 border border-white/40 shadow-2xl rounded-3xl p-10 max-w-5xl mx-auto flex flex-col md:flex-row items-start gap-8 relative overflow-hidden">
+
       {/* Left: Profile Image + Upload */}
       <div className="flex flex-col items-center gap-6 w-full md:w-1/3 mt-12">
         <div className="relative">
@@ -137,10 +138,10 @@ const EditProfile = () => {
                 : profilePicUrl || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
             }
             alt="Profile"
-            className="w-36 h-36 rounded-full object-cover border-4 border-gray-200 shadow-md"
+            className="w-40 h-40 rounded-full object-cover ring-4 ring-purple-300 shadow-xl transition transform hover:scale-105"
           />
           <button
-            className="absolute bottom-0 right-0 bg-purple-600 p-2 rounded-full text-white hover:bg-purple-700 transition"
+            className="absolute bottom-3 right-1 bg-purple-600 p-3 rounded-full text-white hover:bg-purple-700 transition transform hover:scale-110"
             onClick={() => document.getElementById("fileInput").click()}
           >
             <FaCamera />
@@ -157,7 +158,7 @@ const EditProfile = () => {
             className="hidden"
           />
           <div
-            className={`border-2 border-dashed rounded-xl p-6 text-center transition ${
+            className={`border-2 border-dashed rounded-xl p-8 text-center transition hover:scale-[1.02] ${
               newProfilePic
                 ? "border-purple-600 text-purple-600"
                 : "border-gray-300 text-gray-500 hover:border-purple-600 cursor-pointer"
@@ -194,7 +195,7 @@ const EditProfile = () => {
               value={profileData.name}
               onChange={handleChange}
               disabled={!isEditing}
-              className={`w-full border rounded-xl px-4 py-2 focus:outline-none ${
+              className={`w-full border rounded-xl px-4 py-3 focus:outline-none text-black ${
                 isEditing
                   ? "border-purple-500"
                   : "border-gray-300 bg-gray-100"
@@ -210,7 +211,7 @@ const EditProfile = () => {
               value={profileData.email}
               onChange={handleChange}
               disabled={!isEditing}
-              className={`w-full border rounded-xl px-4 py-2 focus:outline-none ${
+              className={`w-full border rounded-xl px-4 py-3 focus:outline-none text-black ${
                 isEditing
                   ? "border-purple-500"
                   : "border-gray-300 bg-gray-100"
@@ -226,7 +227,7 @@ const EditProfile = () => {
               value={profileData.phone}
               onChange={handleChange}
               disabled={!isEditing}
-              className={`w-full border rounded-xl px-4 py-2 focus:outline-none ${
+              className={`w-full border rounded-xl px-4 py-3 focus:outline-none text-black ${
                 isEditing
                   ? "border-purple-500"
                   : "border-gray-300 bg-gray-100"
@@ -242,7 +243,7 @@ const EditProfile = () => {
               value={profileData.address}
               onChange={handleChange}
               disabled={!isEditing}
-              className={`w-full border rounded-xl px-4 py-2 focus:outline-none ${
+              className={`w-full border rounded-xl px-4 py-3 focus:outline-none text-black ${
                 isEditing
                   ? "border-purple-500"
                   : "border-gray-300 bg-gray-100"
@@ -262,18 +263,18 @@ const EditProfile = () => {
         </div>
 
         {/* Buttons */}
-        <div className="flex flex-row gap-4 mt-4">
+        <div className="flex justify-end gap-4 mt-4">
           {isEditing ? (
             <>
               <button
                 onClick={handleSave}
-                className="px-6 py-2 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition cursor-pointer"
+                className="px-6 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 hover:scale-[1.02] transition shadow-md cursor-pointer"
               >
                 SAVE
               </button>
               <button
                 onClick={() => setIsEditing(false)}
-                className="px-6 py-2 border border-purple-600 text-purple-600 rounded-xl font-semibold hover:bg-purple-50 transition cursor-pointer"
+                className="px-6 py-3 border border-purple-600 text-purple-600 rounded-xl font-semibold hover:bg-purple-50 hover:scale-[1.02] transition shadow-sm cursor-pointer"
               >
                 CANCEL
               </button>
@@ -281,7 +282,7 @@ const EditProfile = () => {
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="px-6 py-2 border border-purple-600 text-purple-600 rounded-xl font-semibold flex items-center gap-2 hover:bg-purple-50 transition w-1/2 cursor-pointer"
+              className="px-6 py-3 border border-purple-600 text-purple-600 rounded-xl font-semibold flex items-center gap-2 hover:bg-purple-50 hover:scale-[1.02] transition shadow-sm cursor-pointer"
             >
               <FaEdit /> EDIT PROFILE
             </button>

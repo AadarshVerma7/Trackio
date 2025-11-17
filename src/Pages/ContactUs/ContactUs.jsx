@@ -116,7 +116,7 @@ export const ContactUs = ({ theme }) => {
                 <div className="flex flex-col md:flex-row max-w-6xl w-full rounded-3xl overflow-hidden shadow-2xl bg-white">
                     {/* Left Section */}
                     <div
-                        className={`md:w-1/2 p-10 md:p-12 lg:p-16 ${theme==="light"? `bg-[#5e5348]`:`bg-[#233970]`} text-white flex flex-col justify-center space-y-8 rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none`}
+                        className={`md:w-1/2 p-10 md:p-12 lg:p-16 ${theme==="light"? `bg-[#5e5348]`:`bg-[#0f1e43]`} text-white flex flex-col justify-center space-y-8 rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none`}
                     >
                         <div>
                             <h1 className="text-4xl lg:text-5xl font-extrabold leading-snug text-white">

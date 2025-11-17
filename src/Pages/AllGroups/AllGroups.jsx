@@ -28,6 +28,8 @@ function AllGroups({ theme }) {
   const [sortType, setSortType] = useState("");
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showSortDropdown, setShowSortDropdown] = useState(false);
+  const [sortLabel, setSortLabel] = useState("Sort by");
 
   const fetchGroups = async () => {
     try {
@@ -118,28 +120,78 @@ function AllGroups({ theme }) {
         </h1>
 
         <div className="flex flex-wrap justify-center items-center gap-3">
-          <input
-            className={`border ${colors.border} ${colors.textPrimary} rounded-xl text-md px-3 py-2 w-52 sm:w-60 focus:outline-none focus:ring-2 focus:ring-[#95775A] transition`}
-            type="text"
-            placeholder="Search for a group..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <select
-            value={sortType}
-            onChange={(e) => setSortType(e.target.value)}
-            className={`border ${colors.border} ${colors.textPrimary} rounded-xl text-sm px-3 py-2 
-            ${colors.primary} 
-            focus:outline-none focus:ring-2 focus:ring-[#95775A]`}
-          >
-            <option value="">Sort by</option>
-            <option value="name">Name</option>
-            <option value="members">Members</option>
-            <option value="progress">Progress</option>
-          </select>
+          {/* SEARCH INPUT */}
+<input
+  className={`border ${colors.border} ${colors.textPrimary} rounded-xl text-md px-3 py-2 w-52 sm:w-60
+    focus:outline-none
+    focus:ring-2 ${isDark ? "focus:ring-gray-600" : "focus:ring-[#95775A]"}
+    hover:border-[#95775A]/60
+    ${isDark ? "hover:border-gray-500" : ""}
+    transition-all duration-200`}
+  type="text"
+  placeholder="Search for a group..."
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+/>
+
+
+
+          {/* CUSTOM SORT DROPDOWN */}
+          <div className="relative">
+            <button
+              onClick={() => setShowSortDropdown(true)}
+              className={`border ${colors.border} ${colors.textPrimary} rounded-xl text-sm px-3 py-2 
+              ${colors.primary} hover:opacity-90 cursor-pointer transition 
+              hover:scale-105 active:scale-95 duration-200`}
+            >
+              {sortLabel}
+            </button>
+
+            {showSortDropdown && (
+              <>
+                <div
+                  className="fixed inset-0 z-40"
+                  onClick={() => setShowSortDropdown(false)}
+                ></div>
+
+                <div
+                  className={`absolute right-0 mt-2 w-40 rounded-xl shadow-xl border z-50 ${
+                    isDark
+                      ? "bg-[#1e2535] border-gray-700"
+                      : "bg-white border-gray-300"
+                  }`}
+                >
+                  {[
+                    { label: "Name", value: "name" },
+                    { label: "Members", value: "members" },
+                    { label: "Progress", value: "progress" },
+                  ].map((option) => (
+                    <div
+                      key={option.value}
+                      onClick={() => {
+                        setSortType(option.value);
+                        setSortLabel(option.label);
+                        setShowSortDropdown(false);
+                      }}
+                      className={`px-4 py-2 cursor-pointer rounded-md 
+                      hover:bg-black/10 dark:hover:bg-white/10 
+                      active:scale-[0.98] transition-all duration-200 
+                      ${isDark ? "text-white" : "text-gray-800"}`}
+                    >
+                      {option.label}
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* CREATE GROUP BUTTON */}
           <button
             onClick={() => navigate("/create-group")}
-            className={`${colors.button} text-white fjalla rounded-xl px-4 py-2 tracking-wide cursor-pointer hover:opacity-90 transition`}
+            className={`${colors.button} text-white fjalla rounded-xl px-4 py-2 tracking-wide cursor-pointer 
+            hover:opacity-90 transition 
+            hover:scale-105 active:scale-95 shadow-md hover:shadow-lg duration-200`}
           >
             + Create Group
           </button>
@@ -150,23 +202,28 @@ function AllGroups({ theme }) {
       {!loading && (
         <div className="grid sm:grid-cols-3 gap-4 mt-6">
           <div
-            className={`${colors.secondary} rounded-xl p-4 text-center ${colors.shadow}`}
+            className={`${colors.secondary} rounded-xl p-4 text-center ${colors.shadow} 
+            hover:scale-[1.02] hover:shadow-lg cursor-pointer transition-all duration-200`}
           >
             <p className={`text-md ${colors.textSecondary}`}>Total Groups</p>
             <h2 className={`text-2xl font-semibold ${colors.textPrimary}`}>
               {totalGroups}
             </h2>
           </div>
+
           <div
-            className={`${colors.secondary} rounded-xl p-4 text-center ${colors.shadow}`}
+            className={`${colors.secondary} rounded-xl p-4 text-center ${colors.shadow} 
+            hover:scale-[1.02] hover:shadow-lg cursor-pointer transition-all duration-200`}
           >
             <p className={`text-md ${colors.textSecondary}`}>You Admin</p>
             <h2 className={`text-2xl font-semibold ${colors.textPrimary}`}>
               {adminGroups}
             </h2>
           </div>
+
           <div
-            className={`${colors.secondary} rounded-xl p-4 text-center ${colors.shadow}`}
+            className={`${colors.secondary} rounded-xl p-4 text-center ${colors.shadow} 
+            hover:scale-[1.02] hover:shadow-lg cursor-pointer transition-all duration-200`}
           >
             <p className={`text-md ${colors.textSecondary}`}>
               Average Progress
@@ -200,10 +257,11 @@ function AllGroups({ theme }) {
               transition={{ duration: 0.3 }}
               whileHover={{ scale: 1.02 }}
               onClick={() => navigate(`/groups/${group.groupId}`)}
-              className="cursor-pointer relative"
+              className="cursor-pointer relative active:scale-[0.98] transition-all duration-200"
             >
               {group.userProgress > 50 && (
-                <span className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 text-xs rounded-md">
+                <span className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 text-xs rounded-md 
+                hover:scale-110 transition duration-150">
                   Active 🔥
                 </span>
               )}
@@ -232,7 +290,8 @@ function AllGroups({ theme }) {
             </p>
             <button
               onClick={() => navigate("/create-group")}
-              className={`${colors.button} text-white fjalla rounded-xl px-5 py-2 mt-3 hover:opacity-90 transition`}
+              className={`${colors.button} text-white fjalla rounded-xl px-5 py-2 mt-3 hover:opacity-90 transition
+              hover:scale-105 active:scale-95 shadow-md hover:shadow-lg duration-200`}
             >
               Create your first group
             </button>
