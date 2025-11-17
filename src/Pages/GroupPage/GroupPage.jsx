@@ -16,7 +16,7 @@ function GroupPage({ theme }) {
     secondary: isDark ? "bg-[#0F172A]" : "bg-[#a6987f]",
     button: isDark ? "bg-gray-900" : "bg-[#95775A]",
     buttonPrimary: isDark ? "bg-[#101828]" : "bg-[#95775A]",
-  buttonSecondary: isDark ? "bg-[#18243b]" : "bg-[#a38466]",
+    buttonSecondary: isDark ? "bg-[#18243b]" : "bg-[#a38466]",
     textPrimary: isDark ? "text-white" : "text-gray-800",
     textMuted: isDark ? "text-gray-400" : "text-gray-900",
   };
@@ -70,6 +70,31 @@ function GroupPage({ theme }) {
     }
   };
 
+  const handleDeleteGroup = async () => {
+    try {
+      const response = await fetch(`${backendUrl}/api/group/delete`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ groupId }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        toast.success("Group deleted successfully");
+        navigate("/groups");
+      } else {
+        toast.error(result.message || "Failed to delete group");
+      }
+    } catch (error) {
+      console.error("Error deleting group:", error);
+      toast.error("Something went wrong");
+    }
+  };
+
+
   // fetch current user's progress
   useEffect(() => {
     const fetchUserProgress = async () => {
@@ -117,7 +142,7 @@ function GroupPage({ theme }) {
         if (res.data.success) {
           setGroup(res.data.group);
           setLoading(false);
-          console.log("Fetched Group : ",res.data.group);
+          console.log("Fetched Group : ", res.data.group);
         } else {
           console.error("Failed to fetch group:", res.data.message);
           setLoading(false);
@@ -139,25 +164,61 @@ function GroupPage({ theme }) {
 
   if (loading) return <p className="text-center text-white mt-10">Loading group...</p>;
   if (!group) return <p className="text-center text-red-500 mt-10">Group Not Found</p>;
+  const adminId =
+    typeof group.admin === "string"
+      ? group.admin
+      : group.admin?._id;
+
+  const isAdmin = adminId === currentUserId;
+
 
   return (
     <>
       <div className="flex p-8">
         <div className="w-3/4 space-y-4">
           <div className={`mx-6 mt-4 p-4 rounded-2xl ${colors.primary} ${colors.textPrimary} shadow-md`}>
-            <h1 className={`text-3xl ${colors.textPrimary} font-bold`}>{group.groupName}</h1>
-            <p className={`${colors.textMuted} mt-2`}>{group.description}</p>
+            <div className={`grid grid-cols-2 items-start`}>
+              {/* LEFT SIDE: Name + Description */}
+              <div>
+                <h1 className={`text-3xl ${colors.textPrimary} font-bold`}>
+                  {group.groupName}
+                </h1>
+
+                <p className={`${colors.textMuted} mt-2`}>
+                  {group.description}
+                </p>
+              </div>
+
+              {/* RIGHT SIDE: Copy Group ID */}
+              <div className={`flex  justify-end`}>
+                <div className={`p-3 rounded-xl flex items-center gap-3`}>
+                  <span className={`${colors.textPrimary} font-semibold`}>
+                    Group ID : {group.groupId}
+                  </span>
+
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(group.groupId);
+                      toast.success("Group ID copied to Clipboard!");
+                    }}
+                    className={`px-3 py-1 rounded-lg font-semibold hover:scale-[1.05] cursor-pointer`}
+                  >
+                    <i className="fa-regular fa-copy text-xl"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
 
             <div className="flex gap-4 mt-4">
               <button
                 onClick={() => setShowAddModal(true)}
-                className={`${colors.buttonPrimary} px-4 py-2 rounded-lg font-semibold hover:scale-[1.02] duration-300 transition`}
+                className={`${colors.buttonPrimary} px-4 py-2 rounded-lg font-semibold hover:scale-[1.02] duration-300 transition cursor-pointer`}
               >
                 Add Resources
               </button>
               <button
                 onClick={() => setShowViewModal(true)}
-                className={`${colors.buttonSecondary} px-4 py-2 rounded-lg font-semibold hover:scale-[1.02] duration-300 transition`}
+                className={`${colors.buttonSecondary} px-4 py-2 rounded-lg font-semibold hover:scale-[1.02] duration-300 transition cursor-pointer`}
               >
                 View Resources
               </button>
@@ -177,7 +238,8 @@ function GroupPage({ theme }) {
             theme={theme}
             members={membersWithProgress}
             groupName={group.groupName}
-            onLeave={handleLeaveGroup}
+            onLeave={isAdmin ? handleDeleteGroup : handleLeaveGroup}
+            isAdmin={isAdmin}
           />
         </div>
       </div>
