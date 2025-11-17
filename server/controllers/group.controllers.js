@@ -3,6 +3,7 @@ import {v4 as uuidv4} from "uuid";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import UserModel from "../models/user.models.js";
 import { Task } from "../models/task.models.js";
+import { UserTaskStatus } from "../models/userTaskStatus.models.js";
 
 const createGroup = asyncHandler(async(req,res)=>{
     const {groupName,topic,description,todoList} = req.body;
@@ -107,4 +108,31 @@ const leaveGroup = asyncHandler(async(req,res)=>{
     })
 });
 
-export {createGroup,joinGroup,getUserGroups,leaveGroup};
+const deleteGroup = asyncHandler(async (req, res) => {
+  const { groupId } = req.body;
+  const userId = req.user._id;
+
+  if (!groupId) {
+    return res.status(400).json({ success: false, message: "GroupId is required" });
+  }
+
+  const group = await groupModel.findOne({ groupId });
+
+  if (!group) {
+    return res.status(404).json({ success: false, message: "Group not found" });
+  }
+
+  // Check admin
+  if (group.admin.toString() !== userId.toString()) {
+    return res.status(403).json({ success: false, message: "Only admin can delete this group" });
+  }
+
+  // Delete group + related tasks + userTaskStatus
+  await Task.deleteMany({ groupId });
+  await UserTaskStatus.deleteMany({ taskId: group.todoList });
+  await group.deleteOne();
+
+  res.status(200).json({ success: true, message: "Group deleted successfully" });
+});
+
+export {createGroup,joinGroup,getUserGroups,leaveGroup,deleteGroup};

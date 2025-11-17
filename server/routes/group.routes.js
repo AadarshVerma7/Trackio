@@ -1,5 +1,5 @@
 import express from "express";
-import { createGroup,getUserGroups,joinGroup, leaveGroup } from "../controllers/group.controllers.js";
+import { createGroup,getUserGroups,joinGroup, leaveGroup, deleteGroup } from "../controllers/group.controllers.js";
 import { verifyJWT } from "../middlewares/verifyJWT.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import groupModel from "../models/group.models.js";
@@ -26,5 +26,7 @@ router.get("/my-groups/:groupId",verifyJWT,asyncHandler(async(req,res)=>{
 }));
 
 router.post("/leave",verifyJWT,leaveGroup);
+
+router.post("/delete",verifyJWT,deleteGroup);
 
 export default router;

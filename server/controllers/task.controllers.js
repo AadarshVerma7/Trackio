@@ -58,7 +58,7 @@ const getUserProgress = asyncHandler(async (req, res) => {
   }
 
   const groupTasks = await Task.find({
-    $or: [{ groupId }, { groupId: group._id.toString() }],
+    groupId:group.groupId
   });
 
   const taskIds = groupTasks.map((t) => t._id);

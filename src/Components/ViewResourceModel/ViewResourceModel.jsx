@@ -37,45 +37,61 @@ const ViewResourcesModal = ({ onClose, groupId }) => {
   }, [backendUrl, groupId]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
-      <div className="bg-[#1E2635] text-white p-6 rounded-2xl w-[500px] shadow-lg relative max-h-[80vh] overflow-y-auto">
+    <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-black/60 z-50">
+      <div className="bg-[#1C1A17] text-white p-6 rounded-2xl w-[520px] shadow-2xl relative max-h-[80vh] overflow-y-auto border border-orange-500/30">
+
+        {/* Bigger Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-4 text-gray-400 hover:text-white text-xl"
+          className="absolute top-3 right-4 text-orange-400 hover:text-white text-3xl font-bold"
         >
           ×
         </button>
 
-        <h2 className="text-xl font-semibold mb-4">Group Resources</h2>
+        <h2 className="text-2xl font-semibold mb-5 text-orange-400 text-center">
+          Group Resources
+        </h2>
 
         {loading ? (
           <p className="text-gray-400 text-center">Loading...</p>
         ) : resources.length === 0 ? (
           <p className="text-gray-400 text-center">No resources added yet.</p>
         ) : (
-          <ul className="space-y-3">
+          <div className="space-y-4">
             {resources.map((res, index) => (
-              <li
+              <div
                 key={index}
-                className="p-3 rounded-lg bg-gray-800 flex justify-between items-center"
+                className="bg-[#2A2621] p-4 rounded-xl shadow-lg border border-orange-500/20"
               >
-                <div>
-                  <p className="font-medium">{res.title}</p>
+                {/* Title */}
+                <p className="text-lg font-semibold text-orange-300">
+                  {res.title}
+                </p>
+
+                {/* PDF Preview */}
+                <div className="mt-3 bg-black/40 p-3 rounded-lg border border-orange-500/20">
+                  <embed
+                    src={res.link}
+                    type="application/pdf"
+                    className="w-full h-64 rounded-lg"
+                  />
+
                   <a
                     href={res.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-400 text-sm"
+                    className="mt-3 block text-center bg-orange-500 hover:bg-orange-600 py-2 rounded-lg font-semibold transition-all"
                   >
-                    {res.link}
+                    Open Full PDF
                   </a>
-                  <p className="text-xs text-gray-400 mt-1">
-                    Added by: {res.addedBy?.name || "Unknown"}
-                  </p>
                 </div>
-              </li>
+
+                <p className="text-xs text-gray-400 mt-2">
+                  Added by: {res.addedBy?.name || "Unknown"}
+                </p>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </div>

@@ -1,20 +1,20 @@
-import { LogOut } from "lucide-react";
-import React,{useEffect} from "react";
-import LightGroupBG from '../../assets/LightGroupBG.jpg'
-import DarkGroupBG from '../../assets/DarkGroupBG.jpg'
+import { LogOut, Trash2 } from "lucide-react";
+import React, { useEffect } from "react";
+import LightGroupBG from '../../assets/LightGroupBG.jpg';
+import DarkGroupBG from '../../assets/DarkGroupBG.jpg';
 
-const GroupMemberList = ({ theme, members, groupName = "Group Name", onLeave }) => {
+const GroupMemberList = ({ theme, members, groupName = "Group Name", onLeave, isAdmin }) => {
   const isDark = theme === "dark";
 
   useEffect(() => {
-  console.log("📈 Updated members:", members);
-}, [members]);
-
+    console.log("Updated members:", members);
+  }, [members]);
 
   const colors = {
     primary: isDark ? "bg-[#272F40]" : "bg-[#D0C1A8]",
     secondary: isDark ? "bg-[#0F172A]" : "bg-[#a6987f]",
-    button: "bg-red-600",
+    buttonLeave: "bg-red-600",
+    buttonDelete: "bg-red-700",
     textPrimary: "text-white",
     title: "text-black",
     shadow: isDark
@@ -25,11 +25,9 @@ const GroupMemberList = ({ theme, members, groupName = "Group Name", onLeave }) 
   };
 
   return (
-    <div
-      className={`${colors.primary} bg-opacity-90 shadow-2xl rounded-3xl flex flex-col justify-between p-5`}
-    >
-      
-      {/* Group Header */}
+    <div className={`${colors.primary} bg-opacity-90 shadow-2xl rounded-3xl flex flex-col justify-between p-5`}>
+
+      {/* Header */}
       <div className="relative w-full h-43 rounded-2xl overflow-hidden mb-4">
         <img
           src={colors.bg}
@@ -43,9 +41,7 @@ const GroupMemberList = ({ theme, members, groupName = "Group Name", onLeave }) 
         </div>
       </div>
 
-      <h2 className="text-2xl font-semibold text-center mb-4 text-white">
-        Group Members
-      </h2>
+      <h2 className="text-2xl font-semibold text-center mb-4 text-white">Group Members</h2>
 
       {/* Member List */}
       <div className="flex-1 overflow-y-auto space-y-7 pr-1">
@@ -79,12 +75,16 @@ const GroupMemberList = ({ theme, members, groupName = "Group Name", onLeave }) 
         )}
       </div>
 
-      {/* Leave Button */}
+      {/* Leave/Delete Button */}
       <button
         onClick={onLeave}
-        className={`mt-4 flex items-center justify-center gap-2 ${colors.button} text-white py-3 rounded-xl font-semibold shadow-lg transition-all hover:opacity-90`}
+        className={`mt-4 flex items-center justify-center gap-2 
+          ${
+            isAdmin ? colors.buttonDelete : colors.buttonLeave
+          } text-white py-3 rounded-xl font-semibold shadow-lg transition-all hover:opacity-90 cursor-pointer`}
       >
-        <LogOut className="w-4 h-4" /> Leave Group
+        {isAdmin ? <Trash2 className="w-4 h-4" /> : <LogOut className="w-4 h-4" />}
+        {isAdmin ? "Delete Group" : "Leave Group"}
       </button>
     </div>
   );
