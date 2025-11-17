@@ -14,7 +14,10 @@ import EditProfile from "../../Components/EditProfile/EditProfile.jsx";
 function DashBoard({ theme }) {
   const [inputValue, setInputValue] = useState("");
   const [showEditProfile, setShowEditProfile] = useState(false);
-  const [profilePicUrl,setProfilePicUrl] = useState("");
+  const [profilePicUrl, setProfilePicUrl] = useState("");
+  const [showRoleDropdown, setShowRoleDropdown] = useState(false);
+  const [selectedRole, setSelectedRole] = useState("Member");
+
 
   const { backendUrl, setIsLoggedIn, setUserData } = useContext(AppContext);
   const navigate = useNavigate();
@@ -67,7 +70,7 @@ function DashBoard({ theme }) {
         if (data.success) {
           setUserName(data.userData.name);
           setProfilePicUrl(data.userData.profilePic?.url || "https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png");
-          localStorage.setItem("userProfilePic",data.userData.profilePic?.url);
+          localStorage.setItem("userProfilePic", data.userData.profilePic?.url);
         }
       } catch (error) {
         console.log("Error fetching user data : ", error);
@@ -122,16 +125,16 @@ function DashBoard({ theme }) {
             {showEditProfile && (
               <div className="fixed inset-0 backdrop-blur-sm bg-black/20 flex items-center justify-center z-50">
                 <div className="bg-white rounded-xl shadow-xl p-6 w-[90%] max-w-3xl">
-                  <div className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text tracking-wide pb-3">Profile</div>
-                  <EditProfile />
-                  <div className="flex justify-end mt-4">
+                  <div className="absolute top-3 right-3">
                     <button
                       onClick={() => setShowEditProfile(false)}
-                      className="px-5 py-2 rounded-lg bg-red-500 hover:bg-red-600 cursor-pointer text-white"
+                      className="px-5 py-2 rounded-xl bg-red-500 hover:bg-red-600 cursor-pointer text-white"
                     >
-                      Close
+                      X
                     </button>
                   </div>
+                  <div className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text tracking-wide pb-3">Profile</div>
+                  <EditProfile />
                 </div>
               </div>
             )}
@@ -165,7 +168,8 @@ function DashBoard({ theme }) {
               <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white font-semibold px-5 py-2 rounded-lg transition-all cursor-pointer">
                 Logout
               </button>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg transition-all cursor-pointer">
+              <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg transition-all cursor-pointer"
+              onClick={() => navigate("/contact")}>
                 Support
               </button>
             </div>
@@ -253,16 +257,52 @@ function DashBoard({ theme }) {
                     onChange={handleInputChange}
                   />
                 </div>
+                <div className="relative">
+                  {/* Trigger button */}
+                  <button
+                    onClick={() => setShowRoleDropdown(true)}
+                    className={`px-4 py-2 rounded-xl shadow-sm border ${isDark
+                        ? "bg-gray-700 border-gray-700 text-white"
+                        : "bg-white border-gray-300 text-gray-800"
+                      }`}
+                  >
+                    {selectedRole}
+                  </button>
 
-                <select
-                  className={`px-4 py-2 rounded-lg border ${isDark
-                    ? "bg-gray-700 border-gray-700 text-white"
-                    : "bg-white border-gray-300 text-gray-800"
-                    }`}
-                >
-                  <option value="Member">Member</option>
-                  <option value="Admin">Admin</option>
-                </select>
+                  {/* If open, show backdrop + dropdown */}
+                  {showRoleDropdown && (
+                    <>
+                      {/* BACKDROP (click anywhere to close) */}
+                      <div
+                        onClick={() => setShowRoleDropdown(false)}
+                        className="fixed inset-0 z-40"
+                      ></div>
+
+                      {/* DROPDOWN MENU */}
+                      <div
+                        className={`absolute right-0 mt-2 w-40 rounded-xl shadow-xl border z-50 ${isDark ? "bg-[#1E1E1E] border-gray-700" : "bg-white"
+                          }`}
+                      >
+                        {["Member", "Admin"].map((role) => (
+                          <div
+                            key={role}
+                            onClick={() => {
+                              setSelectedRole(role);
+                              setShowRoleDropdown(false);
+                            }}
+                            className={`px-4 py-2 cursor-pointer rounded-xl hover:bg-white/10 ${isDark ? "text-white" : "text-gray-800"
+                              }`}
+                          >
+                            {role}
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+
+
+
               </div>
 
               {/* GROUP CARDS */}
