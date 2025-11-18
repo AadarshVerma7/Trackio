@@ -258,7 +258,7 @@ const EditProfile = () => {
             onClick={() => navigate("/forgot-password")}
             className="text-sm text-blue-500 hover:text-blue-600 font-medium underline transition cursor-pointer"
           >
-            Forgot Password?
+            Change Password
           </button>
         </div>
 

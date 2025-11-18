@@ -264,7 +264,6 @@ const passwordResetOtp = asyncHandler(async (req,res)=>{
                 text:`Your Otp for Reseting your password is ${otp}. Use this OTP to reset password.`
             }
             await transporter.sendMail(mailOption);
-            console.log("Reset Password OTP sent successfully to : ",user.email);
         } catch (error) {
             console.log("Error Sending the Reset Password Mail");
             throw new apiError(500,"Failed to send the Reset Password Mail,Please try Again ! ",error);

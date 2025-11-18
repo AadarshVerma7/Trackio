@@ -89,7 +89,7 @@ function ResetPassword({ theme }) {
       });
       if (data.success) {
         toast.success(data.message);
-        navigate('/login');
+        navigate('/home');
       } else {
         toast.error(data.message);
       }
