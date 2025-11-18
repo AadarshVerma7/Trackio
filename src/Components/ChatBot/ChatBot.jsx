@@ -82,7 +82,8 @@ export default function ChatBot() {
 
             {isOpen && (
                 <div className="fixed inset-0 bg-black/5 flex justify-end items-end p-4 z-50">
-                    <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl flex flex-col overflow-hidden relative">
+                    {/* Added text-black here to force dark text inside the modal regardless of theme */}
+                    <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl flex flex-col overflow-hidden relative text-black">
 
                         <button
                             className="absolute top-3 right-4 text-2xl text-red-500 hover:text-red-600 cursor-pointer"
@@ -102,7 +103,8 @@ export default function ChatBot() {
                                 return (
                                     <div
                                         key={i}
-                                        className={`p-3 rounded-xl max-w-[80%] ${msg.sender === "user"
+                                        // Added text-black specifically to messages to be safe
+                                        className={`p-3 rounded-xl max-w-[80%] text-black ${msg.sender === "user"
                                                 ? "ml-auto bg-orange-100"
                                                 : "bg-gray-100"
                                             }`}
@@ -112,7 +114,8 @@ export default function ChatBot() {
                             })}
 
                             {isTyping && (
-                                <div className="p-3 rounded-xl bg-gray-200 max-w-[60%]">
+                                // Added text-black here
+                                <div className="p-3 rounded-xl bg-gray-200 max-w-[60%] text-black">
                                     <span className="animate-pulse">TrackBot is typing...</span>
                                 </div>
                             )}
@@ -123,7 +126,8 @@ export default function ChatBot() {
                                         <button
                                             key={i}
                                             onClick={() => handleUserMessage(opt)}
-                                            className="w-full py-2 px-4 bg-orange-50 hover:bg-orange-100 rounded-xl border text-left"
+                                            // Added text-black to options
+                                            className="w-full py-2 px-4 bg-orange-50 hover:bg-orange-100 rounded-xl border text-left text-black"
                                         >
                                             {opt}
                                         </button>
@@ -135,7 +139,8 @@ export default function ChatBot() {
 
                         <div className="p-3 border-t flex gap-2 bg-white">
                             <input
-                                className="flex-1 p-2 border rounded-xl"
+                                // Added text-black and bg-white explicitly to input
+                                className="flex-1 p-2 border rounded-xl text-black bg-white"
                                 placeholder="Type a message..."
                                 value={userInput}
                                 onChange={(e) => setUserInput(e.target.value)}

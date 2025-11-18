@@ -28,7 +28,7 @@ const addResource = asyncHandler(async (req, res) => {
   try {
     const localFilePath = req.file.path;
 
-    const uploadResult = await uploadOnCloudinary(localFilePath);
+    const uploadResult = await uploadOnCloudinary(localFilePath,"resources");
 
     const newResource = await Resource.create({
       title,
