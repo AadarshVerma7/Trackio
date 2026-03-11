@@ -13,7 +13,6 @@ function DashBoard({ theme }) {
   const { backendUrl, setIsLoggedIn, userData, getUserData } = useContext(AppContext);
   const navigate = useNavigate();
   const [showEditProfile, setShowEditProfile] = useState(false);
-
   const [groups, setGroups] = useState([]);
   const [streakData, setStreakData] = useState({
     streak: 0,
@@ -48,12 +47,17 @@ function DashBoard({ theme }) {
   const handleLogout = async () => {
     try {
       const { data } = await axios.post(
-        `${backendUrl}/api/auth/logout`,
-        {},
-        { withCredentials: true }
+        `${backendUrl}/api/auth/logout`,{},
+        { withCredentials: true,
+         headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+         }
       );
+      
       if (data.success) {
         toast.success(data.message || "Logged Out Successfully !");
+        localStorage.clear();
         setIsLoggedIn(false);
         navigate("/");
       } else {
@@ -70,9 +74,12 @@ function DashBoard({ theme }) {
     const updateUserStreak = async () => {
       try {
         const { data } = await axios.post(
-          `${backendUrl}/api/user/updateStreak`,
-          {},
-          { withCredentials: true }
+          `${backendUrl}/api/user/updateStreak`,{},
+          { withCredentials: true,
+            headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+           }
         );
         if (data.success) {
           setStreakData({
@@ -90,7 +97,11 @@ function DashBoard({ theme }) {
       try {
         const { data } = await axios.get(
           `${backendUrl}/api/group/my-groups`,
-          { withCredentials: true }
+          { withCredentials: true,
+            headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+           }
         );
         if (data.success) {
           setGroups(data.groups);

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FaCamera, FaUpload, FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-
-const backendUrl = "http://localhost:4000";
+import { AppContext } from "../../context/AppContext.jsx";
 
 const EditProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
+  const { backendUrl } = useContext(AppContext);
 
   const [profileData, setProfileData] = useState({
     name: "",
@@ -27,6 +27,9 @@ const EditProfile = () => {
       try {
         const { data } = await axios.get(`${backendUrl}/api/user/getUserData`, {
           withCredentials: true,
+          headers:{
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
         });
 
         if (data.success) {
@@ -67,13 +70,16 @@ const EditProfile = () => {
       if (newProfilePic) formData.append("profilePic", newProfilePic);
 
       const { data } = await axios.put(
-        `${backendUrl}/api/user/update-profile`,
-        formData,
-        {
-          withCredentials: true,
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+  `${backendUrl}/api/user/update-profile`,
+  formData,
+  {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  }
+);
+
 
       if (data.success) {
         toast.success("Profile Updated Successfully!");
@@ -104,7 +110,11 @@ const EditProfile = () => {
         formData,
         {
           withCredentials: true,
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: { 
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+           },
+          
         }
       );
 
